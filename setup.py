@@ -9,9 +9,6 @@ import sys
 __version__ = '1.0'
 
 if __name__ == '__main__':
-
-    long_description = __doc__ + '\n\n' + releases
-
     install_requires = [
         'argparse',
         'Markdown',
