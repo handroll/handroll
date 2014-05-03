@@ -54,3 +54,6 @@ docs/_build/
 
 # Vim
 *.swp
+
+# Handroll
+sample/output/
