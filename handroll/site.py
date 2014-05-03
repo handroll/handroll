@@ -3,8 +3,10 @@
 
 import os
 import shutil
+from string import Template
 
 from handroll import logger
+from handroll.composers import MarkdownComposer
 
 
 class Site(object):
@@ -14,14 +16,24 @@ class Site(object):
 
     def __init__(self, path):
         self.path = path
+        self.composer = MarkdownComposer()
+        self._template = None
 
     @property
     def output_root(self):
         return os.path.join(self.path, self.OUTPUT)
 
     @property
-    def template(self):
+    def template_name(self):
         return os.path.join(self.path, self.TEMPLATE)
+
+    @property
+    def template(self):
+        if self._template is None:
+            with open(self.template_name, 'r') as t:
+                self._template = Template(t.read())
+
+        return self._template
 
     def generate(self):
         """Walk the site tree and generate the output."""
@@ -34,8 +46,8 @@ class Site(object):
             print('{0} is not a directory.'.format(self.path))
             return False
 
-        if not os.path.exists(self.template):
-            print('{0} is missing.'.format(self.template))
+        if not os.path.exists(self.template_name):
+            print('{0} is missing.'.format(self.template_name))
             return False
 
         return True
@@ -69,13 +81,14 @@ class Site(object):
 
             # Handle files.
             for file_ in filenames:
+                filepath = os.path.join(dirpath, file_)
                 if file_.endswith('.md'):
-                    # TODO: The real work of generating html.
-                    logger.info('Generating HTML for {0} ...'.format(file_))
+                    self.composer.compose(
+                        self.template, filepath, output_dirpath)
                 else:
                     logger.info(
                         'Copying {0} to {1} ...'.format(file_, output_dirpath))
-                    shutil.copy(os.path.join(dirpath, file_), output_dirpath)
+                    shutil.copy(filepath, output_dirpath)
 
     def _get_output_dirpath(self, dirpath):
         """Convert an input directory path rooted at the site path into the
@@ -84,6 +97,7 @@ class Site(object):
         # a common word like 'site'.
         remainder = dirpath.split(self.path, 1)[1]
         if remainder:
-            return os.path.join(self.output_root, remainder)
+            # Make sure the remainder doesn't look like an abs path.
+            return os.path.join(self.output_root, remainder.lstrip(os.sep))
         else:
             return self.output_root
