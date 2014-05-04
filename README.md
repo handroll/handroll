@@ -1,6 +1,9 @@
 handroll
 ========
 
+[![PyPI version][fury]](https://pypi.python.org/pypi/handroll)
+[![Downloads][pypip]](https://warehouse.python.org/project/handroll/)
+
 Website development is a finely crafted art.
 
 You need simple. You know what you're doing. You don't want to waste time.
@@ -25,3 +28,5 @@ everything that it can find. When it encounters:
     into HTML to become the `content`. `title` and `content` will be combined
     with `template.html` to produce the final HTML file.
 
+[fury]: https://badge.fury.io/py/handroll.png
+[pypip]: https://pypip.in/d/handroll/badge.png
