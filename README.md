@@ -21,7 +21,7 @@ everything that it can find. When it encounters:
 
 1.  `template.html` at the root of your site, the file will be skipped.
 2.  anything ending in `.md`, the file will be read, the first line of the file
-    will become the `title`, and the remainder of will be converted from
-    Markdown into HTML to become the `content`. `title` and `content` will be
-    combined with `template.html` to produce the final HTML file.
+    will become the `title`, and the remainder will be converted from Markdown
+    into HTML to become the `content`. `title` and `content` will be combined
+    with `template.html` to produce the final HTML file.
 
