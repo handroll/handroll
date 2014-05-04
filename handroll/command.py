@@ -14,6 +14,9 @@ def main():
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('site', help='the path to your website')
     parser.add_argument(
+        'outdir', nargs='?', help='an optional output directory to create or'
+        ' update if it already exists')
+    parser.add_argument(
         '-v', '--verbose', action='store_true', help='use verbose messages')
     args = parser.parse_args()
 
@@ -24,5 +27,5 @@ def main():
     if not site.is_valid():
         sys.exit('Incomplete.')
 
-    site.generate()
+    site.generate(args.outdir)
     print('Complete.')

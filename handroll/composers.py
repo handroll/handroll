@@ -19,7 +19,7 @@ class MarkdownComposer(object):
         data = {}
         with open(source_file, 'r') as md:
             # The title is expected to be on the first line.
-            data['title'] = md.readline()
+            data['title'] = md.readline().strip()
             source = md.read()
             data['content'] = markdown.markdown(source, output_format='html5')
 
