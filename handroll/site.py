@@ -115,7 +115,6 @@ class Site(object):
         """Process the file according to its type."""
         filename = os.path.basename(filepath)
         if self._should_skip(filename):
-            logger.info('Skipping {0} ...'.format(filename))
             return
 
         if filename.endswith('.md'):
@@ -141,6 +140,9 @@ class Site(object):
         """Determine if the file type should be skipped."""
         for skip_type in self.SKIP_EXTENSION:
             if filename.endswith(skip_type):
+                logger.info(
+                    'Skipping {0} with skipped file type \'{1}\' ...'.format(
+                        filename, skip_type))
                 return True
 
         return False

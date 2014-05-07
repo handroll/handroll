@@ -8,12 +8,18 @@ handroll is a static website generator that uses Markdown as the source format.
 from setuptools import find_packages, setup
 import sys
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 if __name__ == '__main__':
+    with open('releases.rst', 'r') as f:
+        releases = f.read()
+
+    long_description = __doc__ + '\n\n' + releases
+
     install_requires = [
         'argparse',
         'Markdown',
+        'Pygments',
     ]
 
     # Add some developer tools.
@@ -31,7 +37,7 @@ if __name__ == '__main__':
         author='Matt Layman',
         author_email='matthewlayman@gmail.com',
         description='A website generator for software artisans',
-        long_description=__doc__,
+        long_description=long_description,
         packages=find_packages(),
         entry_points={
             'console_scripts': ['handroll = handroll.command:main']
