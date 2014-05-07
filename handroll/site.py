@@ -14,6 +14,9 @@ class Site(object):
 
     OUTPUT = 'output'
     TEMPLATE = 'template.html'
+    SKIP_EXTENSION = [
+        '.swp',
+    ]
 
     def __init__(self, path):
         self.path = path
@@ -111,6 +114,10 @@ class Site(object):
     def _process_file(self, filepath, output_dirpath):
         """Process the file according to its type."""
         filename = os.path.basename(filepath)
+        if self._should_skip(filename):
+            logger.info('Skipping {0} ...'.format(filename))
+            return
+
         if filename.endswith('.md'):
             self.composer.compose(self.template, filepath, output_dirpath)
         else:
@@ -129,3 +136,11 @@ class Site(object):
             logger.info(
                 'Copying {0} to {1} ...'.format(filename, output_dirpath))
             shutil.copy(filepath, output_dirpath)
+
+    def _should_skip(self, filename):
+        """Determine if the file type should be skipped."""
+        for skip_type in self.SKIP_EXTENSION:
+            if filename.endswith(skip_type):
+                return True
+
+        return False
