@@ -1,6 +1,10 @@
 # Copyright (c) 2014, Matt Layman
 
 import os
+try:
+    from html import escape
+except ImportError:
+    from cgi import escape
 
 import markdown
 
@@ -24,7 +28,7 @@ class MarkdownComposer(object):
         data = {}
         with open(source_file, 'r') as md:
             # The title is expected to be on the first line.
-            data['title'] = md.readline().strip()
+            data['title'] = escape(md.readline().strip())
             source = md.read()
             data['content'] = markdown.markdown(
                 source, extensions=self.EXTENSIONS, output_format='html5')
