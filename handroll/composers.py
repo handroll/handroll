@@ -28,8 +28,8 @@ class MarkdownComposer(object):
         data = {}
         with open(source_file, 'r') as md:
             # The title is expected to be on the first line.
-            data['title'] = escape(md.readline().strip())
-            source = md.read()
+            data['title'] = escape(md.readline().decode('utf-8').strip())
+            source = md.read().decode('utf-8')
             data['content'] = markdown.markdown(
                 source, extensions=self.EXTENSIONS, output_format='html5')
 
@@ -37,5 +37,5 @@ class MarkdownComposer(object):
         basename = os.path.splitext(source_file.split(os.sep)[-1])[0]
         output_file = os.path.join(out_dir, basename + '.html')
         with open(output_file, 'w') as out:
-            out.write(template.safe_substitute(data))
+            out.write(template.safe_substitute(data).encode('utf-8'))
             out.write('<!-- handrolled for excellence -->\n')
