@@ -1,5 +1,6 @@
 # Copyright (c) 2014, Matt Layman
 
+import io
 import os
 try:
     from html import escape
@@ -26,16 +27,16 @@ class MarkdownComposer(object):
 
         # Read the Markdown source to extract the title and content.
         data = {}
-        with open(source_file, 'r') as md:
+        with io.open(source_file, 'r', encoding='utf-8') as md:
             # The title is expected to be on the first line.
-            data['title'] = escape(md.readline().decode('utf-8').strip())
-            source = md.read().decode('utf-8')
+            data['title'] = escape(md.readline().strip())
+            source = md.read()
             data['content'] = markdown.markdown(
                 source, extensions=self.EXTENSIONS, output_format='html5')
 
         # Merge the data with the template and write it to the out directory.
         basename = os.path.splitext(source_file.split(os.sep)[-1])[0]
         output_file = os.path.join(out_dir, basename + '.html')
-        with open(output_file, 'w') as out:
+        with open(output_file, 'wb') as out:
             out.write(template.safe_substitute(data).encode('utf-8'))
-            out.write('<!-- handrolled for excellence -->\n')
+            out.write(b'<!-- handrolled for excellence -->\n')
