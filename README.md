@@ -13,6 +13,9 @@ You need simple. You know what you're doing. You don't want to waste time.
 theme and content into one precise result.
 
 ```bash
+$ pip install handroll
+...
+Successfully installed handroll
 $ handroll site
 Complete.
 ```
@@ -28,6 +31,13 @@ everything that it can find. When it encounters:
     will become the `title`, and the remainder will be converted from Markdown
     into HTML to become the `content`. `title` and `content` will be combined
     with `template.html` to produce the final HTML file.
+
+Everything else
+---------------
+
+All the other stuff you may interested in regarding `handroll` (e.g., writing
+a plugin for your favorite markup language) is found at [Read the
+Docs](http://handroll.readthedocs.org/en/latest/).
 
 [fury]: https://badge.fury.io/py/handroll.png
 [pypip]: https://pypip.in/d/handroll/badge.png

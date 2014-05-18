@@ -22,4 +22,5 @@ Documentation
 .. toctree::
    :maxdepth: 2
 
+   composers
    releases
