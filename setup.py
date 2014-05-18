@@ -41,7 +41,10 @@ if __name__ == '__main__':
         long_description=long_description,
         packages=find_packages(),
         entry_points={
-            'console_scripts': ['handroll = handroll.command:main']
+            'console_scripts': ['handroll = handroll.command:main'],
+            'handroll.composers': [
+                '.md = handroll.composers:MarkdownComposer',
+            ]
         },
         include_package_data=True,
         zip_safe=False,

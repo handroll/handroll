@@ -1,13 +1,12 @@
 # Copyright (c) 2014, Matt Layman
 """The website model"""
 
-import filecmp
 import os
 import shutil
 from string import Template
 
 from handroll import logger
-from handroll.composers import MarkdownComposer
+from handroll.composers import Composers
 
 
 class Site(object):
@@ -20,7 +19,7 @@ class Site(object):
 
     def __init__(self, path):
         self.path = path
-        self.composer = MarkdownComposer()
+        self.composers = Composers()
         self._template = None
 
     @property
@@ -117,24 +116,8 @@ class Site(object):
         if self._should_skip(filename):
             return
 
-        if filename.endswith('.md'):
-            self.composer.compose(self.template, filepath, output_dirpath)
-        else:
-            # Do not copy files that are already there unless different.
-            destination = os.path.join(output_dirpath, filename)
-            if os.path.exists(destination):
-                if filecmp.cmp(filepath, destination):
-                    # Files are equal. Do nothing.
-                    logger.info('{0} is the same as {1}. Skipping ...'.format(
-                        filename, destination))
-                    return
-                else:
-                    logger.info('{0} differs from {1} ...'.format(
-                        filename, destination))
-
-            logger.info(
-                'Copying {0} to {1} ...'.format(filename, output_dirpath))
-            shutil.copy(filepath, output_dirpath)
+        composer = self.composers.select_composer_for(filename)
+        composer.compose(self.template, filepath, output_dirpath)
 
     def _should_skip(self, filename):
         """Determine if the file type should be skipped."""
