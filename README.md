@@ -35,8 +35,8 @@ everything that it can find. When it encounters:
 Everything else
 ---------------
 
-All the other stuff you may interested in regarding `handroll` (e.g., writing
-a plugin for your favorite markup language) is found at [Read the
+All the other stuff you may be interested in regarding `handroll` (e.g.,
+writing a plugin for your favorite markup language) is found at [Read the
 Docs](http://handroll.readthedocs.org/en/latest/).
 
 [fury]: https://badge.fury.io/py/handroll.png
