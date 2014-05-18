@@ -57,3 +57,6 @@ docs/_build/
 
 # Handroll
 sample/output/
+
+# docs
+docs/_build

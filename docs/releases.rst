@@ -9,6 +9,7 @@ Version 1.1, Released ????? 2014
 * All input and output is handled as UTF-8 for better character encoding.
 * Run against Python versions 2.6 through 3.4 using Travis CI.
 * Add a plugin architecture to support composers for any file type.
+* Provide HTML docs at Read the Docs.
 
 Version 1.0, Released May 2014
 ------------------------------

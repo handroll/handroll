@@ -11,7 +11,7 @@ import sys
 __version__ = '1.1'
 
 if __name__ == '__main__':
-    with open('releases.rst', 'r') as f:
+    with open('docs/releases.rst', 'r') as f:
         releases = f.read()
 
     long_description = __doc__ + '\n\n' + releases
@@ -27,6 +27,7 @@ if __name__ == '__main__':
         install_requires.extend([
             'coverage',
             'nose',
+            'Sphinx',
             'tox',
         ])
 
