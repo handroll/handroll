@@ -12,6 +12,7 @@ except ImportError:
 try:
     import textile
 except ImportError:
+    # FIXME: textile not supported on Python 3.
     pass
 
 from handroll import logger
@@ -30,7 +31,8 @@ class TextileComposer(Composer):
         """Compose an HTML document by generating HTML from the Textile source
         file, merging it with the template, and write the result to output
         directory."""
-        if sys.version_info.major == 3:
+        # Python 2.6 does not recognize the `major` attribute of version info.
+        if sys.version_info[0] == 3:
             logger.error('Sorry. Textile does not yet support Python 3.')
             return
 

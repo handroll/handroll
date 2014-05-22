@@ -31,6 +31,9 @@ everything that it can find. When it encounters:
     will become the `title`, and the remainder will be converted from Markdown
     into HTML to become the `content`. `title` and `content` will be combined
     with `template.html` to produce the final HTML file.
+3.  any other "known" extension will be handled by a corresponding composer
+    (e.g., `.textile` will produce HTML as well). See the docs for the full
+    list of known file types.
 
 Everything else
 ---------------
