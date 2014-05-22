@@ -1,0 +1,10 @@
+Sample Textile page
+
+h2. A section heading
+
+This is a _textile_ paragraph.
+
+A list:
+
+* bullet 1
+* bullet 2

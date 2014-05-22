@@ -10,6 +10,7 @@ Version 1.1, Released ????? 2014
 * Run against Python versions 2.6 through 3.4 using Travis CI.
 * Add a plugin architecture to support composers for any file type.
 * Provide HTML docs at Read the Docs.
+* Textile support for ``.textile`` files.
 
 Version 1.0, Released May 2014
 ------------------------------

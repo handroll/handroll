@@ -20,6 +20,7 @@ if __name__ == '__main__':
         'argparse',
         'Markdown',
         'Pygments',
+        'textile',
     ]
 
     # Add some developer tools.
@@ -45,6 +46,7 @@ if __name__ == '__main__':
             'console_scripts': ['handroll = handroll.command:main'],
             'handroll.composers': [
                 '.md = handroll.composers:MarkdownComposer',
+                '.textile = handroll.composers.txt:TextileComposer',
             ]
         },
         include_package_data=True,

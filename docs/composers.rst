@@ -37,3 +37,12 @@ the ``.foobar`` file extension would need the following entry point.
            '.foobar = another.package:FoobarComposer',
        ]
    }
+
+Built-in composers
+==================
+
+.. autoclass:: handroll.composers.CopyComposer
+
+.. autoclass:: handroll.composers.MarkdownComposer
+
+.. autoclass:: handroll.composers.txt.TextileComposer
