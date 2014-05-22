@@ -3,12 +3,16 @@
 import io
 import os
 import shutil
+import sys
 try:
     from html import escape
 except ImportError:
     from cgi import escape
 
-import textile
+try:
+    import textile
+except ImportError:
+    pass
 
 from handroll import logger
 from handroll.composers import Composer
@@ -26,6 +30,10 @@ class TextileComposer(Composer):
         """Compose an HTML document by generating HTML from the Textile source
         file, merging it with the template, and write the result to output
         directory."""
+        if sys.version_info.major == 3:
+            logger.error('Sorry. Textile does not yet support Python 3.')
+            return
+
         logger.info('Generating HTML for {0} ...'.format(source_file))
 
         # Read the Textile source to extract the title and content.

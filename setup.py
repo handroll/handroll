@@ -74,7 +74,8 @@ if __name__ == '__main__':
             'Topic :: Text Processing :: Markup :: HTML',
         ],
         keywords=[
-            'Markdown',
             'generator',
+            'Markdown',
+            'Textile',
         ],
     )
