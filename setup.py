@@ -18,6 +18,7 @@ if __name__ == '__main__':
 
     install_requires = [
         'argparse',
+        'docutils',
         'Markdown',
         'Pygments',
         'textile',
@@ -26,7 +27,6 @@ if __name__ == '__main__':
     # Add some developer tools.
     if 'develop' in sys.argv:
         install_requires.extend([
-            'coverage',
             'nose',
             'Sphinx',
             'tox',
@@ -46,6 +46,7 @@ if __name__ == '__main__':
             'console_scripts': ['handroll = handroll.command:main'],
             'handroll.composers': [
                 '.md = handroll.composers:MarkdownComposer',
+                '.rst = handroll.composers.rst:ReStructuredTextComposer',
                 '.textile = handroll.composers.txt:TextileComposer',
             ]
         },
@@ -76,6 +77,7 @@ if __name__ == '__main__':
         keywords=[
             'generator',
             'Markdown',
+            'ReStructuredText',
             'Textile',
         ],
     )

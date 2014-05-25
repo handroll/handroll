@@ -8,18 +8,14 @@ try:
 except ImportError:
     from cgi import escape
 
-try:
-    import textile
-except ImportError:
-    # FIXME: textile not supported on Python 3.
-    pass
+from docutils.core import publish_parts
 
 from handroll import logger
 from handroll.composers import Composer
 
 
-class TextileComposer(Composer):
-    """Compose HTML from Textile files (``.textile``).
+class ReStructuredTextComposer(Composer):
+    """Compose HTML from ReStructuredText files (``.rst``).
 
     The first line of the file will be used as the ``title`` data for the
     template. All following lines will be converted to HTML and sent to the
@@ -27,23 +23,19 @@ class TextileComposer(Composer):
     """
 
     def compose(self, template, source_file, out_dir):
-        """Compose an HTML document by generating HTML from the Textile source
-        file, merging it with the template, and write the result to output
-        directory."""
-        # Python 2.6 does not recognize the `major` attribute of version info.
-        if sys.version_info[0] == 3:
-            logger.error('Sorry. Textile does not yet support Python 3.')
-            return
-
+        """Compose an HTML document by generating HTML from the
+        ReStructuredText source file, merging it with the template, and write
+        the result to output directory."""
         logger.info('Generating HTML for {0} ...'.format(source_file))
 
-        # Read the Textile source to extract the title and content.
+        # Read the ReStructuredText source to extract the title and content.
         data = {}
         with io.open(source_file, 'r', encoding='utf-8') as f:
             # The title is expected to be on the first line.
             data['title'] = escape(f.readline().strip())
             source = f.read()
-            data['content'] = textile.textile(source)
+            data['content'] = publish_parts(
+                source, writer_name='html')['html_body']
 
         # Merge the data with the template and write it to the out directory.
         root, _ = os.path.splitext(os.path.basename(source_file))

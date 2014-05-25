@@ -11,6 +11,7 @@ Version 1.1, Released ????? 2014
 * Add a plugin architecture to support composers for any file type.
 * Provide HTML docs at Read the Docs.
 * Textile support for ``.textile`` files.
+* ReStructuredText support for ``.rst`` files.
 
 Version 1.0, Released May 2014
 ------------------------------

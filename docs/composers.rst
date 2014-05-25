@@ -45,4 +45,6 @@ Built-in composers
 
 .. autoclass:: handroll.composers.MarkdownComposer
 
+.. autoclass:: handroll.composers.rst.ReStructuredTextComposer
+
 .. autoclass:: handroll.composers.txt.TextileComposer
