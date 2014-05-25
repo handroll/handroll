@@ -72,7 +72,40 @@ class CopyComposer(Composer):
         shutil.copy(source_file, out_dir)
 
 
-class MarkdownComposer(Composer):
+class GenericHTMLComposer(Composer):
+    """A template class that performs basic handling on a source file
+
+    The title will be extracted from the first line and the remaining source
+    lines will be passed to the template method for further processing.
+    """
+
+    def compose(self, template, source_file, out_dir):
+        """Compose an HTML document by generating HTML from the source
+        file, merging it with the template, and write the result to output
+        directory."""
+        logger.info('Generating HTML for {0} ...'.format(source_file))
+
+        # Read the source to extract the title and content.
+        data = {}
+        with io.open(source_file, 'r', encoding='utf-8') as f:
+            # The title is expected to be on the first line.
+            data['title'] = escape(f.readline().strip())
+            source = f.read()
+            data['content'] = self._generate_content(source)
+
+        # Merge the data with the template and write it to the out directory.
+        root, _ = os.path.splitext(os.path.basename(source_file))
+        output_file = os.path.join(out_dir, root + '.html')
+        with open(output_file, 'wb') as out:
+            out.write(template.safe_substitute(data).encode('utf-8'))
+            out.write(b'<!-- handrolled for excellence -->\n')
+
+    def _generate_content(self, source):
+        """Generate the content from the provided source data."""
+        raise NotImplementedError
+
+
+class MarkdownComposer(GenericHTMLComposer):
     """Compose HTML from Markdown files (``.md``).
 
     The first line of the file will be used as the ``title`` data for the
@@ -102,24 +135,6 @@ class MarkdownComposer(Composer):
         'fenced_code',
     ]
 
-    def compose(self, template, source_file, out_dir):
-        """Compose an HTML document by generating HTML from the Markdown source
-        file, merging it with the template, and write the result to output
-        directory."""
-        logger.info('Generating HTML for {0} ...'.format(source_file))
-
-        # Read the Markdown source to extract the title and content.
-        data = {}
-        with io.open(source_file, 'r', encoding='utf-8') as md:
-            # The title is expected to be on the first line.
-            data['title'] = escape(md.readline().strip())
-            source = md.read()
-            data['content'] = markdown.markdown(
-                source, extensions=self.EXTENSIONS, output_format='html5')
-
-        # Merge the data with the template and write it to the out directory.
-        root, _ = os.path.splitext(os.path.basename(source_file))
-        output_file = os.path.join(out_dir, root + '.html')
-        with open(output_file, 'wb') as out:
-            out.write(template.safe_substitute(data).encode('utf-8'))
-            out.write(b'<!-- handrolled for excellence -->\n')
+    def _generate_content(self, source):
+        return markdown.markdown(
+            source, extensions=self.EXTENSIONS, output_format='html5')
