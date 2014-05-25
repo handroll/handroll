@@ -1,7 +1,8 @@
 handroll - A website generator for software artisans
 ====================================================
 
-handroll is a static website generator that uses Markdown as the source format.
+handroll is a static website generator that uses markup languages like
+Markdown, ReStructuredText, and Textile.
 
 handroll development is on `GitHub <https://github.com/mblayman/handroll>`_.
 
