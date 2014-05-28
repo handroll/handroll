@@ -22,7 +22,8 @@ if __name__ == '__main__':
         'docutils',
         'Markdown',
         'Pygments',
-        'textile',
+        # TODO: textile 2.1.8 is broken for Python 3.2 so skip Py3 support.
+        'textile==2.1.5',
     ]
 
     # Add some developer tools.
