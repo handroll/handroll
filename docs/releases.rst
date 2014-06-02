@@ -12,9 +12,10 @@ Version 1.1, Released ????? 2014
 * Provide HTML docs at Read the Docs.
 * Textile support for ``.textile`` files.
 * ReStructuredText support for ``.rst`` files.
+* Support PyPy.
 
-Version 1.0, Released May 2014
-------------------------------
+Version 1.0, Released May 4, 2014
+---------------------------------
 
 * Initial release of ``handroll``
 * Copy all file types.
