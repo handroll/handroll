@@ -42,6 +42,9 @@ All the other stuff you may be interested in regarding `handroll` (e.g.,
 writing a plugin for your favorite markup language) is found at [Read the
 Docs](http://handroll.readthedocs.org/en/latest/).
 
+If you want to share some ideas or find announcements, check out the [Google
+Group](https://groups.google.com/forum/#!forum/handroll).
+
 [fury]: https://badge.fury.io/py/handroll.png
 [pypip]: https://pypip.in/d/handroll/badge.png
 [travis]: https://travis-ci.org/mblayman/handroll.png?branch=master

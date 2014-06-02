@@ -9,7 +9,7 @@ Markdown, ReStructuredText, and Textile.
 from setuptools import find_packages, setup
 import sys
 
-__version__ = '1.1'
+__version__ = '1.2'
 
 if __name__ == '__main__':
     with open('docs/releases.rst', 'r') as f:
