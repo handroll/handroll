@@ -23,7 +23,7 @@ class AtomComposer(Composer):
         logger.info('Generating Atom XML for {0} ...'.format(source_file))
         # TODO: Determine what the input file will look like (YAML? JSON?).
         try:
-            feed = AtomFeed('Dummy Title')
+            feed = AtomFeed('Dummy Title', id='temporary')
         except ValueError as error:
             logger.error('Invalid feed {0}: {1}'.format(
                 source_file, error.message))
