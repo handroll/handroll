@@ -2,7 +2,6 @@
 
 from docutils.core import publish_parts
 
-from handroll import logger
 from handroll.composers import GenericHTMLComposer
 
 

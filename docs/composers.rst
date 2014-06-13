@@ -41,6 +41,8 @@ the ``.foobar`` file extension would need the following entry point.
 Built-in composers
 ==================
 
+.. autoclass:: handroll.composers.atom.AtomComposer
+
 .. autoclass:: handroll.composers.CopyComposer
 
 .. autoclass:: handroll.composers.MarkdownComposer

@@ -24,6 +24,7 @@ if __name__ == '__main__':
         'Pygments',
         # TODO: textile 2.1.8 is broken for Python 3.2 so skip Py3 support.
         'textile==2.1.5',
+        'werkzeug',
     ]
 
     # Add some developer tools.
@@ -47,6 +48,7 @@ if __name__ == '__main__':
         entry_points={
             'console_scripts': ['handroll = handroll.command:main'],
             'handroll.composers': [
+                '.atom = handroll.composers.atom:AtomComposer',
                 '.md = handroll.composers:MarkdownComposer',
                 '.rst = handroll.composers.rst:ReStructuredTextComposer',
                 '.textile = handroll.composers.txt:TextileComposer',

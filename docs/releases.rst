@@ -1,6 +1,11 @@
 Releases
 ========
 
+Version 1.2, To Be Released
+---------------------------
+
+* Generate Atom feeds.
+
 Version 1.1, Released June 1, 2014
 ----------------------------------
 
