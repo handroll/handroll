@@ -1,5 +1,7 @@
 # Copyright (c) 2014, Matt Layman
 
+import io
+import json
 import os
 import sys
 
@@ -21,9 +23,11 @@ class AtomComposer(Composer):
 
     def compose(self, template, source_file, out_dir):
         logger.info('Generating Atom XML for {0} ...'.format(source_file))
-        # TODO: Determine what the input file will look like (YAML? JSON?).
+
         try:
-            feed = AtomFeed('Dummy Title', id='temporary')
+            with io.open(source_file, 'r', encoding='utf-8') as f:
+                metadata = json.loads(f.read())
+            feed = AtomFeed(**metadata)
         except ValueError as error:
             logger.error('Invalid feed {0}: {1}'.format(
                 source_file, error.message))
