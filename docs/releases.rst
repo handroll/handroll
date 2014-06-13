@@ -5,6 +5,7 @@ Version 1.2, To Be Released
 ---------------------------
 
 * Generate Atom feeds.
+* Drop 3.2 support. Too many dependencies do not support it.
 
 Version 1.1, Released June 1, 2014
 ----------------------------------
