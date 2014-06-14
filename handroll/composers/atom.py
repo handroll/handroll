@@ -1,11 +1,14 @@
 # Copyright (c) 2014, Matt Layman
 
+from datetime import datetime
 import io
 import json
 import os
 import sys
+import time
 
 from werkzeug.contrib.atom import AtomFeed
+from werkzeug.contrib.atom import FeedEntry
 
 from handroll import logger
 from handroll.composers import Composer
@@ -23,18 +26,49 @@ class AtomComposer(Composer):
 
     def compose(self, template, source_file, out_dir):
         logger.info('Generating Atom XML for {0} ...'.format(source_file))
-
-        try:
-            with io.open(source_file, 'r', encoding='utf-8') as f:
-                metadata = json.loads(f.read())
-            feed = AtomFeed(**metadata)
-        except ValueError as error:
-            logger.error('Invalid feed {0}: {1}'.format(
-                source_file, error.message))
-            sys.exit('Incomplete.')
+        feed = self._parse_feed(source_file)
 
         root, _ = os.path.splitext(os.path.basename(source_file))
         output_file = os.path.join(out_dir, root + '.xml')
         with open(output_file, 'wb') as out:
             out.write(feed.to_string().encode('utf-8'))
             out.write(b'<!-- handrolled for excellence -->\n')
+
+    def _parse_feed(self, source_file):
+        try:
+            with io.open(source_file, 'r', encoding='utf-8') as f:
+                metadata = json.loads(f.read())
+
+            if metadata.get('entries') is None:
+                raise ValueError('Missing entries list.')
+
+            entries = metadata['entries']
+            # AtomFeed expects FeedEntry objects for the entries keyword so
+            # remove it from the metadata and add it after the feed is built.
+            del metadata['entries']
+
+            feed = AtomFeed(**metadata)
+            # TODO: Will the feed sort by time or will that have to be manual?
+            [feed.add(self._make_entry(entry)) for entry in entries]
+        except ValueError as error:
+            logger.error('Invalid feed {0}: {1}'.format(
+                source_file, error.message))
+            sys.exit('Incomplete.')
+
+        return feed
+
+    def _make_entry(self, data):
+        # Convert dates into datetime instances.
+        if 'updated' in data:
+            data['updated'] = self._convert_date(data['updated'])
+
+        if 'published' in data:
+            data['published'] = self._convert_date(data['published'])
+
+        return FeedEntry(**data)
+
+    def _convert_date(self, date):
+        """Convert a date string into a datetime instance. Assumes date string
+        is RfC 3389 format."""
+        time_s = time.strptime(date, '%Y-%m-%dT%H:%M:%S')
+        return datetime.fromtimestamp(time.mktime(time_s))
