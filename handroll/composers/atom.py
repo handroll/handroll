@@ -24,7 +24,8 @@ class AtomComposer(Composer):
     options.
 
     The dates in the feed should be in `RfC 3339
-    <http://www.ietf.org/rfc/rfc3339.txt>`_ format (e.g., 2014-06-13T11:39:30).
+    <http://www.ietf.org/rfc/rfc3339.txt>`_ format (e.g.,
+    ``2014-06-13T11:39:30``).
     """
 
     def compose(self, template, source_file, out_dir):

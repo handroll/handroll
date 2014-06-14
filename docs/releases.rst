@@ -4,6 +4,7 @@ Releases
 Version 1.2, To Be Released
 ---------------------------
 
+* Update Textile version to enable Python 3 support.
 * Generate Atom feeds.
 * Drop 3.2 support. Too many dependencies do not support it.
 
