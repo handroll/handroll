@@ -22,6 +22,9 @@ class AtomComposer(Composer):
     by Werkzeug's ``AtomFeed`` API. Refer to the `Werkzeug documentation
     <http://werkzeug.pocoo.org/docs/contrib/atom/>`_ for all the available
     options.
+
+    The dates in the feed should be in `RfC 3339
+    <http://www.ietf.org/rfc/rfc3339.txt>`_ format (e.g., 2014-06-13T11:39:30).
     """
 
     def compose(self, template, source_file, out_dir):
@@ -48,7 +51,6 @@ class AtomComposer(Composer):
             del metadata['entries']
 
             feed = AtomFeed(**metadata)
-            # TODO: Will the feed sort by time or will that have to be manual?
             [feed.add(self._make_entry(entry)) for entry in entries]
         except ValueError as error:
             logger.error('Invalid feed {0}: {1}'.format(
