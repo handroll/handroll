@@ -32,7 +32,7 @@ everything that it can find. When it encounters:
     into HTML to become the `content`. `title` and `content` will be combined
     with `template.html` to produce the final HTML file.
 3.  any other "known" extension will be handled by a corresponding composer.
-    `handroll` works with Markdown, ReStructuredText, and Textile out of the
+    `handroll` works with Markdown, reStructuredText, and Textile out of the
     box.
 
 Everything else

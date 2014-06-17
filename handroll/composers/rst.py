@@ -6,7 +6,7 @@ from handroll.composers import GenericHTMLComposer
 
 
 class ReStructuredTextComposer(GenericHTMLComposer):
-    """Compose HTML from ReStructuredText files (``.rst``).
+    """Compose HTML from reStructuredText files (``.rst``).
 
     The first line of the file will be used as the ``title`` data for the
     template. All following lines will be converted to HTML and sent to the

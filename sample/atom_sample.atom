@@ -1,6 +1,26 @@
 {
-    "title": "Dummy Title",
-    "id": "temporary",
-    "entries": [
-    ]
+  "title": "Sample Feed",
+  "url": "http://some.website.com/archive.html",
+  "id": "http://some.website.com/feed.xml",
+  "author": "Matt Layman",
+  "entries": [
+    {
+      "title": "Sample C",
+      "updated": "2014-05-04T12:00:00",
+      "url": "http://some.website.com/c.html",
+      "summary": "A summary of the sample post"
+    },
+    {
+      "title": "Sample B",
+      "updated": "2014-03-17T12:00:00",
+      "url": "http://some.website.com/b.html",
+      "summary": "A summary of the sample post"
+    },
+    {
+      "title": "Sample A",
+      "updated": "2014-02-23T00:00:00",
+      "url": "http://some.website.com/a.html",
+      "summary": "A summary of the sample post"
+    }
+  ]
 }
