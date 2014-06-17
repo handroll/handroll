@@ -46,6 +46,7 @@ what handroll is capable of doing.
   <http://en.wikipedia.org/wiki/Atom_%28standard%29>`_ feed from metadata
   stored in JSON.
 * Be extensible for users who want to write their own plugins.
+* Provide timing information to see file processing time.
 
 The remaining documentation provides additional details about all listed
 features.

@@ -18,6 +18,8 @@ def main():
         ' update if it already exists')
     parser.add_argument(
         '-v', '--verbose', action='store_true', help='use verbose messages')
+    parser.add_argument(
+        '-t', '--timing', action='store_true', help='time the execution')
     args = parser.parse_args()
 
     if args.verbose:
@@ -27,5 +29,5 @@ def main():
     if not site.is_valid():
         sys.exit('Incomplete.')
 
-    site.generate(args.outdir)
+    site.generate(args.outdir, args.timing)
     print('Complete.')

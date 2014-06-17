@@ -4,6 +4,7 @@
 import os
 import shutil
 from string import Template
+import time
 
 from handroll import logger
 from handroll.composers import Composers
@@ -39,7 +40,7 @@ class Site(object):
 
         return self._template
 
-    def generate(self, outdir):
+    def generate(self, outdir, timing):
         """Walk the site tree and generate the output."""
         self._clean_output()
 
@@ -47,7 +48,7 @@ class Site(object):
         if outdir is None:
             outdir = self.output_root
 
-        self._generate_output(outdir)
+        self._generate_output(outdir, timing)
 
     def is_valid(self):
         if not os.path.isdir(self.path):
@@ -65,7 +66,7 @@ class Site(object):
             logger.info('Removing the old {0} ...'.format(self.output_root))
             shutil.rmtree(self.output_root)
 
-    def _generate_output(self, outdir):
+    def _generate_output(self, outdir, timing):
         if os.path.exists(outdir):
             logger.info('Updating {0} ...'.format(outdir))
         else:
@@ -96,7 +97,7 @@ class Site(object):
 
             for filename in filenames:
                 filepath = os.path.join(dirpath, filename)
-                self._process_file(filepath, output_dirpath)
+                self._process_file(filepath, output_dirpath, timing)
 
     def _get_output_dirpath(self, dirpath, outdir):
         """Convert an input directory path rooted at the site path into the
@@ -110,14 +111,22 @@ class Site(object):
         else:
             return outdir
 
-    def _process_file(self, filepath, output_dirpath):
+    def _process_file(self, filepath, output_dirpath, timing):
         """Process the file according to its type."""
         filename = os.path.basename(filepath)
         if self._should_skip(filename):
             return
 
+        if timing:
+            start = time.time()
+
         composer = self.composers.select_composer_for(filename)
         composer.compose(self.template, filepath, output_dirpath)
+
+        if timing:
+            end = time.time()
+            # Put at warn level to be independent of the verbose option.
+            logger.warn('[{:.3f}s]'.format(end - start))
 
     def _should_skip(self, filename):
         """Determine if the file type should be skipped."""
