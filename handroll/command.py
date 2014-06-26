@@ -6,13 +6,14 @@ import logging
 import sys
 
 from handroll import logger
+from handroll.exceptions import AbortError
 from handroll.site import Site
 
 
 def main():
     description = 'A website generator for software artisans'
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('site', help='the path to your website')
+    parser.add_argument('site', nargs='?', help='the path to your website')
     parser.add_argument(
         'outdir', nargs='?', help='an optional output directory to create or'
         ' update if it already exists')
@@ -25,9 +26,14 @@ def main():
     if args.verbose:
         logger.setLevel(logging.INFO)
 
-    site = Site(args.site)
-    if not site.is_valid():
-        sys.exit('Incomplete.')
+    try:
+        site = Site(args.site)
+        valid, message = site.is_valid()
+        if not valid:
+            raise AbortError('Invalid site source: {0}'.format(message))
 
-    site.generate(args.outdir, args.timing)
-    print('Complete.')
+        site.generate(args.outdir, args.timing)
+        print('Complete.')
+    except AbortError as abort:
+        logger.error(abort.message)
+        sys.exit('Incomplete.')

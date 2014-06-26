@@ -8,6 +8,7 @@ import time
 
 from handroll import logger
 from handroll.composers import Composers
+from handroll.exceptions import AbortError
 
 
 class Site(object):
@@ -18,8 +19,11 @@ class Site(object):
         '.swp',
     ]
 
-    def __init__(self, path):
+    def __init__(self, path=None):
         self.path = path
+        if self.path is None:
+            self.path = self._find_site_root_from(os.getcwd())
+
         self.composers = Composers()
         self._template = None
 
@@ -52,19 +56,46 @@ class Site(object):
 
     def is_valid(self):
         if not os.path.isdir(self.path):
-            print('{0} is not a directory.'.format(self.path))
-            return False
+            return False, '{0} is not a directory.'.format(self.path)
 
         if not os.path.exists(self.template_name):
-            print('{0} is missing.'.format(self.template_name))
-            return False
+            return False, '{0} is missing.'.format(self.template_name)
 
-        return True
+        return True, ''
 
     def _clean_output(self):
         if os.path.exists(self.output_root):
             logger.info('Removing the old {0} ...'.format(self.output_root))
             shutil.rmtree(self.output_root)
+
+    def _find_site_root_from(self, cwd):
+        """Ascend through the current working directory provided to find
+        something that looks like the root of a handroll site and return that
+        path. Assumes that ``cwd`` is a valid directory path."""
+        candidate = cwd
+        while True:
+            if self._is_site_root(candidate):
+                return candidate
+
+            parent = os.path.realpath(os.path.join(candidate, os.pardir))
+            if candidate == parent:
+                # When the next candidate is equal to the previous one, then
+                # the root of the filesystem has been reached and tested.
+                break
+
+            candidate = parent
+
+        raise AbortError(
+            'A handroll site was not found in {0}'
+            ' or any of its parents.'.format(cwd))
+
+    def _is_site_root(self, path):
+        """Check if the path provided is the handroll site's root."""
+        # It looks like a site root if it has a template.
+        if os.path.exists(os.path.join(path, self.TEMPLATE)):
+            return True
+
+        return False
 
     def _generate_output(self, outdir, timing):
         if os.path.exists(outdir):
