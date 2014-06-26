@@ -47,6 +47,9 @@ what handroll is capable of doing.
   stored in JSON.
 * Be extensible for users who want to write their own plugins.
 * Provide timing information to see file processing time.
+* Find the site source root so you don't have to. If you're anywhere in your
+  site's source, calling ``handroll`` without the site input parameter will
+  trigger handroll to look for your site's root directory.
 
 The remaining documentation provides additional details about all listed
 features.
