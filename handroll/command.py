@@ -6,6 +6,7 @@ import logging
 import sys
 
 from handroll import logger
+from handroll.configuration import build_config
 from handroll.exceptions import AbortError
 from handroll.site import Site
 
@@ -32,7 +33,8 @@ def main():
         if not valid:
             raise AbortError('Invalid site source: {0}'.format(message))
 
-        site.generate(args.outdir, args.timing)
+        config = build_config(site.config_file, args)
+        site.generate(config)
         print('Complete.')
     except AbortError as abort:
         logger.error(abort.message)

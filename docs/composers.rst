@@ -1,3 +1,5 @@
+.. _composers:
+
 Composers
 =========
 

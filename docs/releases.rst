@@ -4,6 +4,7 @@ Releases
 Version 1.2, To Be Released
 ---------------------------
 
+* Add a basic configuration file to specify the output directory.
 * A search for the site root is done when no site path is provided.
 * Add timing reporting to find slow composers.
 * Update Textile version to enable Python 3 support.

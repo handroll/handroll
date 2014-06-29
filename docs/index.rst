@@ -4,7 +4,8 @@ handroll - A website generator for software artisans
 handroll is a static website generator that uses markup languages like
 Markdown, reStructuredText, and Textile.
 
-handroll development is on `GitHub <https://github.com/mblayman/handroll>`_.
+handroll development is done on `GitHub
+<https://github.com/mblayman/handroll>`_.
 
 Installation
 ------------
@@ -20,13 +21,13 @@ handroll is currently supported on Python 2.6, 2.7, 3.3, 3.4, and PyPy.
 Usage
 -----
 
-When ``site`` is the source of a website, the following command will generate
-results and store them in ``site/output``. Use ``handroll -h`` to see all the
+When inside a website's source directory, the following command will generate
+results and store them in ``output``. Use ``handroll -h`` to see all the
 options.
 
 .. code-block:: bash
 
-    $ handroll site
+    $ handroll
     Complete.
 
 Features
@@ -45,11 +46,15 @@ what handroll is capable of doing.
 * Generate a proper `Atom XML
   <http://en.wikipedia.org/wiki/Atom_%28standard%29>`_ feed from metadata
   stored in JSON.
-* Be extensible for users who want to write their own plugins.
+* Be extensible for users who want to write their own plugins (see
+  :ref:`composers`).
 * Provide timing information to see file processing time.
 * Find the site source root so you don't have to. If you're anywhere in your
   site's source, calling ``handroll`` without the site input parameter will
   trigger handroll to look for your site's root directory.
+* Store global configuration in a configuration file (see
+  :ref:`configuration`). You'll never need to specify the output directory
+  again.
 
 The remaining documentation provides additional details about all listed
 features.
@@ -58,7 +63,8 @@ Documentation
 -------------
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
-   composers
-   releases
+    configuration
+    composers
+    releases

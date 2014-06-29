@@ -1,6 +1,7 @@
 # Copyright (c) 2014, Matt Layman
 '''
-handroll development is on `GitHub <https://github.com/mblayman/handroll>`_.
+handroll development is done on `GitHub
+<https://github.com/mblayman/handroll>`_.
 
 handroll is a static website generator that uses markup languages like
 Markdown, ReStructuredText, and Textile.

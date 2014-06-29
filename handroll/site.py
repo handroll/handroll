@@ -13,10 +13,14 @@ from handroll.exceptions import AbortError
 
 class Site(object):
 
+    CONFIG = 'handroll.conf'
     OUTPUT = 'output'
     TEMPLATE = 'template.html'
     SKIP_EXTENSION = [
         '.swp',
+    ]
+    SKIP_FILES = [
+        CONFIG,
     ]
 
     def __init__(self, path=None):
@@ -26,6 +30,10 @@ class Site(object):
 
         self.composers = Composers()
         self._template = None
+
+    @property
+    def config_file(self):
+        return os.path.join(self.path, self.CONFIG)
 
     @property
     def output_root(self):
@@ -44,15 +52,17 @@ class Site(object):
 
         return self._template
 
-    def generate(self, outdir, timing):
+    def generate(self, config):
         """Walk the site tree and generate the output."""
         self._clean_output()
 
         # When no output directory is given, the default will be used.
-        if outdir is None:
+        if config.outdir is None:
             outdir = self.output_root
+        else:
+            outdir = config.outdir
 
-        self._generate_output(outdir, timing)
+        self._generate_output(outdir, config.timing)
 
     def is_valid(self):
         if not os.path.isdir(self.path):
@@ -91,8 +101,11 @@ class Site(object):
 
     def _is_site_root(self, path):
         """Check if the path provided is the handroll site's root."""
+        # It looks like a site root if it has the config file.
+        if os.path.exists(os.path.join(path, self.CONFIG)):
+            return True
         # It looks like a site root if it has a template.
-        if os.path.exists(os.path.join(path, self.TEMPLATE)):
+        elif os.path.exists(os.path.join(path, self.TEMPLATE)):
             return True
 
         return False
@@ -166,6 +179,11 @@ class Site(object):
                 logger.info(
                     'Skipping {0} with skipped file type \'{1}\' ...'.format(
                         filename, skip_type))
+                return True
+
+        for skip_file in self.SKIP_FILES:
+            if filename.endswith(skip_file):
+                logger.info('Skipping special file {0} ...'.format(filename))
                 return True
 
         return False
