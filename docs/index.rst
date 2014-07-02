@@ -5,7 +5,8 @@ handroll is a static website generator that uses markup languages like
 Markdown, reStructuredText, and Textile.
 
 handroll development is done on `GitHub
-<https://github.com/mblayman/handroll>`_.
+<https://github.com/mblayman/handroll>`_. Announcements and discussions happen
+on `Google Groups <https://groups.google.com/forum/#!forum/handroll>`_.
 
 Installation
 ------------

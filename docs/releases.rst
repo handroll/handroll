@@ -1,8 +1,8 @@
 Releases
 ========
 
-Version 1.2, To Be Released
----------------------------
+Version 1.2, July 2, 2014
+-------------------------
 
 * Add a basic configuration file to specify the output directory.
 * A search for the site root is done when no site path is provided.

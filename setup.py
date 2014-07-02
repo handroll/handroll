@@ -1,7 +1,8 @@
 # Copyright (c) 2014, Matt Layman
 '''
 handroll development is done on `GitHub
-<https://github.com/mblayman/handroll>`_.
+<https://github.com/mblayman/handroll>`_. Announcements and discussions happen
+on `Google Groups <https://groups.google.com/forum/#!forum/handroll>`_.
 
 handroll is a static website generator that uses markup languages like
 Markdown, ReStructuredText, and Textile.
