@@ -3,6 +3,7 @@
 import filecmp
 import io
 import os
+import re
 import shutil
 try:
     from html import escape
@@ -11,6 +12,7 @@ except ImportError:
 
 import markdown
 from pkg_resources import iter_entry_points
+import yaml
 
 from handroll import logger
 
@@ -79,19 +81,21 @@ class GenericHTMLComposer(Composer):
     lines will be passed to the template method for further processing.
     """
 
+    # A pattern to get source content from a file with YAML front matter.
+    yaml_scanner = re.compile(r""".*    # YAML header
+                                  ---
+                                  .*    # front matter
+                                  ---\n
+                                  (?P<markup>.*)""",
+                              re.DOTALL | re.VERBOSE)
+
     def compose(self, template, source_file, out_dir):
         """Compose an HTML document by generating HTML from the source
         file, merging it with the template, and write the result to output
         directory."""
         logger.info('Generating HTML for {0} ...'.format(source_file))
 
-        # Read the source to extract the title and content.
-        data = {}
-        with io.open(source_file, 'r', encoding='utf-8') as f:
-            # The title is expected to be on the first line.
-            data['title'] = escape(f.readline().strip())
-            source = f.read()
-            data['content'] = self._generate_content(source)
+        data = self._get_data(source_file)
 
         # Merge the data with the template and write it to the out directory.
         root, _ = os.path.splitext(os.path.basename(source_file))
@@ -103,6 +107,37 @@ class GenericHTMLComposer(Composer):
     def _generate_content(self, source):
         """Generate the content from the provided source data."""
         raise NotImplementedError
+
+    def _get_data(self, source_file):
+        """Get data from the source file to pass to the template."""
+        data = {}
+        with io.open(source_file, 'r', encoding='utf-8') as f:
+            # The first line determines whether to look for front matter.
+            first = f.readline().strip()
+            source = f.read()
+
+            if self._has_frontmatter(first):
+                documents = yaml.load_all(source)
+                data = next(documents)
+                if 'title' in data:
+                    data['title'] = escape(data['title'])
+
+                # Don't pass all file content to the composer. Find the markup.
+                match = re.search(self.yaml_scanner, source)
+                if match:
+                    source = match.group('markup')
+            else:
+                # This is a plain file so pull title from the first line.
+                data['title'] = escape(first)
+
+            data['content'] = self._generate_content(source)
+
+        return data
+
+    def _has_frontmatter(self, first_line):
+        """Check if the document has any front matter. handroll only supports
+        front matter from YAML documents."""
+        return first_line.startswith('%YAML')
 
 
 class MarkdownComposer(GenericHTMLComposer):
