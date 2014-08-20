@@ -29,6 +29,7 @@ class Site(object):
             self.path = self._find_site_root_from(os.getcwd())
 
         self.composers = Composers()
+        # TODO: Hook the template catalog in and remove the old template stuff.
         self._template = None
 
     @property
