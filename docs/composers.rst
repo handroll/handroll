@@ -20,12 +20,12 @@ point in ``setup.py`` as:
 
    entry_points={
        'handroll.composers': [
-           '.md = handroll.composers:MarkdownComposer',
+           '.md = handroll.composers.md:MarkdownComposer',
        ]
    }
 
 This entry point registers the ``MarkdownComposer`` class in the
-``handroll.composers`` module for the ``.md`` file extension. The example is
+``handroll.composers.md`` module for the ``.md`` file extension. The example is
 slightly confusing because the entry point name and the package are the same so
 here is a fictious example.
 
@@ -47,7 +47,7 @@ Built-in composers
 
 .. autoclass:: handroll.composers.CopyComposer
 
-.. autoclass:: handroll.composers.MarkdownComposer
+.. autoclass:: handroll.composers.md.MarkdownComposer
 
 .. autoclass:: handroll.composers.rst.ReStructuredTextComposer
 

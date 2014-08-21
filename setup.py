@@ -51,7 +51,7 @@ if __name__ == '__main__':
             'console_scripts': ['handroll = handroll.command:main'],
             'handroll.composers': [
                 '.atom = handroll.composers.atom:AtomComposer',
-                '.md = handroll.composers:MarkdownComposer',
+                '.md = handroll.composers.md:MarkdownComposer',
                 '.rst = handroll.composers.rst:ReStructuredTextComposer',
                 '.textile = handroll.composers.txt:TextileComposer',
             ]
