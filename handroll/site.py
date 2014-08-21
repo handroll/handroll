@@ -151,7 +151,7 @@ class Site(object):
             start = time.time()
 
         composer = self.composers.select_composer_for(filename)
-        composer.compose(self.catalog.default, filepath, output_dirpath)
+        composer.compose(self.catalog, filepath, output_dirpath)
 
         if timing:
             end = time.time()
