@@ -101,7 +101,7 @@ class GenericHTMLComposer(Composer):
         root, _ = os.path.splitext(os.path.basename(source_file))
         output_file = os.path.join(out_dir, root + '.html')
         with open(output_file, 'wb') as out:
-            out.write(template.safe_substitute(data).encode('utf-8'))
+            out.write(template.render(data).encode('utf-8'))
             out.write(b'<!-- handrolled for excellence -->\n')
 
     def _generate_content(self, source):

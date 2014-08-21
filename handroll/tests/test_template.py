@@ -36,5 +36,5 @@ class TestTemplateCatalog(unittest.TestCase):
         catalog = self._make_one()
 
         def get_default():  # Function hack to test property exception
-            template = catalog.default
+            catalog.default
         self.assertRaises(AbortError, get_default)

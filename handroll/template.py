@@ -9,11 +9,12 @@ from handroll.exceptions import AbortError
 
 class TemplateCatalog(object):
 
-    TEMPLATE = 'template.html'
+    DEFAULT_TEMPLATE = 'template.html'
 
     def __init__(self, site_path):
         self.site_path = site_path
-        self._default_template_path = os.path.join(site_path, self.TEMPLATE)
+        self._default_template_path = os.path.join(site_path,
+                                                   self.DEFAULT_TEMPLATE)
         self._default = None
         self._templates = {}
 
@@ -46,3 +47,14 @@ class StringTemplate(Template):
 
     def render(self, context):
         return self._template.safe_substitute(context)
+
+
+def has_templates(site_path):
+    """Check if the site path has any templates."""
+    default_template_path = os.path.join(site_path,
+                                         TemplateCatalog.DEFAULT_TEMPLATE)
+    if os.path.exists(default_template_path):
+        return True
+
+    # TODO: Add check for templates directory as an alternative.
+    return False

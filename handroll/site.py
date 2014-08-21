@@ -3,10 +3,10 @@
 
 import os
 import shutil
-from string import Template
 import time
 
 from handroll import logger
+from handroll import template
 from handroll.composers import Composers
 from handroll.exceptions import AbortError
 
@@ -15,7 +15,6 @@ class Site(object):
 
     CONFIG = 'handroll.conf'
     OUTPUT = 'output'
-    TEMPLATE = 'template.html'
     SKIP_EXTENSION = [
         '.swp',
     ]
@@ -28,9 +27,8 @@ class Site(object):
         if self.path is None:
             self.path = self._find_site_root_from(os.getcwd())
 
+        self.catalog = template.TemplateCatalog(self.path)
         self.composers = Composers()
-        # TODO: Hook the template catalog in and remove the old template stuff.
-        self._template = None
 
     @property
     def config_file(self):
@@ -40,18 +38,6 @@ class Site(object):
     def output_root(self):
         """The default output root directory"""
         return os.path.join(self.path, self.OUTPUT)
-
-    @property
-    def template_name(self):
-        return os.path.join(self.path, self.TEMPLATE)
-
-    @property
-    def template(self):
-        if self._template is None:
-            with open(self.template_name, 'r') as t:
-                self._template = Template(t.read())
-
-        return self._template
 
     def generate(self, config):
         """Walk the site tree and generate the output."""
@@ -68,9 +54,6 @@ class Site(object):
     def is_valid(self):
         if not os.path.isdir(self.path):
             return False, '{0} is not a directory.'.format(self.path)
-
-        if not os.path.exists(self.template_name):
-            return False, '{0} is missing.'.format(self.template_name)
 
         return True, ''
 
@@ -105,8 +88,8 @@ class Site(object):
         # It looks like a site root if it has the config file.
         if os.path.exists(os.path.join(path, self.CONFIG)):
             return True
-        # It looks like a site root if it has a template.
-        elif os.path.exists(os.path.join(path, self.TEMPLATE)):
+        # It looks like a site root if it has templates.
+        elif template.has_templates(path):
             return True
 
         return False
@@ -122,12 +105,14 @@ class Site(object):
             # Do not walk the output.
             if dirpath.startswith(outdir):
                 continue
+            # TODO: Guard against working in the templates directory.
 
             # Prevent work on the output directory.
             # Skip the template.
             if dirpath == self.path:
                 dirnames = [name for name in dirnames if name != self.OUTPUT]
-                filenames = [f for f in filenames if f != self.TEMPLATE]
+                filenames = [
+                    f for f in filenames if f != self.catalog.DEFAULT_TEMPLATE]
 
             output_dirpath = self._get_output_dirpath(dirpath, outdir)
             logger.info('Populating {0} ...'.format(output_dirpath))
@@ -166,7 +151,7 @@ class Site(object):
             start = time.time()
 
         composer = self.composers.select_composer_for(filename)
-        composer.compose(self.template, filepath, output_dirpath)
+        composer.compose(self.catalog.default, filepath, output_dirpath)
 
         if timing:
             end = time.time()
