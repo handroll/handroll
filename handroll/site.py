@@ -105,12 +105,12 @@ class Site(object):
             # Do not walk the output.
             if dirpath.startswith(outdir):
                 continue
-            # TODO: Guard against working in the templates directory.
 
             # Prevent work on the output directory.
             # Skip the template.
             if dirpath == self.path:
-                dirnames = [name for name in dirnames if name != self.OUTPUT]
+                dirnames = [name for name in dirnames if name != self.OUTPUT
+                            and name != self.catalog.TEMPLATES_DIR]
                 filenames = [
                     f for f in filenames if f != self.catalog.DEFAULT_TEMPLATE]
 

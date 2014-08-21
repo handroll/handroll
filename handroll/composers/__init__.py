@@ -95,13 +95,17 @@ class GenericHTMLComposer(Composer):
         logger.info('Generating HTML for {0} ...'.format(source_file))
 
         data = self._get_data(source_file)
-        # TODO: check if template was in frontmatter.
+
+        # Select the template.
+        template = catalog.default
+        if 'template' in data:
+            template = catalog.get_template(data['template'])
 
         # Merge the data with the template and write it to the out directory.
         root, _ = os.path.splitext(os.path.basename(source_file))
         output_file = os.path.join(out_dir, root + '.html')
         with open(output_file, 'wb') as out:
-            out.write(catalog.default.render(data).encode('utf-8'))
+            out.write(template.render(data).encode('utf-8'))
             out.write(b'<!-- handrolled for excellence -->\n')
 
     def _generate_content(self, source):
