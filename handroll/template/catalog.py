@@ -5,15 +5,10 @@ import os
 import string
 
 from handroll.exceptions import AbortError
+from handroll.template.j2 import JinjaTemplateBuilder
 
 
 class Template(object):
-
-    def __init__(self, template_path):
-        """Construct a template from the given path.
-
-        :param template_path: The path to the template source
-        """
 
     def render(self, context):
         """Render the context as a string in whatever manner is appropriate."""
@@ -39,17 +34,22 @@ class TemplateCatalog(object):
 
     DEFAULT_TEMPLATE = 'template.html'
     TEMPLATES_DIR = 'templates'
-    TEMPLATE_TYPES = {
-        '.html': StringTemplate
-    }
 
-    def __init__(self, site_path):
+    def __init__(self, site_path, builders=None):
         self.site_path = site_path
         self._default_template_path = os.path.join(site_path,
                                                    self.DEFAULT_TEMPLATE)
         self._default = None
         self.templates_path = os.path.join(site_path, self.TEMPLATES_DIR)
         self._templates = {}
+        self._builders = builders
+        if builders is None:
+            # Set default builders.
+            self._jinja_builder = JinjaTemplateBuilder(self.templates_path)
+            self._builders = {
+                '.html': StringTemplate,
+                '.j2': self._jinja_builder.build
+            }
 
     @property
     def default(self):
@@ -75,23 +75,9 @@ class TemplateCatalog(object):
 
     def _build_template(self, template_path):
         """Build a template. Abort if unknown type."""
-        for extension, template_type in self.TEMPLATE_TYPES.items():
+        for extension, template_builder in self._builders.items():
             if template_path.endswith(extension):
-                return template_type(template_path)
+                return template_builder(template_path)
 
         raise AbortError('Unknown template type provided for {0}.'.format(
             template_path))
-
-
-def has_templates(site_path):
-    """Check if the site path has any templates."""
-    default_template_path = os.path.join(site_path,
-                                         TemplateCatalog.DEFAULT_TEMPLATE)
-    if os.path.exists(default_template_path):
-        return True
-
-    templates_path = os.path.join(site_path, TemplateCatalog.TEMPLATES_DIR)
-    if os.path.exists(templates_path):
-        return True
-
-    return False

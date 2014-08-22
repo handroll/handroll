@@ -22,6 +22,7 @@ if __name__ == '__main__':
     install_requires = [
         'argparse',
         'docutils',
+        'Jinja2',
         'Markdown',
         'Pygments',
         'PyYAML',

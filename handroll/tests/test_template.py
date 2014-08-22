@@ -5,8 +5,8 @@ import tempfile
 import unittest
 
 from handroll.exceptions import AbortError
-from handroll.template import StringTemplate
-from handroll.template import TemplateCatalog
+from handroll.template.catalog import StringTemplate
+from handroll.template.catalog import TemplateCatalog
 
 
 class TestTemplateCatalog(unittest.TestCase):
@@ -26,8 +26,8 @@ class TestTemplateCatalog(unittest.TestCase):
         return catalog
 
     def test_render_not_implemented(self):
-        from handroll.template import Template
-        template = Template('foobar')
+        from handroll.template.catalog import Template
+        template = Template()
         self.assertRaises(NotImplementedError, template.render, {})
 
     def test_renders_default(self):

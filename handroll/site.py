@@ -9,6 +9,7 @@ from handroll import logger
 from handroll import template
 from handroll.composers import Composers
 from handroll.exceptions import AbortError
+from handroll.template import catalog
 
 
 class Site(object):
@@ -27,7 +28,7 @@ class Site(object):
         if self.path is None:
             self.path = self._find_site_root_from(os.getcwd())
 
-        self.catalog = template.TemplateCatalog(self.path)
+        self.catalog = catalog.TemplateCatalog(self.path)
         self.composers = Composers()
 
     @property
@@ -107,10 +108,10 @@ class Site(object):
             if dirpath == self.path:
                 if self.OUTPUT in dirnames:
                     dirnames.remove(self.OUTPUT)
-                if self.catalog.TEMPLATES_DIR in dirnames:
-                    dirnames.remove(self.catalog.TEMPLATES_DIR)
-                if self.catalog.DEFAULT_TEMPLATE in filenames:
-                    filenames.remove(self.catalog.DEFAULT_TEMPLATE)
+                if template.TEMPLATES_DIR in dirnames:
+                    dirnames.remove(template.TEMPLATES_DIR)
+                if template.DEFAULT_TEMPLATE in filenames:
+                    filenames.remove(template.DEFAULT_TEMPLATE)
 
             output_dirpath = self._get_output_dirpath(dirpath, outdir)
             logger.info('Populating {0} ...'.format(output_dirpath))
