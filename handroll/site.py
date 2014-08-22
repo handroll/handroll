@@ -101,18 +101,16 @@ class Site(object):
             logger.info('Creating {0} ...'.format(outdir))
             os.mkdir(outdir)
 
-        for (dirpath, dirnames, filenames) in os.walk(self.path):
-            # Do not walk the output.
-            if dirpath.startswith(outdir):
-                continue
-
-            # Prevent work on the output directory.
+        for dirpath, dirnames, filenames in os.walk(self.path):
+            # Prevent work on the output or templates directory.
             # Skip the template.
             if dirpath == self.path:
-                dirnames = [name for name in dirnames if name != self.OUTPUT
-                            and name != self.catalog.TEMPLATES_DIR]
-                filenames = [
-                    f for f in filenames if f != self.catalog.DEFAULT_TEMPLATE]
+                if self.OUTPUT in dirnames:
+                    dirnames.remove(self.OUTPUT)
+                if self.catalog.TEMPLATES_DIR in dirnames:
+                    dirnames.remove(self.catalog.TEMPLATES_DIR)
+                if self.catalog.DEFAULT_TEMPLATE in filenames:
+                    filenames.remove(self.catalog.DEFAULT_TEMPLATE)
 
             output_dirpath = self._get_output_dirpath(dirpath, outdir)
             logger.info('Populating {0} ...'.format(output_dirpath))
