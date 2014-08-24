@@ -32,15 +32,31 @@ class AtomComposer(Composer):
     .. literalinclude:: ../sample/atom_sample.atom
     """
 
-    def compose(self, template, source_file, out_dir):
-        logger.info('Generating Atom XML for {0} ...'.format(source_file))
-        feed = self._parse_feed(source_file)
-
+    def compose(self, catalog, source_file, out_dir):
         root, _ = os.path.splitext(os.path.basename(source_file))
-        output_file = os.path.join(out_dir, root + '.xml')
-        with open(output_file, 'wb') as out:
-            out.write(feed.to_string().encode('utf-8'))
-            out.write(b'<!-- handrolled for excellence -->\n')
+        filename = root + '.xml'
+        output_file = os.path.join(out_dir, filename)
+        if self._needs_update(source_file, output_file):
+            logger.info('Generating Atom XML for {0} ...'.format(source_file))
+            feed = self._parse_feed(source_file)
+
+            with open(output_file, 'wb') as out:
+                out.write(feed.to_string().encode('utf-8'))
+                out.write(b'<!-- handrolled for excellence -->\n')
+        else:
+            logger.info('Skipping {0} ... It is up to date.'.format(filename))
+
+    def _needs_update(self, source_file, output_file):
+        """Check if the output file needs to be updated by looking at the
+        modified times of the source file and output file."""
+        out_modified_time = None
+        if os.path.exists(output_file):
+            out_modified_time = os.path.getmtime(output_file)
+        else:
+            # The file doesn't exist so it definitely needs to be "updated."
+            return True
+
+        return os.path.getmtime(source_file) > out_modified_time
 
     def _parse_feed(self, source_file):
         try:

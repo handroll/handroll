@@ -61,7 +61,7 @@ class CopyComposer(Composer):
         if os.path.exists(destination):
             if filecmp.cmp(source_file, destination):
                 # Files are equal. Do nothing.
-                logger.info('{0} is the same as {1}. Skipping ...'.format(
+                logger.info('Skipping {0} ... It is the same as {1}.'.format(
                     filename, destination))
                 return
             else:
@@ -92,28 +92,31 @@ class GenericHTMLComposer(Composer):
         """Compose an HTML document by generating HTML from the source
         file, merging it with a template, and write the result to output
         directory."""
-        logger.info('Generating HTML for {0} ...'.format(source_file))
-
-        data = self._get_data(source_file)
+        data, source = self._get_data(source_file)
 
         # Select the template.
         template = catalog.default
         if 'template' in data:
             template = catalog.get_template(data['template'])
 
-        # Merge the data with the template and write it to the out directory.
+        # Determine the output filename.
         root, _ = os.path.splitext(os.path.basename(source_file))
-        output_file = os.path.join(out_dir, root + '.html')
-        with open(output_file, 'wb') as out:
-            out.write(template.render(data).encode('utf-8'))
-            out.write(b'<!-- handrolled for excellence -->\n')
+        filename = root + '.html'
+        output_file = os.path.join(out_dir, filename)
+
+        if self._needs_update(template, source_file, output_file):
+            logger.info('Generating HTML for {0} ...'.format(source_file))
+            data['content'] = self._generate_content(source)
+            self._render_to_output(template, data, output_file)
+        else:
+            logger.info('Skipping {0} ... It is up to date.'.format(filename))
 
     def _generate_content(self, source):
         """Generate the content from the provided source data."""
         raise NotImplementedError
 
     def _get_data(self, source_file):
-        """Get data from the source file to pass to the template."""
+        """Get data and source from the source file to pass to the template."""
         data = {}
         with io.open(source_file, 'r', encoding='utf-8') as f:
             # The first line determines whether to look for front matter.
@@ -134,11 +137,33 @@ class GenericHTMLComposer(Composer):
                 # This is a plain file so pull title from the first line.
                 data['title'] = escape(first)
 
-            data['content'] = self._generate_content(source)
-
-        return data
+        return data, source
 
     def _has_frontmatter(self, first_line):
         """Check if the document has any front matter. handroll only supports
         front matter from YAML documents."""
         return first_line.startswith('%YAML')
+
+    def _needs_update(self, template, source_file, output_file):
+        """Check if the output file needs to be updated by looking at the
+        modified times of the template, source file, and output file."""
+        out_modified_time = None
+        if os.path.exists(output_file):
+            out_modified_time = os.path.getmtime(output_file)
+        else:
+            # The file doesn't exist so it definitely needs to be "updated."
+            return True
+
+        if os.path.getmtime(source_file) > out_modified_time:
+            return True
+
+        if template.last_modified > out_modified_time:
+            return True
+
+        return False
+
+    def _render_to_output(self, template, data, output_file):
+        """Render the template and data to the output file."""
+        with open(output_file, 'wb') as out:
+            out.write(template.render(data).encode('utf-8'))
+            out.write(b'<!-- handrolled for excellence -->\n')

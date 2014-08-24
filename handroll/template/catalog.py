@@ -14,6 +14,11 @@ class Template(object):
         """Render the context as a string in whatever manner is appropriate."""
         raise NotImplementedError
 
+    @property
+    def last_modified(self):
+        """Get the the last modified time of the source of the template."""
+        raise NotImplementedError
+
 
 class StringTemplate(Template):
     """This template class is a thin wrapper around ``string.Template`` to
@@ -23,11 +28,17 @@ class StringTemplate(Template):
         if not os.path.exists(template_path):
             raise AbortError('No template found at {0}.'.format(template_path))
 
+        self._last_modified = os.path.getmtime(template_path)
+
         with open(template_path, 'r') as t:
             self._template = string.Template(t.read())
 
     def render(self, context):
         return self._template.safe_substitute(context)
+
+    @property
+    def last_modified(self):
+        return self._last_modified
 
 
 class TemplateCatalog(object):
