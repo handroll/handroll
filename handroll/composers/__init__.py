@@ -33,15 +33,28 @@ class Composers(object):
     """A collection of available composers"""
 
     def __init__(self):
+        self._available_composers = {}
         self._composers = {}
         self.default_composer = CopyComposer()
         for entry_point in iter_entry_points('handroll.composers'):
             cls = entry_point.load()
-            self._composers[entry_point.name] = cls()
+            self._available_composers[entry_point.name] = cls
 
     def select_composer_for(self, filename):
         _, ext = os.path.splitext(filename)
-        return self._composers.get(ext, self.default_composer)
+        return self._get_composer(ext)
+
+    def _get_composer(self, ext):
+        """Get a composer. Lazy load composers for an extension so that an
+        individual composer only initializes when a file of its type is found.
+        """
+        if ext not in self._composers:
+            if ext in self._available_composers:
+                self._composers[ext] = self._available_composers[ext]()
+            else:
+                self._composers[ext] = self.default_composer
+
+        return self._composers[ext]
 
 
 class CopyComposer(Composer):
