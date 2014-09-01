@@ -26,17 +26,23 @@ Just the facts
 `handroll` walks your website source (i.e. `site` as shown above), copying
 everything that it can find. When it encounters:
 
-1.  `template.html` at the root of your site, the file will be skipped.
+1.  a template (either `template.html` or anything in `templates`), the file
+    will be skipped.
 2.  anything ending in `.md`, the file will be read, the first line of the file
     will become the `title`, and the remainder will be converted from Markdown
     into HTML to become the `content`. `title` and `content` will be combined
-    with `template.html` to produce the final HTML file.
+    with a template to produce the final HTML file.
 3.  any other "known" extension will be handled by a corresponding composer.
     `handroll` works with Markdown, reStructuredText, and Textile out of the
     box.
 
 Everything else
 ---------------
+
+Check out [the feature
+list](http://handroll.readthedocs.org/en/latest/#features) to see if handroll
+meets your needs. If not, please tell us with a GitHub issue or on the mailing
+list.
 
 All the other stuff you may be interested in regarding `handroll` (e.g.,
 writing a plugin for your favorite markup language) is found at [Read the

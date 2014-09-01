@@ -47,15 +47,21 @@ what handroll is capable of doing.
 * Generate a proper `Atom XML
   <http://en.wikipedia.org/wiki/Atom_%28standard%29>`_ feed from metadata
   stored in JSON.
-* Be extensible for users who want to write their own plugins (see
-  :ref:`composers`).
-* Provide timing information to see file processing time.
 * Find the site source root so you don't have to. If you're anywhere in your
   site's source, calling ``handroll`` without the site input parameter will
   trigger handroll to look for your site's root directory.
 * Store global configuration in a configuration file (see
   :ref:`configuration`). You'll never need to specify the output directory
   again.
+* Keep extra data for templates in a separate front matter section in YAML
+  format (see :ref:`frontmatter`).
+* Templates can use the Jinja2 template engine.
+* Content is only updated when either a template or the source file is newer
+  than the existing output file. This eliminates wasted regeneration on
+  unchanged content.
+* Be extensible for users who want to write their own plugins (see
+  :ref:`composers`).
+* Provide timing information to see file processing time.
 
 The remaining documentation provides additional details about all listed
 features.
@@ -68,4 +74,5 @@ Documentation
 
     configuration
     composers
+    templates
     releases

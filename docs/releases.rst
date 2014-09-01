@@ -1,8 +1,15 @@
 Releases
 ========
 
-Version 1.2, July 2, 2014
--------------------------
+Version 1.3, In Development
+---------------------------
+
+* Update the appropriate output only when a template or content was modified.
+* Use Jinja templates or standard Python string templates.
+* Provide YAML formatted front matter to add any data to a template.
+
+Version 1.2, Released July 2, 2014
+----------------------------------
 
 * Add a basic configuration file to specify the output directory.
 * A search for the site root is done when no site path is provided.
