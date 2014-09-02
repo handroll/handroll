@@ -161,14 +161,14 @@ class Site(object):
         """Determine if the file type should be skipped."""
         for skip_type in self.SKIP_EXTENSION:
             if filename.endswith(skip_type):
-                logger.info(
+                logger.debug(
                     'Skipping {0} with skipped file type \'{1}\' ...'.format(
                         filename, skip_type))
                 return True
 
         for skip_file in self.SKIP_FILES:
             if filename.endswith(skip_file):
-                logger.info('Skipping special file {0} ...'.format(filename))
+                logger.debug('Skipping special file {0} ...'.format(filename))
                 return True
 
         return False

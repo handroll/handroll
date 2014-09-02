@@ -74,7 +74,7 @@ class CopyComposer(Composer):
         if os.path.exists(destination):
             if filecmp.cmp(source_file, destination):
                 # Files are equal. Do nothing.
-                logger.info('Skipping {0} ... It is the same as {1}.'.format(
+                logger.debug('Skipping {0} ... It is the same as {1}.'.format(
                     filename, destination))
                 return
             else:
@@ -123,7 +123,7 @@ class GenericHTMLComposer(Composer):
             data['content'] = self._generate_content(source)
             self._render_to_output(template, data, output_file)
         else:
-            logger.info('Skipping {0} ... It is up to date.'.format(filename))
+            logger.debug('Skipping {0} ... It is up to date.'.format(filename))
 
     def _generate_content(self, source):
         """Generate the content from the provided source data."""

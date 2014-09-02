@@ -44,7 +44,7 @@ class AtomComposer(Composer):
                 out.write(feed.to_string().encode('utf-8'))
                 out.write(b'<!-- handrolled for excellence -->\n')
         else:
-            logger.info('Skipping {0} ... It is up to date.'.format(filename))
+            logger.debug('Skipping {0} ... It is up to date.'.format(filename))
 
     def _needs_update(self, source_file, output_file):
         """Check if the output file needs to be updated by looking at the

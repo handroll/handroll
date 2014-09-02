@@ -22,10 +22,15 @@ def main():
         '-v', '--verbose', action='store_true', help='use verbose messages')
     parser.add_argument(
         '-t', '--timing', action='store_true', help='time the execution')
+    parser.add_argument(
+        '-d', '--debug', action='store_true', help='show debug level messages')
     args = parser.parse_args()
 
     if args.verbose:
         logger.setLevel(logging.INFO)
+
+    if args.debug:
+        logger.setLevel(logging.DEBUG)
 
     try:
         site = Site(args.site)
