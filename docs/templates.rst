@@ -1,6 +1,11 @@
 Templates
 =========
 
+Your source content (e.g., Markdown or reStructuredText) is read and converted
+into HTML. After content is converted to HTML, it is passed to a template
+system as a variable called ``content``. Each template system can then insert
+the HTML content into a template.
+
 handroll supports multiple template systems. Templates are stored in a
 ``templates`` directory at the root of your site. Alternatively, if you have
 very simple needs, you can use a ``template.html`` file at your site's root.

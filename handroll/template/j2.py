@@ -39,7 +39,7 @@ class JinjaTemplateBuilder(object):
         newer and should represent this template's last modified time.
         """
         if template_name in self._templates_modified_times:
-            return self._template_modified_times[template_name]
+            return self._templates_modified_times[template_name]
 
         if template_path is None:
             template_path = os.path.join(self.templates_path, template_name)
