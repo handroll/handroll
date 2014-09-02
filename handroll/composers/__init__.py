@@ -108,9 +108,10 @@ class GenericHTMLComposer(Composer):
         data, source = self._get_data(source_file)
 
         # Select the template.
-        template = catalog.default
         if 'template' in data:
             template = catalog.get_template(data['template'])
+        else:
+            template = catalog.default
 
         # Determine the output filename.
         root, _ = os.path.splitext(os.path.basename(source_file))
