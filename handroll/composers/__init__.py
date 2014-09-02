@@ -94,9 +94,9 @@ class GenericHTMLComposer(Composer):
     """
 
     # A pattern to get source content from a file with YAML front matter.
-    yaml_scanner = re.compile(r""".*    # YAML header
+    yaml_scanner = re.compile(r""".*?    # YAML header
                                   ---
-                                  .*    # front matter
+                                  .*?    # front matter
                                   ---\n
                                   (?P<markup>.*)""",
                               re.DOTALL | re.VERBOSE)
