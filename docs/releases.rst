@@ -1,8 +1,8 @@
 Releases
 ========
 
-Version 1.3, In Development
----------------------------
+Version 1.3, Released September 3, 2014
+---------------------------------------
 
 * Update the appropriate output only when a template or content was modified.
 * Use Jinja templates or standard Python string templates.
