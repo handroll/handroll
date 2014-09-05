@@ -51,6 +51,9 @@ Docs](http://handroll.readthedocs.org/en/latest/).
 If you want to share some ideas or find announcements, check out the [Google
 Group](https://groups.google.com/forum/#!forum/handroll).
 
+handroll is [BSD
+licensed](https://github.com/mblayman/handroll/blob/master/LICENSE).
+
 [fury]: https://badge.fury.io/py/handroll.png
 [pypip]: https://pypip.in/d/handroll/badge.png
 [travis]: https://travis-ci.org/mblayman/handroll.png?branch=master
