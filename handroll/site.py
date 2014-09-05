@@ -9,6 +9,7 @@ from handroll import logger
 from handroll import template
 from handroll.composers import Composers
 from handroll.exceptions import AbortError
+from handroll.i18n import _
 from handroll.template import catalog
 
 
@@ -54,13 +55,15 @@ class Site(object):
 
     def is_valid(self):
         if not os.path.isdir(self.path):
-            return False, '{0} is not a directory.'.format(self.path)
+            return False, _('{path} is not a directory.').format(
+                path=self.path)
 
         return True, ''
 
     def _clean_output(self):
         if os.path.exists(self.output_root):
-            logger.info('Removing the old {0} ...'.format(self.output_root))
+            logger.info(_('Removing the old {output_root} ...').format(
+                output_root=self.output_root))
             shutil.rmtree(self.output_root)
 
     def _find_site_root_from(self, cwd):
@@ -81,8 +84,8 @@ class Site(object):
             candidate = parent
 
         raise AbortError(
-            'A handroll site was not found in {0}'
-            ' or any of its parents.'.format(cwd))
+            _('A handroll site was not found in {current_directory}'
+              ' or any of its parents.').format(current_directory=cwd))
 
     def _is_site_root(self, path):
         """Check if the path provided is the handroll site's root."""

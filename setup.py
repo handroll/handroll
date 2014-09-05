@@ -11,7 +11,7 @@ Markdown, ReStructuredText, and Textile.
 from setuptools import find_packages, setup
 import sys
 
-__version__ = '1.3'
+__version__ = '1.4'
 
 if __name__ == '__main__':
     with open('docs/releases.rst', 'r') as f:
@@ -33,6 +33,8 @@ if __name__ == '__main__':
     # Add some developer tools.
     if 'develop' in sys.argv:
         install_requires.extend([
+            'Babel',
+            'flake8',
             'nose',
             'Sphinx',
             'tox',

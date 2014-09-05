@@ -14,6 +14,7 @@ from pkg_resources import iter_entry_points
 import yaml
 
 from handroll import logger
+from handroll.i18n import _
 
 
 class Composer(object):
@@ -74,15 +75,17 @@ class CopyComposer(Composer):
         if os.path.exists(destination):
             if filecmp.cmp(source_file, destination):
                 # Files are equal. Do nothing.
-                logger.debug('Skipping {0} ... It is the same as {1}.'.format(
-                    filename, destination))
+                logger.debug(_('Skipping {filename} ... It is the same as '
+                               '{destination}.').format(
+                    filename=filename, destination=destination))
                 return
             else:
-                logger.info('{0} differs from {1} ...'.format(
-                    filename, destination))
+                logger.info(
+                    _('{filename} differs from {destination} ...').format(
+                        filename=filename, destination=destination))
 
-        logger.info(
-            'Copying {0} to {1} ...'.format(filename, out_dir))
+        logger.info(_('Copying {filename} to {out_dir} ...').format(
+            filename=filename, out_dir=out_dir))
         shutil.copy(source_file, out_dir)
 
 
@@ -114,16 +117,18 @@ class GenericHTMLComposer(Composer):
             template = catalog.default
 
         # Determine the output filename.
-        root, _ = os.path.splitext(os.path.basename(source_file))
+        root, ext = os.path.splitext(os.path.basename(source_file))
         filename = root + '.html'
         output_file = os.path.join(out_dir, filename)
 
         if self._needs_update(template, source_file, output_file):
-            logger.info('Generating HTML for {0} ...'.format(source_file))
+            logger.info(_('Generating HTML for {source_file} ...').format(
+                source_file=source_file))
             data['content'] = self._generate_content(source)
             self._render_to_output(template, data, output_file)
         else:
-            logger.debug('Skipping {0} ... It is up to date.'.format(filename))
+            logger.debug(_('Skipping {filename} ... It is up to date.').format(
+                filename=filename))
 
     def _generate_content(self, source):
         """Generate the content from the provided source data."""

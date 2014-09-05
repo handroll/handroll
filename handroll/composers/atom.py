@@ -4,7 +4,6 @@ from datetime import datetime
 import io
 import json
 import os
-import sys
 import time
 
 from werkzeug.contrib.atom import AtomFeed
@@ -12,6 +11,8 @@ from werkzeug.contrib.atom import FeedEntry
 
 from handroll import logger
 from handroll.composers import Composer
+from handroll.exceptions import AbortError
+from handroll.i18n import _
 
 
 class AtomComposer(Composer):
@@ -33,18 +34,20 @@ class AtomComposer(Composer):
     """
 
     def compose(self, catalog, source_file, out_dir):
-        root, _ = os.path.splitext(os.path.basename(source_file))
+        root, ext = os.path.splitext(os.path.basename(source_file))
         filename = root + '.xml'
         output_file = os.path.join(out_dir, filename)
         if self._needs_update(source_file, output_file):
-            logger.info('Generating Atom XML for {0} ...'.format(source_file))
+            logger.info(_('Generating Atom XML for {source_file} ...').format(
+                source_file=source_file))
             feed = self._parse_feed(source_file)
 
             with open(output_file, 'wb') as out:
                 out.write(feed.to_string().encode('utf-8'))
                 out.write(b'<!-- handrolled for excellence -->\n')
         else:
-            logger.debug('Skipping {0} ... It is up to date.'.format(filename))
+            logger.debug(_('Skipping {filename} ... It is up to date.').format(
+                filename=filename))
 
     def _needs_update(self, source_file, output_file):
         """Check if the output file needs to be updated by looking at the
@@ -64,7 +67,7 @@ class AtomComposer(Composer):
                 metadata = json.loads(f.read())
 
             if metadata.get('entries') is None:
-                raise ValueError('Missing entries list.')
+                raise ValueError(_('Missing entries list.'))
 
             entries = metadata['entries']
             # AtomFeed expects FeedEntry objects for the entries keyword so
@@ -74,9 +77,8 @@ class AtomComposer(Composer):
             feed = AtomFeed(**metadata)
             [feed.add(self._make_entry(entry)) for entry in entries]
         except ValueError as error:
-            logger.error('Invalid feed {0}: {1}'.format(
-                source_file, error.message))
-            sys.exit('Incomplete.')
+            raise AbortError(_('Invalid feed {source_file}: {error}').format(
+                source_file=source_file, error=error.message))
 
         return feed
 
