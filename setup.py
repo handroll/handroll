@@ -22,9 +22,8 @@ if __name__ == '__main__':
     install_requires = [
         'argparse',
         'docutils',
-        'importlib',  # Markdown no longer supports 2.6. Depends on importlib.
         'Jinja2',
-        'Markdown',
+        'Markdown==2.4',  # 2.5 dropped support for Python 2.6.
         'Pygments',
         'PyYAML',
         'textile',
