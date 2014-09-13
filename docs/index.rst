@@ -75,4 +75,5 @@ Documentation
     configuration
     composers
     templates
+    i18n
     releases
