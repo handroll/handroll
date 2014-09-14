@@ -51,4 +51,6 @@ Built-in composers
 
 .. autoclass:: handroll.composers.rst.ReStructuredTextComposer
 
+.. autoclass:: handroll.composers.sass.SassComposer
+
 .. autoclass:: handroll.composers.txt.TextileComposer

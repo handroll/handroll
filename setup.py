@@ -34,7 +34,9 @@ if __name__ == '__main__':
     if 'develop' in sys.argv:
         install_requires.extend([
             'Babel',
+            'coverage',
             'flake8',
+            'mock',
             'nose',
             'requests',
             'Sphinx',
@@ -57,6 +59,8 @@ if __name__ == '__main__':
                 '.atom = handroll.composers.atom:AtomComposer',
                 '.md = handroll.composers.md:MarkdownComposer',
                 '.rst = handroll.composers.rst:ReStructuredTextComposer',
+                '.sass = handroll.composers.sass:SassComposer',
+                '.scss = handroll.composers.sass:SassComposer',
                 '.textile = handroll.composers.txt:TextileComposer',
             ]
         },

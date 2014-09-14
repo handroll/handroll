@@ -1,6 +1,12 @@
 Releases
 ========
 
+Version 1.4, In Development
+---------------------------
+
+* Sass support for ``.scss`` and ``.sass`` files.
+* Add internationalization (i18n).
+
 Version 1.3, Released September 3, 2014
 ---------------------------------------
 

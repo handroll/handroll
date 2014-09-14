@@ -44,6 +44,7 @@ what handroll is capable of doing.
 * Convert `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ to
   HTML.
 * Convert `Textile <http://en.wikipedia.org/wiki/Textile>`_ to HTML.
+* Convert `Sass <http://sass-lang.com/>`_ to CSS.
 * Generate a proper `Atom XML
   <http://en.wikipedia.org/wiki/Atom_%28standard%29>`_ feed from metadata
   stored in JSON.
