@@ -7,8 +7,40 @@ import unittest
 
 import mock
 
+from handroll.composers.atom import AtomComposer
+from handroll.composers.md import MarkdownComposer
+from handroll.composers.rst import ReStructuredTextComposer
 from handroll.composers.sass import SassComposer
+from handroll.composers.txt import TextileComposer
 from handroll.exceptions import AbortError
+
+
+class TestAtomComposer(unittest.TestCase):
+
+    def test_creates(self):
+        composer = AtomComposer()
+        self.assertTrue(isinstance(composer, AtomComposer))
+
+
+class TestMarkdownComposer(unittest.TestCase):
+
+    def test_generates_html(self):
+        source = '**bold**'
+        composer = MarkdownComposer()
+        html = composer._generate_content(source)
+        self.assertEqual('<p><strong>bold</strong></p>', html)
+
+
+class TestReStructuredTextComposer(unittest.TestCase):
+
+    def test_generates_html(self):
+        source = '**bold**'
+        composer = ReStructuredTextComposer()
+        html = composer._generate_content(source)
+        expected = '<div class="document">\n' \
+                   '<p><strong>bold</strong></p>\n' \
+                   '</div>\n'
+        self.assertEqual(expected, html)
 
 
 class TestSassComposer(unittest.TestCase):
@@ -52,3 +84,12 @@ class TestSassComposer(unittest.TestCase):
         subprocess.Popen.return_value.returncode = 1
         self.assertRaises(
             AbortError, composer.compose, None, source_file, output_dir)
+
+
+class TestTextileComposer(unittest.TestCase):
+
+    def test_generates_html(self):
+        source = '*bold*'
+        composer = TextileComposer()
+        html = composer._generate_content(source)
+        self.assertEqual('\t<p><strong>bold</strong></p>', html)
