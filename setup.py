@@ -24,6 +24,7 @@ if __name__ == '__main__':
         'docutils',
         'Jinja2',
         'Markdown==2.4',  # 2.5 dropped support for Python 2.6.
+        'mock',
         'Pygments',
         'PyYAML',
         'textile',
@@ -36,7 +37,6 @@ if __name__ == '__main__':
             'Babel',
             'coverage',
             'flake8',
-            'mock',
             'nose',
             'requests',
             'Sphinx',
