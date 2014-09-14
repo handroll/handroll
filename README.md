@@ -54,6 +54,22 @@ Group](https://groups.google.com/forum/#!forum/handroll).
 handroll is [BSD
 licensed](https://github.com/mblayman/handroll/blob/master/LICENSE).
 
+Get Involved
+------------
+
+Bring an idea to the table! Implement it in a fork or submit an issue to have
+some discussion about it.
+
+handroll needs a home and a better identity. If you're a web developer or
+designer, please consider helping with a
+[website](https://github.com/mblayman/handroll/issues/15) or a
+[logo](https://github.com/mblayman/handroll/issues/14).
+
+Translators can join the fun by translating at the [Transifex
+project](https://www.transifex.com/projects/p/handroll/). Additional
+translation details are in the [translation
+documentation](http://handroll.readthedocs.org/en/latest/i18n.html).
+
 [fury]: https://badge.fury.io/py/handroll.png
 [pypip]: https://pypip.in/d/handroll/badge.png
 [travis]: https://travis-ci.org/mblayman/handroll.png?branch=master
