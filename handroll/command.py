@@ -12,21 +12,8 @@ from handroll.i18n import _
 from handroll.site import Site
 
 
-def main():
-    description = _('A website generator for software artisans')
-    parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('site', nargs='?', help=_('the path to your website'))
-    parser.add_argument(
-        'outdir', nargs='?', help=_('an optional output directory to create or'
-                                    ' update if it already exists'))
-    parser.add_argument(
-        '-v', '--verbose', action='store_true', help=_('use verbose messages'))
-    parser.add_argument(
-        '-t', '--timing', action='store_true', help=_('time the execution'))
-    parser.add_argument(
-        '-d', '--debug', action='store_true',
-        help=_('show debug level messages'))
-    args = parser.parse_args()
+def main(argv=sys.argv):
+    args = parse_args(argv)
 
     if args.verbose:
         logger.setLevel(logging.INFO)
@@ -46,3 +33,21 @@ def main():
     except AbortError as abort:
         logger.error(abort.message)
         sys.exit(_('Incomplete.'))
+
+
+def parse_args(argv):
+    description = _('A website generator for software artisans')
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument('site', nargs='?', help=_('the path to your website'))
+    parser.add_argument(
+        'outdir', nargs='?', help=_('an optional output directory to create or'
+                                    ' update if it already exists'))
+    parser.add_argument(
+        '-v', '--verbose', action='store_true', help=_('use verbose messages'))
+    parser.add_argument(
+        '-t', '--timing', action='store_true', help=_('time the execution'))
+    parser.add_argument(
+        '-d', '--debug', action='store_true',
+        help=_('show debug level messages'))
+    # argparse expects the executable to be removed from argv.
+    return parser.parse_args(argv[1:])
