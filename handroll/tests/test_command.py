@@ -1,7 +1,11 @@
 # Copyright (c) 2014, Matt Layman
 
+import logging
+import os
+import tempfile
 import unittest
 
+from handroll import logger
 from handroll import command
 
 
@@ -64,3 +68,40 @@ class TestArguments(unittest.TestCase):
         self.arguments.extend(['fake_site', outdir])
         args = command.parse_args(self.arguments)
         self.assertEqual(outdir, args.outdir)
+
+
+class TestMain(unittest.TestCase):
+
+    def setUp(self):
+        self.arguments = ['/fake/bin/handroll']
+
+    def _make_valid_site(self):
+        site = tempfile.mkdtemp()
+        open(os.path.join(site, 'template.html'), 'w').close()
+        return site
+
+    def test_verbose_sets_logging(self):
+        logger.setLevel(logging.CRITICAL)
+        self.arguments.append('-v')
+        self.assertRaises(SystemExit, command.main, self.arguments)
+        self.assertEqual(logging.INFO, logger.getEffectiveLevel())
+
+    def test_debug_sets_logging(self):
+        logger.setLevel(logging.CRITICAL)
+        self.arguments.append('-d')
+        self.assertRaises(SystemExit, command.main, self.arguments)
+        self.assertEqual(logging.DEBUG, logger.getEffectiveLevel())
+
+    def test_site_directory_is_file(self):
+        site = tempfile.mkdtemp()
+        file_site = os.path.join(site, 'fake')
+        self.arguments.append(file_site)
+        self.assertRaises(SystemExit, command.main, self.arguments)
+
+    def test_complete_site_generation(self):
+        site = self._make_valid_site()
+        self.arguments.append(site)
+        try:
+            command.main(self.arguments)
+        except SystemExit:
+            self.fail('Failed to completely generate site.')
