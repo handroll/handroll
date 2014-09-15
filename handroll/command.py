@@ -31,7 +31,7 @@ def main(argv=sys.argv):
         site.generate(config)
         print(_('Complete.'))
     except AbortError as abort:
-        logger.error(abort.message)
+        logger.error(str(abort))
         sys.exit(_('Incomplete.'))
 
 
