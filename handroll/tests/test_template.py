@@ -5,6 +5,7 @@ import tempfile
 import unittest
 
 from handroll.exceptions import AbortError
+from handroll import template
 from handroll.template.catalog import StringTemplate
 from handroll.template.catalog import TemplateCatalog
 
@@ -84,3 +85,18 @@ class TestTemplateCatalog(unittest.TestCase):
     def test_fails_on_bad_template_type(self):
         catalog = self._make_one_with_template('confused.bogus')
         self.assertRaises(AbortError, catalog.get_template, 'confused.bogus')
+
+
+class TestTemplateFunctions(unittest.TestCase):
+
+    def test_has_default_template(self):
+        site = tempfile.mkdtemp()
+        open(os.path.join(site, 'template.html'), 'w').close()
+
+        self.assertTrue(template.has_templates(site))
+
+    def test_has_templates_directory(self):
+        site = tempfile.mkdtemp()
+        os.mkdir(os.path.join(site, 'templates'))
+
+        self.assertTrue(template.has_templates(site))
