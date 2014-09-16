@@ -9,6 +9,14 @@ from handroll.template.catalog import StringTemplate
 from handroll.template.catalog import TemplateCatalog
 
 
+class TestStringTemplate(unittest.TestCase):
+
+    def test_template_last_modified(self):
+        fh, path = tempfile.mkstemp()
+        expected = os.path.getmtime(path)
+        template = StringTemplate(path)
+        self.assertEqual(expected, template.last_modified)
+
 class TestTemplateCatalog(unittest.TestCase):
 
     def setUp(self):
@@ -29,6 +37,15 @@ class TestTemplateCatalog(unittest.TestCase):
         from handroll.template.catalog import Template
         template = Template()
         self.assertRaises(NotImplementedError, template.render, {})
+
+    def test_last_modified_not_implemented(self):
+        from handroll.template.catalog import Template
+        template = Template()
+        try:
+            template.last_modified
+            self.fail('last_modified did not raise exception.')
+        except NotImplementedError:
+            pass
 
     def test_renders_default(self):
         """Test rendering a default template."""
