@@ -31,7 +31,7 @@ class TestConfiguration(unittest.TestCase):
             outdir = out""")
         args = FakeArgs()
         with tempfile.NamedTemporaryFile(delete=False) as f:
-            f.write(conf_file)
+            f.write(conf_file.encode('utf-8'))
 
         config = configuration.build_config(f.name, args)
 
