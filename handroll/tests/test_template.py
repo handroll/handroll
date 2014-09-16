@@ -17,6 +17,7 @@ class TestStringTemplate(unittest.TestCase):
         template = StringTemplate(path)
         self.assertEqual(expected, template.last_modified)
 
+
 class TestTemplateCatalog(unittest.TestCase):
 
     def setUp(self):

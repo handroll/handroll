@@ -2,7 +2,7 @@
 
 try:
     from ConfigParser import ConfigParser
-except ImportError:
+except ImportError:  # pragma: no cover
     from configparser import ConfigParser
 import os
 
