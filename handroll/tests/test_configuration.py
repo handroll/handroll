@@ -29,7 +29,6 @@ class TestConfiguration(unittest.TestCase):
         conf_file = inspect.cleandoc(
             """[site]
             outdir = out""")
-        print conf_file
         args = FakeArgs()
         with tempfile.NamedTemporaryFile(delete=False) as f:
             f.write(conf_file)
