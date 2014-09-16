@@ -2,7 +2,7 @@
 
 from docutils.core import publish_parts
 
-from handroll.composers import GenericHTMLComposer
+from handroll.composers.generic import GenericHTMLComposer
 
 
 class ReStructuredTextComposer(GenericHTMLComposer):

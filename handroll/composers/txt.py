@@ -2,7 +2,7 @@
 
 import textile
 
-from handroll.composers import GenericHTMLComposer
+from handroll.composers.generic import GenericHTMLComposer
 
 
 class TextileComposer(GenericHTMLComposer):

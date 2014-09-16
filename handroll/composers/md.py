@@ -2,7 +2,7 @@
 
 import markdown
 
-from handroll.composers import GenericHTMLComposer
+from handroll.composers.generic import GenericHTMLComposer
 
 
 class MarkdownComposer(GenericHTMLComposer):
