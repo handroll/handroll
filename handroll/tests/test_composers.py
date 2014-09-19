@@ -10,6 +10,7 @@ import mock
 from handroll.composers import Composers
 from handroll.composers import CopyComposer
 from handroll.composers.atom import AtomComposer
+from handroll.composers.generic import GenericHTMLComposer
 from handroll.composers.md import MarkdownComposer
 from handroll.composers.rst import ReStructuredTextComposer
 from handroll.composers.sass import SassComposer
@@ -27,9 +28,38 @@ class TestComposers(unittest.TestCase):
 
 class TestAtomComposer(unittest.TestCase):
 
-    def test_creates(self):
+    def test_composes_feed(self):
+        source = """{
+            "title": "Fakity Fake",
+            "id": "let's pretend this is unique",
+            "entries": [{
+                "title": "Sample A",
+                "updated": "2014-02-23T00:00:00",
+                "published": "2014-02-22T00:00:00",
+                "url": "http://some.website.com/a.html",
+                "summary": "A summary of the sample post"
+            }]
+        }"""
+        feed = 'feed.atom'
+        site = tempfile.mkdtemp()
+        source_file = os.path.join(site, feed)
+        with open(source_file, 'w') as f:
+            f.write(source)
+        outdir = tempfile.mkdtemp()
         composer = AtomComposer()
-        self.assertTrue(isinstance(composer, AtomComposer))
+        composer.compose(None, source_file, outdir)
+        self.assertTrue(os.path.exists(os.path.join(outdir, 'feed.xml')))
+
+    @mock.patch('handroll.composers.atom.json')
+    def test_skips_up_to_date(self, json):
+        source = tempfile.mkdtemp()
+        source_file = os.path.join(source, 'feed.atom')
+        outdir = tempfile.mkdtemp()
+        open(source_file, 'w').close()
+        open(os.path.join(outdir, 'feed.xml'), 'w').close()
+        composer = AtomComposer()
+        composer.compose(None, source_file, outdir)
+        self.assertFalse(json.loads.called)
 
 
 class TestCopyComposer(unittest.TestCase):
@@ -40,7 +70,7 @@ class TestCopyComposer(unittest.TestCase):
         source = tempfile.mkdtemp()
         source_file = os.path.join(source, marker)
         outdir = tempfile.mkdtemp()
-        open(os.path.join(source, marker), 'w').close()
+        open(source_file, 'w').close()
         open(os.path.join(outdir, marker), 'w').close()
         composer = CopyComposer()
         composer.compose(None, source_file, outdir)
@@ -52,12 +82,27 @@ class TestCopyComposer(unittest.TestCase):
         source = tempfile.mkdtemp()
         source_file = os.path.join(source, marker)
         outdir = tempfile.mkdtemp()
-        open(os.path.join(source, marker), 'w').close()
+        open(source_file, 'w').close()
         with open(os.path.join(outdir, marker), 'w') as f:
             f.write('something different')
         composer = CopyComposer()
         composer.compose(None, source_file, outdir)
         self.assertTrue(shutil.copy.called)
+
+
+class TestGenericHTMLComposer(unittest.TestCase):
+
+    def test_composes_file(self):
+        catalog = mock.MagicMock()
+        site = tempfile.mkdtemp()
+        source_file = os.path.join(site, 'sample.generic')
+        open(source_file, 'w').close()
+        outdir = ''
+        composer = GenericHTMLComposer()
+        self.assertRaises(
+            NotImplementedError,
+            composer.compose, catalog, source_file, outdir)
+
 
 class TestMarkdownComposer(unittest.TestCase):
 

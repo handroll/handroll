@@ -49,17 +49,14 @@ class AtomComposer(Composer):
             logger.debug(_('Skipping {filename} ... It is up to date.').format(
                 filename=filename))
 
-    def _needs_update(self, source_file, output_file):
+    def _needs_update(self, source_file, out_file):
         """Check if the output file needs to be updated by looking at the
         modified times of the source file and output file."""
-        out_modified_time = None
-        if os.path.exists(output_file):
-            out_modified_time = os.path.getmtime(output_file)
+        if os.path.exists(out_file):
+            return os.path.getmtime(source_file) > os.path.getmtime(out_file)
         else:
             # The file doesn't exist so it definitely needs to be "updated."
             return True
-
-        return os.path.getmtime(source_file) > out_modified_time
 
     def _parse_feed(self, source_file):
         try:
