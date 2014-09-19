@@ -7,6 +7,7 @@ import unittest
 
 import mock
 
+from handroll.composers import Composer
 from handroll.composers import Composers
 from handroll.composers import CopyComposer
 from handroll.composers.atom import AtomComposer
@@ -16,6 +17,14 @@ from handroll.composers.rst import ReStructuredTextComposer
 from handroll.composers.sass import SassComposer
 from handroll.composers.txt import TextileComposer
 from handroll.exceptions import AbortError
+
+
+class TestComposer(unittest.TestCase):
+
+    def test_compose_not_implemented(self):
+        composer = Composer()
+        self.assertRaises(
+            NotImplementedError, composer.compose, None, None, None)
 
 
 class TestComposers(unittest.TestCase):
