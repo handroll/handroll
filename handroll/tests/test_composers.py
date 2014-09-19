@@ -7,6 +7,8 @@ import unittest
 
 import mock
 
+from handroll.composers import Composers
+from handroll.composers import CopyComposer
 from handroll.composers.atom import AtomComposer
 from handroll.composers.md import MarkdownComposer
 from handroll.composers.rst import ReStructuredTextComposer
@@ -15,12 +17,47 @@ from handroll.composers.txt import TextileComposer
 from handroll.exceptions import AbortError
 
 
+class TestComposers(unittest.TestCase):
+
+    def test_selects_composer(self):
+        composers = Composers()
+        composer = composers.select_composer_for('sample.md')
+        self.assertTrue(isinstance(composer, MarkdownComposer))
+
+
 class TestAtomComposer(unittest.TestCase):
 
     def test_creates(self):
         composer = AtomComposer()
         self.assertTrue(isinstance(composer, AtomComposer))
 
+
+class TestCopyComposer(unittest.TestCase):
+
+    @mock.patch('handroll.composers.shutil')
+    def test_skips_same_files(self, shutil):
+        marker = 'marker.txt'
+        source = tempfile.mkdtemp()
+        source_file = os.path.join(source, marker)
+        outdir = tempfile.mkdtemp()
+        open(os.path.join(source, marker), 'w').close()
+        open(os.path.join(outdir, marker), 'w').close()
+        composer = CopyComposer()
+        composer.compose(None, source_file, outdir)
+        self.assertFalse(shutil.copy.called)
+
+    @mock.patch('handroll.composers.shutil')
+    def test_copies_when_content_differs(self, shutil):
+        marker = 'marker.txt'
+        source = tempfile.mkdtemp()
+        source_file = os.path.join(source, marker)
+        outdir = tempfile.mkdtemp()
+        open(os.path.join(source, marker), 'w').close()
+        with open(os.path.join(outdir, marker), 'w') as f:
+            f.write('something different')
+        composer = CopyComposer()
+        composer.compose(None, source_file, outdir)
+        self.assertTrue(shutil.copy.called)
 
 class TestMarkdownComposer(unittest.TestCase):
 
