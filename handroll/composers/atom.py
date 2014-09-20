@@ -75,7 +75,7 @@ class AtomComposer(Composer):
             [feed.add(self._make_entry(entry)) for entry in entries]
         except ValueError as error:
             raise AbortError(_('Invalid feed {source_file}: {error}').format(
-                source_file=source_file, error=error.message))
+                source_file=source_file, error=str(error)))
 
         return feed
 
