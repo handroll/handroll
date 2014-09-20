@@ -5,7 +5,6 @@ import tempfile
 import unittest
 
 from handroll.configuration import Configuration
-from handroll.exceptions import AbortError
 from handroll.site import Site
 
 
