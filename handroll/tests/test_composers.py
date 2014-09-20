@@ -37,6 +37,13 @@ class TestComposers(unittest.TestCase):
 
 class TestAtomComposer(unittest.TestCase):
 
+    def setUp(self):
+        site = tempfile.mkdtemp()
+        self.source_file = os.path.join(site, 'feed.atom')
+        open(self.source_file, 'w').close()
+        self.outdir = tempfile.mkdtemp()
+        self.output_file = os.path.join(self.outdir, 'feed.xml')
+
     def test_composes_feed(self):
         source = """{
             "title": "Fakity Fake",
@@ -49,25 +56,28 @@ class TestAtomComposer(unittest.TestCase):
                 "summary": "A summary of the sample post"
             }]
         }"""
-        feed = 'feed.atom'
-        site = tempfile.mkdtemp()
-        source_file = os.path.join(site, feed)
-        with open(source_file, 'w') as f:
+        with open(self.source_file, 'w') as f:
             f.write(source)
-        outdir = tempfile.mkdtemp()
         composer = AtomComposer()
-        composer.compose(None, source_file, outdir)
-        self.assertTrue(os.path.exists(os.path.join(outdir, 'feed.xml')))
+        composer.compose(None, self.source_file, self.outdir)
+        self.assertTrue(os.path.exists(self.output_file))
+
+    def test_must_have_entries(self):
+        source = """{
+            "title": "Fakity Fake",
+            "id": "let's pretend this is unique"
+        }"""
+        with open(self.source_file, 'w') as f:
+            f.write(source)
+        composer = AtomComposer()
+        self.assertRaises(
+            AbortError, composer.compose, None, self.source_file, self.outdir)
 
     @mock.patch('handroll.composers.atom.json')
     def test_skips_up_to_date(self, json):
-        source = tempfile.mkdtemp()
-        source_file = os.path.join(source, 'feed.atom')
-        outdir = tempfile.mkdtemp()
-        open(source_file, 'w').close()
-        open(os.path.join(outdir, 'feed.xml'), 'w').close()
+        open(self.output_file, 'w').close()
         composer = AtomComposer()
-        composer.compose(None, source_file, outdir)
+        composer.compose(None, self.source_file, self.outdir)
         self.assertFalse(json.loads.called)
 
 
