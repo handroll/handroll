@@ -5,6 +5,7 @@ import tempfile
 import unittest
 
 from handroll.configuration import Configuration
+from handroll.exceptions import AbortError
 from handroll.site import Site
 
 
@@ -56,3 +57,36 @@ class TestSite(unittest.TestCase):
 
         out_skip = os.path.join(site.output_root, skip)
         self.assertFalse(os.path.exists(out_skip))
+
+    def test_skips_templates_directory(self):
+        site = self._make_valid_site()
+        templates = os.path.join(site.path, 'templates')
+        os.mkdir(templates)
+        config = Configuration()
+
+        site.generate(config)
+
+        out_templates = os.path.join(site.output_root, 'templates')
+        self.assertFalse(os.path.exists(out_templates))
+
+    def test_finds_valid_site_root_from_templates(self):
+        original = os.getcwd()
+        valid_site = tempfile.mkdtemp()
+        open(os.path.join(valid_site, 'template.html'), 'w').close()
+        os.chdir(valid_site)
+
+        site = Site()
+
+        self.assertEqual(valid_site, site.path)
+        os.chdir(original)
+
+    def test_finds_valid_site_root_from_conf(self):
+        original = os.getcwd()
+        valid_site = tempfile.mkdtemp()
+        open(os.path.join(valid_site, Site.CONFIG), 'w').close()
+        os.chdir(valid_site)
+
+        site = Site()
+
+        self.assertEqual(valid_site, site.path)
+        os.chdir(original)
