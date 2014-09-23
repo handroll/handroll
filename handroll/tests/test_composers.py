@@ -151,17 +151,28 @@ class TestGenericHTMLComposer(unittest.TestCase):
         self.assertEqual('A Fake Title', data['title'])
         self.assertEqual('The Content', source)
 
-    def test_needs_update_with_newer_source(self):
+    def test_needs_update(self):
         site = tempfile.mkdtemp()
         output_file = os.path.join(site, 'output.md')
         open(output_file, 'w').close()
-        output_mtime = os.path.getmtime(output_file)
-        future = output_mtime + 1
+        future = os.path.getmtime(output_file) + 1
         source_file = os.path.join(site, 'test.md')
         open(source_file, 'w').close()
         os.utime(source_file, (future, future))
+        template = mock.MagicMock()
+        template.last_modified = future
+
         composer = GenericHTMLComposer()
         self.assertTrue(composer._needs_update(None, source_file, output_file))
+
+        past = future - 10
+        os.utime(source_file, (past, past))
+        self.assertTrue(
+            composer._needs_update(template, source_file, output_file))
+
+        template.last_modified = past
+        self.assertFalse(
+            composer._needs_update(template, source_file, output_file))
 
 
 class TestMarkdownComposer(unittest.TestCase):
@@ -171,6 +182,25 @@ class TestMarkdownComposer(unittest.TestCase):
         composer = MarkdownComposer()
         html = composer._generate_content(source)
         self.assertEqual('<p><strong>bold</strong></p>', html)
+
+    def test_composes_no_update(self):
+        site = tempfile.mkdtemp()
+        source_file = os.path.join(site, 'test.md')
+        open(source_file, 'w').close()
+        source_mtime = os.path.getmtime(source_file)
+        future = source_mtime + 1
+        outdir = tempfile.mkdtemp()
+        output_file = os.path.join(outdir, 'test.html')
+        open(output_file, 'w').close()
+        os.utime(output_file, (future, future))
+        template = mock.MagicMock()
+        template.last_modified = source_mtime
+        catalog = mock.MagicMock()
+        catalog.default = template
+
+        composer = MarkdownComposer()
+        composer.compose(catalog, source_file, outdir)
+        self.assertTrue(template.render.called)
 
 
 class TestReStructuredTextComposer(unittest.TestCase):
