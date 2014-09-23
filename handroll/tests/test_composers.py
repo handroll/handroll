@@ -1,5 +1,6 @@
 # Copyright (c) 2014, Matt Layman
 
+import inspect
 import os
 import stat
 import tempfile
@@ -121,6 +122,46 @@ class TestGenericHTMLComposer(unittest.TestCase):
         self.assertRaises(
             NotImplementedError,
             composer.compose, catalog, source_file, outdir)
+
+    def test_selects_default_template(self):
+        catalog = mock.MagicMock()
+        default = mock.PropertyMock()
+        type(catalog).default = default
+        composer = GenericHTMLComposer()
+        composer.select_template(catalog, {})
+        self.assertTrue(default.called)
+
+    def test_selects_specified_template(self):
+        catalog = mock.MagicMock()
+        composer = GenericHTMLComposer()
+        composer.select_template(catalog, {'template': 'base.j2'})
+        catalog.get_template.assert_called_once_with('base.j2')
+
+    def test_gets_frontmatter(self):
+        source = inspect.cleandoc("""%YAML 1.1
+        ---
+        title: A Fake Title
+        ---
+        The Content
+        """)
+        with tempfile.NamedTemporaryFile(delete=False) as f:
+            f.write(source.encode('utf-8'))
+        composer = GenericHTMLComposer()
+        data, source = composer._get_data(f.name)
+        self.assertEqual('A Fake Title', data['title'])
+        self.assertEqual('The Content', source)
+
+    def test_needs_update_with_newer_source(self):
+        site = tempfile.mkdtemp()
+        output_file = os.path.join(site, 'output.md')
+        open(output_file, 'w').close()
+        output_mtime = os.path.getmtime(output_file)
+        future = output_mtime + 1
+        source_file = os.path.join(site, 'test.md')
+        open(source_file, 'w').close()
+        os.utime(source_file, (future, future))
+        composer = GenericHTMLComposer()
+        self.assertTrue(composer._needs_update(None, source_file, output_file))
 
 
 class TestMarkdownComposer(unittest.TestCase):

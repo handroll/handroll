@@ -36,11 +36,7 @@ class GenericHTMLComposer(Composer):
         directory."""
         data, source = self._get_data(source_file)
 
-        # Select the template.
-        if 'template' in data:
-            template = catalog.get_template(data['template'])
-        else:
-            template = catalog.default
+        template = self.select_template(catalog, data)
 
         # Determine the output filename.
         root, ext = os.path.splitext(os.path.basename(source_file))
@@ -55,6 +51,14 @@ class GenericHTMLComposer(Composer):
         else:
             logger.debug(_('Skipping {filename} ... It is up to date.').format(
                 filename=filename))
+
+    def select_template(self, catalog, data):
+        """Select a template from the catalog based on the source file's data.
+        """
+        if 'template' in data:
+            return catalog.get_template(data['template'])
+        else:
+            return catalog.default
 
     def _generate_content(self, source):
         """Generate the content from the provided source data."""
