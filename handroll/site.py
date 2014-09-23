@@ -158,7 +158,7 @@ class Site(object):
         if timing:
             end = time.time()
             # Put at warn level to be independent of the verbose option.
-            logger.warn('[{:.3f}s]'.format(end - start))
+            logger.warn('[{0:.3f}s]'.format(end - start))
 
     def _should_skip(self, filename):
         """Determine if the file type should be skipped."""
