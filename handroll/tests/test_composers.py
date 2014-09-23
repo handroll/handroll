@@ -200,7 +200,7 @@ class TestMarkdownComposer(unittest.TestCase):
 
         composer = MarkdownComposer()
         composer.compose(catalog, source_file, outdir)
-        self.assertTrue(template.render.called)
+        self.assertFalse(template.render.called)
 
 
 class TestReStructuredTextComposer(unittest.TestCase):
