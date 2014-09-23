@@ -4,6 +4,8 @@ import os
 import tempfile
 import unittest
 
+import mock
+
 from handroll.configuration import Configuration
 from handroll.site import Site
 
@@ -89,3 +91,27 @@ class TestSite(unittest.TestCase):
 
         self.assertEqual(valid_site, site.path)
         os.chdir(original)
+
+    def test_generates_output_directory(self):
+        site = self._make_valid_site()
+        another = os.path.join(site.path, 'another')
+        os.mkdir(another)
+        config = Configuration()
+
+        site.generate(config)
+
+        another_out = os.path.join(site.output_root, 'another')
+        self.assertTrue(os.path.isdir(another_out))
+
+    def test_does_timing(self):
+        mock_time = mock.Mock()
+        mock_time.return_value = 42.0  # Return float so that format works.
+        site = self._make_valid_site()
+        open(os.path.join(site.path, 'fake.md'), 'w').close()
+        config = Configuration()
+        config.timing = True
+
+        with mock.patch('handroll.site.time.time', mock_time):
+            site.generate(config)
+
+        self.assertTrue(mock_time.called)
