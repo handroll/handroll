@@ -5,6 +5,7 @@ import os
 import string
 
 from handroll.exceptions import AbortError
+from handroll.i18n import _
 from handroll.template.j2 import JinjaTemplateBuilder
 
 
@@ -25,9 +26,6 @@ class StringTemplate(Template):
     conform to the standard handroll template API."""
 
     def __init__(self, template_path):
-        if not os.path.exists(template_path):
-            raise AbortError('No template found at {0}.'.format(template_path))
-
         self._last_modified = os.path.getmtime(template_path)
 
         with open(template_path, 'r') as t:
@@ -66,6 +64,7 @@ class TemplateCatalog(object):
     def default(self):
         """Get the default site template."""
         if self._default is None:
+            self._abort_if_missing(self._default_template_path)
             self._default = StringTemplate(self._default_template_path)
 
         return self._default
@@ -77,12 +76,15 @@ class TemplateCatalog(object):
             return self._templates[template_name]
 
         template_path = os.path.join(self.templates_path, template_name)
-        if not os.path.exists(template_path):
-            raise AbortError('No template found at {0}.'.format(template_path))
-
+        self._abort_if_missing(template_path)
         template = self._build_template(template_path)
         self._templates[template_name] = template
         return template
+
+    def _abort_if_missing(self, template_path):
+        if not os.path.exists(template_path):
+            raise AbortError(_('No template found at {template_path}.').format(
+                template_path=template_path))
 
     def _build_template(self, template_path):
         """Build a template. Abort if unknown type."""
@@ -90,5 +92,6 @@ class TemplateCatalog(object):
             if template_path.endswith(extension):
                 return template_builder(template_path)
 
-        raise AbortError('Unknown template type provided for {0}.'.format(
-            template_path))
+        raise AbortError(
+            _('Unknown template type provided for {template}.').format(
+                template=template_path))

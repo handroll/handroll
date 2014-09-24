@@ -6,6 +6,7 @@ import jinja2
 from jinja2 import meta
 
 from handroll.exceptions import AbortError
+from handroll.i18n import _
 
 
 class JinjaTemplateBuilder(object):
@@ -29,8 +30,8 @@ class JinjaTemplateBuilder(object):
             return template
         except jinja2.exceptions.TemplateSyntaxError as e:
             raise AbortError(
-                'An error exists in the Jinja template at {0}: {1}'.format(
-                    template_path, str(e)))
+                _('An error exists in the Jinja template at {template}:'
+                  ' {error}').format(template=template_path, error=str(e)))
 
     def _get_last_modified(self, template_name, template_path=None):
         """Get the last modified time of the template.
