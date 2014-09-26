@@ -7,6 +7,7 @@ import sys
 
 from handroll import logger
 from handroll.configuration import build_config
+from handroll.director import Director
 from handroll.exceptions import AbortError
 from handroll.i18n import _
 from handroll.site import Site
@@ -28,7 +29,8 @@ def main(argv=sys.argv):
             raise AbortError(_('Invalid site source: {0}').format(message))
 
         config = build_config(site.config_file, args)
-        site.generate(config)
+        director = Director(config, site)
+        director.produce()
         print(_('Complete.'))
     except AbortError as abort:
         logger.error(str(abort))
