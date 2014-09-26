@@ -6,6 +6,7 @@ import time
 from handroll import logger
 from handroll import template
 from handroll.composers import Composers
+from handroll.i18n import _
 from handroll.site import Site
 from handroll.template import catalog
 
@@ -40,9 +41,9 @@ class Director(object):
 
     def _generate_output(self, outdir, timing):
         if os.path.exists(outdir):
-            logger.info('Updating {0} ...'.format(outdir))
+            logger.info(_('Updating {outdir} ...').format(outdir=outdir))
         else:
-            logger.info('Creating {0} ...'.format(outdir))
+            logger.info(_('Creating {outdir} ...').format(outdir=outdir))
             os.mkdir(outdir)
 
         for dirpath, dirnames, filenames in os.walk(self.site.path):
@@ -57,14 +58,16 @@ class Director(object):
                     filenames.remove(template.DEFAULT_TEMPLATE)
 
             output_dirpath = self._get_output_dirpath(dirpath, outdir)
-            logger.info('Populating {0} ...'.format(output_dirpath))
+            logger.info(_('Populating {dirpath} ...').format(
+                dirpath=output_dirpath))
 
             # Create new directories in output.
             for dirname in dirnames:
                 out_dir = os.path.join(output_dirpath, dirname)
                 # The directory may already exist for updates.
                 if not os.path.exists(out_dir):
-                    logger.info('Creating directory {0} ...'.format(out_dir))
+                    logger.info(_('Creating directory {out_dir} ...').format(
+                        out_dir=out_dir))
                     os.mkdir(out_dir)
 
             for filename in filenames:
@@ -105,13 +108,15 @@ class Director(object):
         for skip_type in self.SKIP_EXTENSION:
             if filename.endswith(skip_type):
                 logger.debug(
-                    'Skipping {0} with skipped file type \'{1}\' ...'.format(
-                        filename, skip_type))
+                    _('Skipping {filename} with skipped file type'
+                      ' \'{skip_type}\' ...').format(
+                        filename=filename, skip_type=skip_type))
                 return True
 
         for skip_file in self.SKIP_FILES:
             if filename.endswith(skip_file):
-                logger.debug('Skipping special file {0} ...'.format(filename))
+                logger.debug(_('Skipping special file {filename} ...').format(
+                    filename=filename))
                 return True
 
         return False
