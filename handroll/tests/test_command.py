@@ -3,13 +3,13 @@
 import logging
 import os
 import tempfile
-import unittest
 
 from handroll import logger
 from handroll import command
+from handroll.tests import TestCase
 
 
-class TestArguments(unittest.TestCase):
+class TestArguments(TestCase):
 
     def setUp(self):
         # argv will always start with the command.
@@ -70,15 +70,10 @@ class TestArguments(unittest.TestCase):
         self.assertEqual(outdir, args.outdir)
 
 
-class TestMain(unittest.TestCase):
+class TestMain(TestCase):
 
     def setUp(self):
         self.arguments = ['/fake/bin/handroll']
-
-    def _make_valid_site(self):
-        site = tempfile.mkdtemp()
-        open(os.path.join(site, 'template.html'), 'w').close()
-        return site
 
     def test_verbose_sets_logging(self):
         logger.setLevel(logging.CRITICAL)
@@ -99,8 +94,8 @@ class TestMain(unittest.TestCase):
         self.assertRaises(SystemExit, command.main, self.arguments)
 
     def test_complete_site_generation(self):
-        site = self._make_valid_site()
-        self.arguments.append(site)
+        site = self.factory.make_site()
+        self.arguments.append(site.path)
         try:
             command.main(self.arguments)
         except SystemExit:

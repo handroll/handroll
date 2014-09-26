@@ -2,23 +2,18 @@
 
 import os
 import tempfile
-import unittest
 
 import mock
 
 from handroll.configuration import Configuration
 from handroll.site import Site
+from handroll.tests import TestCase
 
 
-class TestSite(unittest.TestCase):
-
-    def _make_valid_site(self):
-        site = tempfile.mkdtemp()
-        open(os.path.join(site, 'template.html'), 'w').close()
-        return Site(site)
+class TestSite(TestCase):
 
     def test_generates_with_user_specified_outdir(self):
-        site = self._make_valid_site()
+        site = self.factory.make_site()
         marker = 'marker.txt'
         open(os.path.join(site.path, marker), 'w').close()
         config = Configuration()
@@ -30,7 +25,7 @@ class TestSite(unittest.TestCase):
         self.assertTrue(os.path.exists(out_marker))
 
     def test_cleans_output(self):
-        site = self._make_valid_site()
+        site = self.factory.make_site()
         os.mkdir(site.output_root)
 
         site._clean_output()
@@ -38,7 +33,7 @@ class TestSite(unittest.TestCase):
         self.assertFalse(os.path.exists(site.output_root))
 
     def test_skips_file_with_skip_extension(self):
-        site = self._make_valid_site()
+        site = self.factory.make_site()
         skip = 'to_my_lou.swp'
         open(os.path.join(site.path, skip), 'w').close()
         config = Configuration()
@@ -49,7 +44,7 @@ class TestSite(unittest.TestCase):
         self.assertFalse(os.path.exists(out_skip))
 
     def test_skips_file_in_skip_list(self):
-        site = self._make_valid_site()
+        site = self.factory.make_site()
         skip = Site.CONFIG
         open(os.path.join(site.path, skip), 'w').close()
         config = Configuration()
@@ -60,7 +55,7 @@ class TestSite(unittest.TestCase):
         self.assertFalse(os.path.exists(out_skip))
 
     def test_skips_templates_directory(self):
-        site = self._make_valid_site()
+        site = self.factory.make_site()
         templates = os.path.join(site.path, 'templates')
         os.mkdir(templates)
         config = Configuration()
@@ -93,7 +88,7 @@ class TestSite(unittest.TestCase):
         os.chdir(original)
 
     def test_generates_output_directory(self):
-        site = self._make_valid_site()
+        site = self.factory.make_site()
         another = os.path.join(site.path, 'another')
         os.mkdir(another)
         config = Configuration()
@@ -106,7 +101,7 @@ class TestSite(unittest.TestCase):
     def test_does_timing(self):
         mock_time = mock.Mock()
         mock_time.return_value = 42.0  # Return float so that format works.
-        site = self._make_valid_site()
+        site = self.factory.make_site()
         open(os.path.join(site.path, 'fake.md'), 'w').close()
         config = Configuration()
         config.timing = True
