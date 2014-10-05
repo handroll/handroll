@@ -19,6 +19,9 @@ class Director(object):
     SKIP_EXTENSION = [
         '.swp',
     ]
+    SKIP_DIRECTORIES = set([
+        '.sass-cache',
+    ])
     SKIP_FILES = [
         Site.CONFIG,
     ]
@@ -39,6 +42,14 @@ class Director(object):
 
         self._generate_output(outdir, self.config.timing)
 
+    def prune_skip_directories(self, dirnames):
+        """Prune out any directories that should be skipped from the provided
+        list of directories.
+        """
+        for directory in dirnames:
+            if directory in self.SKIP_DIRECTORIES:
+                dirnames.remove(directory)
+
     def _generate_output(self, outdir, timing):
         if os.path.exists(outdir):
             logger.info(_('Updating {outdir} ...').format(outdir=outdir))
@@ -56,6 +67,8 @@ class Director(object):
                     dirnames.remove(template.TEMPLATES_DIR)
                 if template.DEFAULT_TEMPLATE in filenames:
                     filenames.remove(template.DEFAULT_TEMPLATE)
+
+            self.prune_skip_directories(dirnames)
 
             output_dirpath = self._get_output_dirpath(dirpath, outdir)
             logger.info(_('Populating {dirpath} ...').format(
