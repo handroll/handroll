@@ -6,6 +6,8 @@ Version 1.4, In Development
 
 * Sass support for ``.scss`` and ``.sass`` files.
 * Add internationalization (i18n).
+* Skip certain directories that should not be in output (like a Sass cache).
+* Include documentation in release.
 * Massive unit test improvements (100% coverage).
 
 Version 1.3, Released September 3, 2014

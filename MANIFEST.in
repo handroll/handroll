@@ -1,5 +1,6 @@
 include AUTHORS
 include LICENSE
 include README.md
-include docs/releases.rst
+recursive-include docs *
 recursive-include handroll/locale *
+prune docs/_build
