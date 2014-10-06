@@ -48,8 +48,6 @@ class SassComposer(Composer):
                 err))
 
     def build_command(self, source_file, output_file):
-        command = [self.sass, source_file, output_file]
+        command = [
+            self.sass, '--style', 'compressed', source_file, output_file]
         return command
-
-    # TODO: update compose to pass in a config object.
-    # TODO: accept arbitrary options from [sass] section

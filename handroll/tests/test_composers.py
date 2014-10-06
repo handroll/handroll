@@ -242,7 +242,9 @@ class TestSassComposer(unittest.TestCase):
         composer = SassComposer(fake_bin)
         source_file = '/in/sassy.scss'
         output_file = '/out/sass.css'
-        expected = [os.path.join(fake_bin, 'sass'), source_file, output_file]
+        expected = [
+            os.path.join(fake_bin, 'sass'), '--style', 'compressed',
+            source_file, output_file]
         actual = composer.build_command(source_file, output_file)
         self.assertEqual(expected, actual)
 
