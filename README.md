@@ -4,6 +4,7 @@ handroll
 [![PyPI version][fury]](https://pypi.python.org/pypi/handroll)
 [![Downloads][pypip]](https://warehouse.python.org/project/handroll/)
 [![Build Status][travis]](https://travis-ci.org/mblayman/handroll)
+[![Coverage Status][coveralls]](https://coveralls.io/r/mblayman/handroll)
 
 Website development is a finely crafted art.
 
@@ -73,3 +74,4 @@ documentation](http://handroll.readthedocs.org/en/latest/i18n.html).
 [fury]: https://badge.fury.io/py/handroll.png
 [pypip]: https://pypip.in/d/handroll/badge.png
 [travis]: https://travis-ci.org/mblayman/handroll.png?branch=master
+[coveralls]: https://coveralls.io/repos/mblayman/handroll/badge.png
