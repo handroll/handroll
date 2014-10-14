@@ -13,7 +13,7 @@ Translators will be added to the AUTHORS list of contributors for contributions
 of any size (unless you specifically do not want to be listed).
 
 If you have any problems, please feel free to `report an issue on Github
-<https://github.com/mblayman/handroll/issues/new>`_. If there is a new
+<https://github.com/handroll/handroll/issues/new>`_. If there is a new
 language that you want to translate for, please file an issue so it can be
 added (there is a small amount of software setup to make a new language work
 with handroll).

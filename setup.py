@@ -1,7 +1,7 @@
 # Copyright (c) 2014, Matt Layman
 """
 handroll development is done on `GitHub
-<https://github.com/mblayman/handroll>`_. Announcements and discussions happen
+<https://github.com/handroll/handroll>`_. Announcements and discussions happen
 on `Google Groups <https://groups.google.com/forum/#!forum/handroll>`_.
 
 handroll is a static website generator that uses markup languages like
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     setup(
         name='handroll',
         version=__version__,
-        url='https://github.com/mblayman/handroll',
+        url='https://github.com/handroll/handroll',
         license='BSD',
         author='Matt Layman',
         author_email='matthewlayman@gmail.com',
