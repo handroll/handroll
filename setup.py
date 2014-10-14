@@ -20,11 +20,12 @@ if __name__ == '__main__':
     long_description = __doc__ + '\n\n' + releases
 
     install_requires = [
-        'argparse',
+        'argparse',  # For Python 2.6 support
         'docutils',
         'Jinja2',
         'Markdown==2.4',  # 2.5 dropped support for Python 2.6.
         'mock',
+        'ordereddict',  # For textile support on Python 2.6
         'Pygments',
         'PyYAML',
         'textile',
