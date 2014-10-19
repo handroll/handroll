@@ -9,9 +9,19 @@ Markdown, ReStructuredText, and Textile.
 """
 
 from setuptools import find_packages, setup
+from setuptools.command.sdist import sdist
 import sys
 
 __version__ = '1.4'
+
+
+class Sdist(sdist):
+    """Custom ``sdist`` command to ensure that mo files are always created."""
+
+    def run(self):
+        self.run_command('compile_catalog')
+        # sdist is an old style class so super cannot be used.
+        sdist.run(self)
 
 if __name__ == '__main__':
     with open('docs/releases.rst', 'r') as f:
@@ -95,4 +105,5 @@ if __name__ == '__main__':
             'ReStructuredText',
             'Textile',
         ],
+        cmdclass={'sdist': Sdist},
     )
