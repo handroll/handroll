@@ -79,6 +79,9 @@ if __name__ == '__main__':
         zip_safe=False,
         platforms='any',
         install_requires=install_requires,
+        setup_requires=[
+            'Babel',  # sdist compiles po into mo.
+        ],
         classifiers=[
             'Development Status :: 5 - Production/Stable',
             'Environment :: Console',
