@@ -6,6 +6,7 @@ Version 1.4, In Development
 
 * Sass support for ``.scss`` and ``.sass`` files.
 * Add internationalization (i18n).
+* Translated to French, German, Italian, Portuguese, and Spanish.
 * Skip certain directories that should not be in output (like a Sass cache).
 * Moved project to a GitHub organization to separate from a personal account.
 * Include documentation in the release.

@@ -9,6 +9,7 @@ import requests
 API_URL = 'https://www.transifex.com/api/2'
 LANGUAGES = [
     'es',
+    'fr',
 ]
 
 
@@ -19,10 +20,11 @@ def fetch_po_for(language, username, password):
     params = {'file': '1'}
     r = requests.get(po_url, auth=(username, password), params=params)
     if r.status_code == 200:
+        r.encoding = 'utf-8'
         output_file = os.path.join(
             here, 'handroll', 'locale', language, 'LC_MESSAGES', 'handroll.po')
         with open(output_file, 'wb') as out:
-            out.write(r.text.decode('iso-8859-1').encode('utf-8'))
+            out.write(r.text.encode('utf-8'))
     else:
         print('Something went wrong fetching the {0} po file.'.format(
             language))

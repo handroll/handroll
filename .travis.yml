@@ -8,6 +8,7 @@ env:
   - TOX_ENV=flake8
   - TOX_ENV=cover
   - TOX_ENV=language_es
+  - TOX_ENV=language_fr
 install:
   - pip install tox
 script: tox -e $TOX_ENV

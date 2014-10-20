@@ -9,145 +9,145 @@ msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2014-09-26 00:18-0400\n"
-"PO-Revision-Date: 2014-10-09 03:00+0000\n"
+"PO-Revision-Date: 2014-10-16 03:04+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/projects/p/handroll/language/es/)\n"
+"Language-Team: French (http://www.transifex.com/projects/p/handroll/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: handroll/command.py:29
 msgid "Invalid site source: {0}"
-msgstr "Fuente de sitio no válido: {0}"
+msgstr "Invalid source du site: {0}"
 
 #: handroll/command.py:34
 msgid "Complete."
-msgstr "Completa."
+msgstr "Complète."
 
 #: handroll/command.py:37
 msgid "Incomplete."
-msgstr "Incompleta."
+msgstr "Incomplète."
 
 #: handroll/command.py:41
 msgid "A website generator for software artisans"
-msgstr "Un generador de sitio web para los artesanos de software"
+msgstr "Un générateur de site internet pour les artisans de logiciels"
 
 #: handroll/command.py:43
 msgid "the path to your website"
-msgstr "el camino a su sitio web"
+msgstr "le chemin de votre site"
 
 #: handroll/command.py:45
 msgid "an optional output directory to create or update if it already exists"
-msgstr "un directorio de salida opcional para crear o actualizar si ya existe"
+msgstr "un répertoire de sortie en option pour créer ou mettre à jour si elle existe déjà"
 
 #: handroll/command.py:48
 msgid "use verbose messages"
-msgstr "utilizar mensajes detallados"
+msgstr "utiliser des messages détaillés"
 
 #: handroll/command.py:50
 msgid "time the execution"
-msgstr "medir el tiempo de la ejecución"
+msgstr "le temps d'exécution"
 
 #: handroll/command.py:53
 msgid "show debug level messages"
-msgstr "mostrar mensajes de nivel de depuración"
+msgstr "afficher les messages de niveau de débogage"
 
 #: handroll/director.py:44
 msgid "Updating {outdir} ..."
-msgstr "Actualización de {outdir} ..."
+msgstr "Mise à jour {outdir} ..."
 
 #: handroll/director.py:46
 msgid "Creating {outdir} ..."
-msgstr "Creación de {outdir} ..."
+msgstr "Création {outdir} ..."
 
 #: handroll/director.py:61
 msgid "Populating {dirpath} ..."
-msgstr "Poblar {dirpath} ..."
+msgstr "Remplissage {dirpath} ..."
 
 #: handroll/director.py:69
 msgid "Creating directory {out_dir} ..."
-msgstr "Crear directorio {out_dir} ..."
+msgstr "Création du répertoire {out_dir} ..."
 
 #: handroll/director.py:111
 msgid "Skipping {filename} with skipped file type '{skip_type}' ..."
-msgstr "Saltarse {filename} con el tipo de archivo omitido '{skip_type}' ..."
+msgstr "Sauter {filename} avec le type de fichier ignoré '{skip_type}' ..."
 
 #: handroll/director.py:118
 msgid "Skipping special file {filename} ..."
-msgstr "Saltarse el archivo especial {filename} ..."
+msgstr "Sauter fichier spécial {filename} ..."
 
 #: handroll/site.py:32
 msgid "{path} is not a directory."
-msgstr "{path} no es un directorio."
+msgstr "{path} n'est pas un répertoire."
 
 #: handroll/site.py:55
 msgid ""
 "A handroll site was not found in {current_directory} or any of its parents."
-msgstr "Un sitio de handroll no se encontró en {current_directory} o cualquiera de sus padres."
+msgstr "Un site handroll n'a pas été trouvé dans {current_directory} ou un de ses parents."
 
 #: handroll/composers/__init__.py:71
 msgid "Skipping {filename} ... It is the same as {destination}."
-msgstr "Saltarse {filename} ... Es lo mismo que {destination}."
+msgstr "Sauter {filename} ... Il est le même que {destination}."
 
 #: handroll/composers/__init__.py:77
 msgid "{filename} differs from {destination} ..."
-msgstr "{filename} difiere de {destination} ..."
+msgstr "{filename} diffère de {destination} ..."
 
 #: handroll/composers/__init__.py:80
 msgid "Copying {filename} to {out_dir} ..."
-msgstr "Copiado {filename} a {out_dir} ..."
+msgstr "Copie {filename} et {out_dir} ..."
 
 #: handroll/composers/atom.py:41
 msgid "Generating Atom XML for {source_file} ..."
-msgstr "La generación de Atom XML para {source_file} ..."
+msgstr "Génération Atom XML pour {source_file} ..."
 
 #: handroll/composers/atom.py:49 handroll/composers/generic.py:52
 msgid "Skipping {filename} ... It is up to date."
-msgstr "Saltarse {filename} ... Es hasta la fecha."
+msgstr "Sauter {filename} ... Il est à jour."
 
 #: handroll/composers/atom.py:67
 msgid "Missing entries list."
-msgstr "Falta de lista entradas."
+msgstr "Manquant liste des entrées."
 
 #: handroll/composers/atom.py:77
 msgid "Invalid feed {source_file}: {error}"
-msgstr "Inválido feed {source_file}: {error}"
+msgstr "Flux non valide de {source_file}: {error}"
 
 #: handroll/composers/generic.py:47
 msgid "Generating HTML for {source_file} ..."
-msgstr "Generar HTML para {source_file} ..."
+msgstr "Génération HTML pour {source_file} ..."
 
 #: handroll/composers/sass.py:28
 msgid "Sass is not installed."
-msgstr "Sass no está instalado."
+msgstr "Sass n'est pas installé."
 
 #: handroll/composers/sass.py:35
 msgid "Generating CSS for {source_file} ..."
-msgstr "Generar CSS para {source_file} ..."
+msgstr "Génération CSS pour {source_file} ..."
 
 #: handroll/composers/sass.py:44
 msgid ""
 "Received output from sass:\n"
 "{0}"
-msgstr "Recibido salida de sass:\n{0}"
+msgstr "Reçu sortie du sass:\n{0}"
 
 #: handroll/composers/sass.py:47
 msgid ""
 "Sass failed to generate CSS:\n"
 "{0}"
-msgstr "Sass no pudo generar CSS:\n{0}"
+msgstr "Sass n'a pas réussi à générer des CSS:\n{0}"
 
 #: handroll/template/catalog.py:86
 msgid "No template found at {template_path}."
-msgstr "No se plantilla han encontrado en {template_path}."
+msgstr "Aucun gabarit trouvé à {template_path}."
 
 #: handroll/template/catalog.py:96
 msgid "Unknown template type provided for {template}."
-msgstr "Tipo de plantilla desconocido prevista {template}."
+msgstr "Inconnu type de modèle fourni pour {template}."
 
 #: handroll/template/j2.py:33
 msgid "An error exists in the Jinja template at {template}: {error}"
-msgstr "Existe un error en la plantilla de Jinja en {template}: {error}"
+msgstr "Une erreur existe dans le modèle Jinja à {template}: {error}"

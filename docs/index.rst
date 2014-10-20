@@ -63,6 +63,7 @@ what handroll is capable of doing.
 * Be extensible for users who want to write their own plugins (see
   :ref:`composers`).
 * Provide timing information to see file processing time.
+* Translated to many different languages.
 
 The remaining documentation provides additional details about all listed
 features.
