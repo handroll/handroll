@@ -1,0 +1,153 @@
+# Translations template for handroll.
+# Copyright (C) 2014 Matt Layman
+# This file is distributed under the same license as the handroll project.
+# 
+# Translators:
+# Matt Layman <matthewlayman@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: handroll\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-09-26 00:18-0400\n"
+"PO-Revision-Date: 2014-10-19 14:02+0000\n"
+"Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/handroll/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 1.3\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: handroll/command.py:29
+msgid "Invalid site source: {0}"
+msgstr "Fonte do site inválida: {0}"
+
+#: handroll/command.py:34
+msgid "Complete."
+msgstr "Completa."
+
+#: handroll/command.py:37
+msgid "Incomplete."
+msgstr "Incompletos."
+
+#: handroll/command.py:41
+msgid "A website generator for software artisans"
+msgstr "Um gerador de site para artesãos de software"
+
+#: handroll/command.py:43
+msgid "the path to your website"
+msgstr "o caminho para o seu site"
+
+#: handroll/command.py:45
+msgid "an optional output directory to create or update if it already exists"
+msgstr "um diretório de saída opcional para criar ou atualizar se ele já existe"
+
+#: handroll/command.py:48
+msgid "use verbose messages"
+msgstr "usar mensagens detalhadas"
+
+#: handroll/command.py:50
+msgid "time the execution"
+msgstr "tempo de execução"
+
+#: handroll/command.py:53
+msgid "show debug level messages"
+msgstr "mostrar mensagens de depuração"
+
+#: handroll/director.py:44
+msgid "Updating {outdir} ..."
+msgstr "Atualizando {outdir} ..."
+
+#: handroll/director.py:46
+msgid "Creating {outdir} ..."
+msgstr "Criando {outdir} ..."
+
+#: handroll/director.py:61
+msgid "Populating {dirpath} ..."
+msgstr "Preenchendo {dirpath} ..."
+
+#: handroll/director.py:69
+msgid "Creating directory {out_dir} ..."
+msgstr "Criando diretório {out_dir} ..."
+
+#: handroll/director.py:111
+msgid "Skipping {filename} with skipped file type '{skip_type}' ..."
+msgstr "Ignorando {filename} com o tipo de arquivo ignorado '{skip_type}' ..."
+
+#: handroll/director.py:118
+msgid "Skipping special file {filename} ..."
+msgstr "Ignorando arquivo especial {filename} ..."
+
+#: handroll/site.py:32
+msgid "{path} is not a directory."
+msgstr "{path} não é um diretório."
+
+#: handroll/site.py:55
+msgid ""
+"A handroll site was not found in {current_directory} or any of its parents."
+msgstr "Um site handroll não foi encontrado em {current_directory} ou qualquer de seus pais."
+
+#: handroll/composers/__init__.py:71
+msgid "Skipping {filename} ... It is the same as {destination}."
+msgstr "Ignorando {filename} ... É o mesmo que {destination}."
+
+#: handroll/composers/__init__.py:77
+msgid "{filename} differs from {destination} ..."
+msgstr "{filename} difere de {destination} ..."
+
+#: handroll/composers/__init__.py:80
+msgid "Copying {filename} to {out_dir} ..."
+msgstr "Cópia {filename} para {out_dir} ..."
+
+#: handroll/composers/atom.py:41
+msgid "Generating Atom XML for {source_file} ..."
+msgstr "Gerando Atom XML para {source_file} ..."
+
+#: handroll/composers/atom.py:49 handroll/composers/generic.py:52
+msgid "Skipping {filename} ... It is up to date."
+msgstr "Ignorando {filename} ... É até à data."
+
+#: handroll/composers/atom.py:67
+msgid "Missing entries list."
+msgstr "Faltando lista entradas."
+
+#: handroll/composers/atom.py:77
+msgid "Invalid feed {source_file}: {error}"
+msgstr "Lista inválido {source_file}: {error}"
+
+#: handroll/composers/generic.py:47
+msgid "Generating HTML for {source_file} ..."
+msgstr "Gerar HTML para {source_file} ..."
+
+#: handroll/composers/sass.py:28
+msgid "Sass is not installed."
+msgstr "Sass não está instalado."
+
+#: handroll/composers/sass.py:35
+msgid "Generating CSS for {source_file} ..."
+msgstr "Gerando CSS para {source_file} ..."
+
+#: handroll/composers/sass.py:44
+msgid ""
+"Received output from sass:\n"
+"{0}"
+msgstr "Saída recebeu de sass:\n{0}"
+
+#: handroll/composers/sass.py:47
+msgid ""
+"Sass failed to generate CSS:\n"
+"{0}"
+msgstr "Sass não conseguiu gerar CSS:\n{0}"
+
+#: handroll/template/catalog.py:86
+msgid "No template found at {template_path}."
+msgstr "Nenhum modelo encontrado em {template_path}."
+
+#: handroll/template/catalog.py:96
+msgid "Unknown template type provided for {template}."
+msgstr "Tipo de modelo Unknown prevista {template}."
+
+#: handroll/template/j2.py:33
+msgid "An error exists in the Jinja template at {template}: {error}"
+msgstr "Existe um erro no modelo de Jinja em {template}: {error}"

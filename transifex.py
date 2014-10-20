@@ -8,12 +8,16 @@ import requests
 
 API_URL = 'https://www.transifex.com/api/2'
 LANGUAGES = [
+    'de',
     'es',
     'fr',
+    'it',
+    'pt_BR',
 ]
 
 
 def fetch_po_for(language, username, password):
+    print 'Downloading po file for {0} ...'.format(language)
     po_api = '/project/handroll/resource/handrollpot/translation/{0}/'.format(
         language)
     po_url = API_URL + po_api
