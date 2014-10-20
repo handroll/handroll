@@ -3,6 +3,7 @@
 import filecmp
 import os
 import shutil
+import warnings
 
 from pkg_resources import iter_entry_points
 
@@ -30,6 +31,21 @@ class Composers(object):
         self._available_composers = {}
         self._composers = {}
         self.default_composer = CopyComposer()
+
+        # pkg_resources emits an annoying message related to security that is
+        # completely irritating for an average user to address. Filter it out.
+        #
+        # For the record, the warning is:
+        #
+        # pkg_resources.py:991: UserWarning: ~/.python-eggs is writable by
+        # group/others and vulnerable to attack when used with
+        # get_resource_filename. Consider a more secure location (set with
+        # .set_extraction_path or the PYTHON_EGG_CACHE environment variable).
+        #
+        # handroll assumes a level of trust in whatever is placed in the
+        # ``handroll.composers`` entry points.
+        warnings.filterwarnings('ignore', '.*get_resource_filename.*')
+
         for entry_point in iter_entry_points('handroll.composers'):
             cls = entry_point.load()
             self._available_composers[entry_point.name] = cls
