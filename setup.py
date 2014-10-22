@@ -35,6 +35,7 @@ if __name__ == '__main__':
         'Jinja2',
         'Markdown==2.4',  # 2.5 dropped support for Python 2.6.
         'mock',
+        'ordereddict',  # For textile support on Python 2.6
         'Pygments',
         'PyYAML',
         'textile',
