@@ -1,0 +1,39 @@
+# Copyright (c) 2014, Matt Layman
+
+import tempfile
+
+import mock
+
+from handroll.configuration import Configuration
+from handroll.director import Director
+from handroll.server import serve
+from handroll.tests import TestCase
+
+
+class TestServer(TestCase):
+
+    def setUp(self):
+        config = Configuration()
+        config.outdir = tempfile.mkdtemp()
+        self.site = self.factory.make_site()
+        self.director = Director(config, self.site)
+
+    @mock.patch('handroll.server.SocketServer.TCPServer')
+    def test_serves_forever(self, tcp_server):
+        httpd = mock.MagicMock()
+        tcp_server.return_value = httpd
+
+        serve(self.site, self.director)
+
+        self.assertTrue(httpd.serve_forever.called)
+
+    @mock.patch('handroll.server.SocketServer.TCPServer')
+    def test_server_quits_on_keyboard_interrupt(self, tcp_server):
+        httpd = mock.MagicMock()
+        httpd.serve_forever.side_effect = KeyboardInterrupt
+        tcp_server.return_value = httpd
+
+        try:
+            serve(self.site, self.director)
+        except KeyboardInterrupt:
+            self.fail('Server did not quit gracefully.')

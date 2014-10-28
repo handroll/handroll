@@ -57,6 +57,20 @@ class TestArguments(TestCase):
         args = command.parse_args(argv)
         self.assertTrue(args.timing)
 
+    def test_watch_argument(self):
+        args = command.parse_args(self.arguments)
+        self.assertFalse(args.watch)
+
+        argv = list(self.arguments)
+        argv.append('-w')
+        args = command.parse_args(argv)
+        self.assertTrue(args.watch)
+
+        argv = list(self.arguments)
+        argv.append('--watch')
+        args = command.parse_args(argv)
+        self.assertTrue(args.watch)
+
     def test_site_argument(self):
         site = 'fake_site'
         self.arguments.append(site)

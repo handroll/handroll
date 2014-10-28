@@ -32,15 +32,19 @@ class Director(object):
         self.catalog = catalog.TemplateCatalog(site.path)
         self.composers = Composers()
 
-    def produce(self):
-        """Walk the site tree and generate the output."""
+    def lookup_outdir(self):
+        """Look up the output directory based on what configuration is
+        available.
+        """
         # When no output directory is given, the default will be used.
         if self.config.outdir is None:
-            outdir = self.site.output_root
+            return self.site.output_root
         else:
-            outdir = self.config.outdir
+            return self.config.outdir
 
-        self._generate_output(outdir, self.config.timing)
+    def produce(self):
+        """Walk the site tree and generate the output."""
+        self._generate_output(self.lookup_outdir(), self.config.timing)
 
     def prune_skip_directories(self, dirnames):
         """Prune out any directories that should be skipped from the provided
