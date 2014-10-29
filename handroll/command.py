@@ -3,6 +3,7 @@
 
 import argparse
 import logging
+import os
 import sys
 
 from handroll import logger
@@ -61,5 +62,12 @@ def parse_args(argv):
         '-w', '--watch', action='store_true',
         help=_('watch the site for changes and'
                ' run a web server in the output directory'))
+
     # argparse expects the executable to be removed from argv.
-    return parser.parse_args(argv[1:])
+    args = parser.parse_args(argv[1:])
+
+    # Normalize the site path so that all sites are handled consistently.
+    if args.site:
+        args.site = args.site.rstrip(os.sep)
+
+    return args

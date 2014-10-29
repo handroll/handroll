@@ -77,6 +77,14 @@ class TestArguments(TestCase):
         args = command.parse_args(self.arguments)
         self.assertEqual(site, args.site)
 
+    def test_site_argument_is_normalized(self):
+        """Test that trailing path separator is removed so that a site is
+        consistently handled."""
+        site = 'fake_site' + os.sep
+        self.arguments.append(site)
+        args = command.parse_args(self.arguments)
+        self.assertEqual('fake_site', args.site)
+
     def test_outdir_argument(self):
         outdir = 'fake_outdir'
         self.arguments.extend(['fake_site', outdir])
