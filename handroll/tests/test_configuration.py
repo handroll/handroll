@@ -1,6 +1,7 @@
 # Copyright (c) 2014, Matt Layman
 
 import inspect
+import os
 import tempfile
 import unittest
 
@@ -23,7 +24,8 @@ class TestConfiguration(unittest.TestCase):
 
         config.load_from_arguments(args)
 
-        self.assertEqual(args.outdir, config.outdir)
+        expected = os.path.join(os.getcwd(), args.outdir)
+        self.assertEqual(expected, config.outdir)
 
     def test_build_config_from_file(self):
         conf_file = inspect.cleandoc(
@@ -35,4 +37,5 @@ class TestConfiguration(unittest.TestCase):
 
         config = configuration.build_config(f.name, args)
 
-        self.assertEqual('out', config.outdir)
+        expected = os.path.join(os.getcwd(), 'out')
+        self.assertEqual(expected, config.outdir)

@@ -13,13 +13,18 @@ class SiteHandler(FileSystemEventHandler):
         self.director = director
 
     def on_created(self, event):
-        # TODO: handle the event
-        print 'on created'
+        if event.is_directory:
+            self.director.process_directory(event.src_path)
+        else:
+            self.director.process_file(event.src_path)
 
     def on_modified(self, event):
-        # TODO: handle the event
-        print 'on modified'
+        # Only pay attention to modified files, not directories.
+        if not event.is_directory:
+            self.director.process_file(event.src_path)
 
     def on_moved(self, event):
-        # TODO: handle the event
-        print 'on moved'
+        if event.is_directory:
+            self.director.process_directory(event.dest_path)
+        else:
+            self.director.process_file(event.dest_path)

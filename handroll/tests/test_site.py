@@ -30,3 +30,15 @@ class TestSite(TestCase):
 
         self.assertEqual(valid_site, site.path)
         os.chdir(original)
+
+    def test_site_has_absolute_path(self):
+        original = os.getcwd()
+        tempdir = tempfile.mkdtemp()
+        site_path = os.path.join(tempdir, 'site')
+        os.mkdir(site_path)
+        os.chdir(tempdir)
+
+        site = Site('site')
+
+        self.assertEqual(site_path, site.path)
+        os.chdir(original)

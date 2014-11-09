@@ -11,6 +11,8 @@ class Configuration(object):
     """Configuration data used by handroll"""
 
     def __init__(self):
+        # The output directory should be absolute. That constraint will make it
+        # easy to check if a filepath is in the output directory.
         self.outdir = None
         self.timing = None
 
@@ -19,7 +21,7 @@ class Configuration(object):
         arguments. Arguments have the highest precedent so overwrite any other
         value if a value exists."""
         if args.outdir is not None:
-            self.outdir = args.outdir
+            self.outdir = os.path.abspath(args.outdir)
 
         if args.timing is not None:
             self.timing = args.timing
@@ -30,7 +32,8 @@ class Configuration(object):
             parser = ConfigParser()
             parser.readfp(f)
             if parser.has_option('site', 'outdir'):
-                self.outdir = os.path.expanduser(parser.get('site', 'outdir'))
+                self.outdir = os.path.abspath(os.path.expanduser(
+                    parser.get('site', 'outdir')))
 
 
 def build_config(config_file, args):

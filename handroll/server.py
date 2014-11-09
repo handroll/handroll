@@ -43,7 +43,7 @@ def serve(site, director):
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
+        logger.info(_('\nBye.'))
         observer.stop()
 
     observer.join()
-    logger.info(_('\nBye.'))

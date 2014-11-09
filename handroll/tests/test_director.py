@@ -99,3 +99,38 @@ class TestDirector(TestCase):
         self.assertEqual(2, len(dirnames))
         self.assertEqual('keep', dirnames[0])
         self.assertEqual('another_keeper', dirnames[1])
+
+    def test_process_file_ignores_files_already_in_output(self):
+        # This condition is checked because the output directory can be within
+        # the source (e.g., the default of storing results in 'output'). If
+        # the watcher is watching for any changes in site source, then
+        # processing files in the output directory could lead the watcher into
+        # an infinite loop.
+        config = Configuration()
+        site = self.factory.make_site()
+        config.outdir = os.path.join(site.path, 'outdir')
+        os.mkdir(config.outdir)
+        marker = os.path.join(config.outdir, 'marker.md')
+        open(marker, 'w').close()
+        director = Director(config, site)
+
+        director.process_file(marker)
+
+        marker_output = os.path.join(config.outdir, 'marker.html')
+        self.assertFalse(os.path.exists(marker_output))
+
+    def test_process_directory_ignores_directories_already_in_output(self):
+        # Avoid processing directories in output for the same reason that
+        # file processing is skipped.
+        config = Configuration()
+        site = self.factory.make_site()
+        config.outdir = os.path.join(site.path, 'outdir')
+        os.mkdir(config.outdir)
+        directory = os.path.join(config.outdir, 'directory')
+        os.mkdir(directory)
+        director = Director(config, site)
+
+        director.process_directory(directory)
+
+        directory_output = os.path.join(config.outdir, 'outdir', 'directory')
+        self.assertFalse(os.path.exists(directory_output))
