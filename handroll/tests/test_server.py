@@ -19,7 +19,7 @@ class TestServer(TestCase):
         self.director = Director(config, self.site)
 
     @mock.patch('handroll.server.Observer')
-    @mock.patch('handroll.server.SocketServer.TCPServer')
+    @mock.patch('handroll.server.socketserver.TCPServer')
     def test_serves_forever(self, tcp_server, observer_cls):
         httpd = mock.MagicMock()
         tcp_server.return_value = httpd
@@ -32,7 +32,7 @@ class TestServer(TestCase):
         self.assertTrue(observer.start.called)
 
     @mock.patch('handroll.server.Observer')
-    @mock.patch('handroll.server.SocketServer.TCPServer')
+    @mock.patch('handroll.server.socketserver.TCPServer')
     def test_server_quits_on_keyboard_interrupt(
             self, tcp_server, observer_cls):
         httpd = mock.MagicMock()

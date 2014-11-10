@@ -2,8 +2,16 @@
 
 import logging
 import os
-import SimpleHTTPServer
-import SocketServer
+try:
+    from SimpleHTTPServer import SimpleHTTPRequestHandler
+except ImportError:
+    # Python 3 moved the server.
+    from http.server import SimpleHTTPRequestHandler
+try:
+    import SocketServer as socketserver
+except ImportError:
+    # Python 3 renamed the SocketServer module.
+    import socketserver
 
 from watchdog.observers import Observer
 
@@ -34,8 +42,7 @@ def serve(site, director):
     outdir = director.lookup_outdir()
     os.chdir(outdir)
 
-    handler = SimpleHTTPServer.SimpleHTTPRequestHandler
-    httpd = SocketServer.TCPServer(('', PORT), handler)
+    httpd = socketserver.TCPServer(('', PORT), SimpleHTTPRequestHandler)
 
     logger.info(
         _('Serving {outdir} at http://localhost:{port}/.'
