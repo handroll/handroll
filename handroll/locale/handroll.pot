@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll 1.4\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-10-19 10:28-0400\n"
+"POT-Creation-Date: 2014-11-09 22:24-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,85 +17,101 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: handroll/command.py:29
+#: handroll/command.py:31
 msgid "Invalid site source: {0}"
 msgstr ""
 
-#: handroll/command.py:34
+#: handroll/command.py:38
 msgid "Complete."
 msgstr ""
 
-#: handroll/command.py:37
+#: handroll/command.py:41
 msgid "Incomplete."
 msgstr ""
 
-#: handroll/command.py:41
+#: handroll/command.py:48
 msgid "A website generator for software artisans"
 msgstr ""
 
-#: handroll/command.py:43
+#: handroll/command.py:50
 msgid "the path to your website"
 msgstr ""
 
-#: handroll/command.py:45
+#: handroll/command.py:52
 msgid "an optional output directory to create or update if it already exists"
 msgstr ""
 
-#: handroll/command.py:48
+#: handroll/command.py:55
 msgid "use verbose messages"
 msgstr ""
 
-#: handroll/command.py:50
+#: handroll/command.py:57
 msgid "time the execution"
 msgstr ""
 
-#: handroll/command.py:53
+#: handroll/command.py:60
 msgid "show debug level messages"
 msgstr ""
 
-#: handroll/director.py:55
+#: handroll/command.py:63
+msgid "watch the site for changes and run a web server in the output directory"
+msgstr ""
+
+#: handroll/director.py:95
 msgid "Updating {outdir} ..."
 msgstr ""
 
-#: handroll/director.py:57
+#: handroll/director.py:97
 msgid "Creating {outdir} ..."
 msgstr ""
 
-#: handroll/director.py:74
+#: handroll/director.py:114
 msgid "Populating {dirpath} ..."
 msgstr ""
 
-#: handroll/director.py:82
+#: handroll/director.py:122
 msgid "Creating directory {out_dir} ..."
 msgstr ""
 
-#: handroll/director.py:124
-msgid "Skipping {filename} with skipped file type '{skip_type}' ..."
+#: handroll/director.py:163
+msgid "Skipping {filename} with skipped file type ..."
 msgstr ""
 
-#: handroll/director.py:131
+#: handroll/director.py:168
 msgid "Skipping special file {filename} ..."
 msgstr ""
 
-#: handroll/site.py:32
+#: handroll/server.py:49
+msgid ""
+"Serving {outdir} at http://localhost:{port}/.\n"
+"Press Ctrl-C to quit."
+msgstr ""
+
+#: handroll/server.py:53
+msgid ""
+"\n"
+"Bye."
+msgstr ""
+
+#: handroll/site.py:36
 msgid "{path} is not a directory."
 msgstr ""
 
-#: handroll/site.py:55
+#: handroll/site.py:59
 msgid ""
 "A handroll site was not found in {current_directory} or any of its "
 "parents."
 msgstr ""
 
-#: handroll/composers/__init__.py:71
+#: handroll/composers/__init__.py:87
 msgid "Skipping {filename} ... It is the same as {destination}."
 msgstr ""
 
-#: handroll/composers/__init__.py:77
+#: handroll/composers/__init__.py:93
 msgid "{filename} differs from {destination} ..."
 msgstr ""
 
-#: handroll/composers/__init__.py:80
+#: handroll/composers/__init__.py:96
 msgid "Copying {filename} to {out_dir} ..."
 msgstr ""
 
