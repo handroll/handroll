@@ -4,6 +4,8 @@ Releases
 Version 1.4, In Development
 ---------------------------
 
+* A development server (accessible from the ``watch`` flag) will monitor a site
+  and generate new output files as the source is modified.
 * Sass support for ``.scss`` and ``.sass`` files.
 * Add internationalization (i18n).
 * Translated to French, German, Italian, Portuguese, and Spanish.
