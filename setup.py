@@ -39,6 +39,7 @@ if __name__ == '__main__':
         'Pygments',
         'PyYAML',
         'textile',
+        'watchdog',
         'werkzeug',
     ]
 

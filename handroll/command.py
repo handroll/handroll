@@ -3,6 +3,7 @@
 
 import argparse
 import logging
+import os
 import sys
 
 from handroll import logger
@@ -10,6 +11,7 @@ from handroll.configuration import build_config
 from handroll.director import Director
 from handroll.exceptions import AbortError
 from handroll.i18n import _
+from handroll.server import serve
 from handroll.site import Site
 
 
@@ -31,10 +33,15 @@ def main(argv=sys.argv):
         config = build_config(site.config_file, args)
         director = Director(config, site)
         director.produce()
-        print(_('Complete.'))
+
+        if not args.watch:
+            print(_('Complete.'))
     except AbortError as abort:
         logger.error(str(abort))
         sys.exit(_('Incomplete.'))
+
+    if args.watch:
+        serve(site, director)
 
 
 def parse_args(argv):
@@ -51,5 +58,16 @@ def parse_args(argv):
     parser.add_argument(
         '-d', '--debug', action='store_true',
         help=_('show debug level messages'))
+    parser.add_argument(
+        '-w', '--watch', action='store_true',
+        help=_('watch the site for changes and'
+               ' run a web server in the output directory'))
+
     # argparse expects the executable to be removed from argv.
-    return parser.parse_args(argv[1:])
+    args = parser.parse_args(argv[1:])
+
+    # Normalize the site path so that all sites are handled consistently.
+    if args.site:
+        args.site = args.site.rstrip(os.sep)
+
+    return args

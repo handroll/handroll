@@ -18,6 +18,10 @@ class Site(object):
         if self.path is None:
             self.path = self._find_site_root_from(os.getcwd())
 
+        # Make sure that the path is absolute.
+        if os.path.isdir(self.path):
+            self.path = os.path.abspath(self.path)
+
     @property
     def config_file(self):
         return os.path.join(self.path, self.CONFIG)

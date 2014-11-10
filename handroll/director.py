@@ -16,15 +16,19 @@ class Director(object):
     site input. Each site file is delegated to a composer to generate content.
     """
 
-    SKIP_EXTENSION = [
+    SKIP_EXTENSION = (
+        '~',
         '.swp',
-    ]
+        '.swpx',
+        '.swx',
+        '4913',  # Vim makes a '4913' file for file system checking. Seriously.
+    )
     SKIP_DIRECTORIES = set([
         '.sass-cache',
     ])
-    SKIP_FILES = [
+    SKIP_FILES = (
         Site.CONFIG,
-    ]
+    )
 
     def __init__(self, config, site):
         self.config = config
@@ -32,15 +36,51 @@ class Director(object):
         self.catalog = catalog.TemplateCatalog(site.path)
         self.composers = Composers()
 
-    def produce(self):
-        """Walk the site tree and generate the output."""
+    def lookup_outdir(self):
+        """Look up the output directory based on what configuration is
+        available.
+        """
         # When no output directory is given, the default will be used.
         if self.config.outdir is None:
-            outdir = self.site.output_root
+            return self.site.output_root
         else:
-            outdir = self.config.outdir
+            return self.config.outdir
 
-        self._generate_output(outdir, self.config.timing)
+    def process_file(self, filepath):
+        """Process a site source file, determine its output location, and
+        trigger its composer.
+
+        This is primarily used for the watchdog handler and would be slow if
+        used in the main ``produce`` method.
+        """
+        # Because all paths should be absolute, it should be simple to find out
+        # if this file is in the output directory. If so, skip it.
+        if filepath.startswith(self.lookup_outdir()):
+            return
+
+        dirname = os.path.dirname(filepath)
+        output_dirpath = self._get_output_dirpath(
+            dirname, self.lookup_outdir())
+        self._process_file(filepath, output_dirpath, self.config.timing)
+
+    def process_directory(self, directory):
+        """Process a site directory by creating its equivalent in output.
+
+        This is used by the watchdog.
+        """
+        # Because all paths should be absolute, it should be simple to find out
+        # if this directory is in the output directory. If so, skip it.
+        if directory.startswith(self.lookup_outdir()):
+            return
+
+        dirname, basedir = os.path.split(directory)
+        output_dirpath = self._get_output_dirpath(
+            dirname, self.lookup_outdir())
+        os.mkdir(os.path.join(output_dirpath, basedir))
+
+    def produce(self):
+        """Walk the site tree and generate the output."""
+        self._generate_output(self.lookup_outdir(), self.config.timing)
 
     def prune_skip_directories(self, dirnames):
         """Prune out any directories that should be skipped from the provided
@@ -118,18 +158,15 @@ class Director(object):
 
     def _should_skip(self, filename):
         """Determine if the file type should be skipped."""
-        for skip_type in self.SKIP_EXTENSION:
-            if filename.endswith(skip_type):
-                logger.debug(
-                    _('Skipping {filename} with skipped file type'
-                      ' \'{skip_type}\' ...').format(
-                        filename=filename, skip_type=skip_type))
-                return True
-
-        for skip_file in self.SKIP_FILES:
-            if filename.endswith(skip_file):
-                logger.debug(_('Skipping special file {filename} ...').format(
+        if filename.endswith(self.SKIP_EXTENSION):
+            logger.debug(
+                _('Skipping {filename} with skipped file type ...').format(
                     filename=filename))
-                return True
+            return True
+
+        if filename.endswith(self.SKIP_FILES):
+            logger.debug(_('Skipping special file {filename} ...').format(
+                filename=filename))
+            return True
 
         return False

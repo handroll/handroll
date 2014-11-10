@@ -48,6 +48,8 @@ what handroll is capable of doing.
 * Generate a proper `Atom XML
   <http://en.wikipedia.org/wiki/Atom_%28standard%29>`_ feed from metadata
   stored in JSON.
+* Run a development server with the ``watch`` flag to monitor your site and
+  update the output immediately as you make changes.
 * Find the site source root so you don't have to. If you're anywhere in your
   site's source, calling ``handroll`` without the site input parameter will
   trigger handroll to look for your site's root directory.
@@ -75,6 +77,7 @@ Documentation
     :maxdepth: 2
 
     configuration
+    server
     composers
     templates
     i18n
