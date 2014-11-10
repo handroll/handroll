@@ -4,6 +4,8 @@ import logging
 import os
 import tempfile
 
+import mock
+
 from handroll import logger
 from handroll import command
 from handroll.tests import TestCase
@@ -122,3 +124,12 @@ class TestMain(TestCase):
             command.main(self.arguments)
         except SystemExit:
             self.fail('Failed to completely generate site.')
+
+    @mock.patch('handroll.command.serve')
+    def test_development_server_served(self, serve):
+        site = self.factory.make_site()
+        self.arguments.extend(['-w', site.path])
+
+        command.main(self.arguments)
+
+        self.assertTrue(serve.called)
