@@ -4,12 +4,12 @@ import logging
 import os
 try:
     from SimpleHTTPServer import SimpleHTTPRequestHandler
-except ImportError:
+except ImportError:  # NOQA
     # Python 3 moved the server.
     from http.server import SimpleHTTPRequestHandler
 try:
     import SocketServer as socketserver
-except ImportError:
+except ImportError:  # NOQA
     # Python 3 renamed the SocketServer module.
     import socketserver
 
