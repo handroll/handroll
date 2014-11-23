@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-09-26 00:18-0400\n"
-"PO-Revision-Date: 2014-10-19 02:49+0000\n"
+"POT-Creation-Date: 2014-11-09 22:24-0500\n"
+"PO-Revision-Date: 2014-11-23 13:29+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/handroll/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -19,84 +19,101 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: handroll/command.py:29
+#: handroll/command.py:31
 msgid "Invalid site source: {0}"
 msgstr "Fonte sito non valido: {0}"
 
-#: handroll/command.py:34
+#: handroll/command.py:38
 msgid "Complete."
 msgstr "Complete."
 
-#: handroll/command.py:37
+#: handroll/command.py:41
 msgid "Incomplete."
 msgstr "Incompleta."
 
-#: handroll/command.py:41
+#: handroll/command.py:48
 msgid "A website generator for software artisans"
 msgstr "Un generatore di sito web per artigiani software"
 
-#: handroll/command.py:43
+#: handroll/command.py:50
 msgid "the path to your website"
 msgstr "il percorso al tuo sito web"
 
-#: handroll/command.py:45
+#: handroll/command.py:52
 msgid "an optional output directory to create or update if it already exists"
 msgstr "una directory di output opzionale per creare o aggiornare se esiste già"
 
-#: handroll/command.py:48
+#: handroll/command.py:55
 msgid "use verbose messages"
 msgstr "utilizzare messaggi verbose"
 
-#: handroll/command.py:50
+#: handroll/command.py:57
 msgid "time the execution"
 msgstr "tempo di esecuzione"
 
-#: handroll/command.py:53
+#: handroll/command.py:60
 msgid "show debug level messages"
 msgstr "visualizzare i messaggi di debug"
 
-#: handroll/director.py:44
+#: handroll/command.py:63
+msgid ""
+"watch the site for changes and run a web server in the output directory"
+msgstr "guardare il sito per le modifiche e gestire un server Web nella directory di output"
+
+#: handroll/director.py:95
 msgid "Updating {outdir} ..."
 msgstr "Aggiornamento {outdir} ..."
 
-#: handroll/director.py:46
+#: handroll/director.py:97
 msgid "Creating {outdir} ..."
 msgstr "Creazione {outdir} ..."
 
-#: handroll/director.py:61
+#: handroll/director.py:114
 msgid "Populating {dirpath} ..."
 msgstr "Popolare {dirpath} ..."
 
-#: handroll/director.py:69
+#: handroll/director.py:122
 msgid "Creating directory {out_dir} ..."
 msgstr "Creazione di direttorio {out_dir} ..."
 
-#: handroll/director.py:111
-msgid "Skipping {filename} with skipped file type '{skip_type}' ..."
-msgstr "Saltare {filename} con il tipo di file ignorato '{skip_type}' ..."
+#: handroll/director.py:163
+msgid "Skipping {filename} with skipped file type ..."
+msgstr "Saltare {filename} con il tipo di file ignorato ..."
 
-#: handroll/director.py:118
+#: handroll/director.py:168
 msgid "Skipping special file {filename} ..."
 msgstr "Salto speciale file {filename} ..."
 
-#: handroll/site.py:32
+#: handroll/server.py:49
+msgid ""
+"Serving {outdir} at http://localhost:{port}/.\n"
+"Press Ctrl-C to quit."
+msgstr "Servire {outdir} all'indirizzo http://localhost:{port}/.\nPremere Ctrl-C per uscire."
+
+#: handroll/server.py:53
+msgid ""
+"\n"
+"Bye."
+msgstr "\nArrivederci."
+
+#: handroll/site.py:36
 msgid "{path} is not a directory."
 msgstr "{path} non è una direttorio."
 
-#: handroll/site.py:55
+#: handroll/site.py:59
 msgid ""
 "A handroll site was not found in {current_directory} or any of its parents."
 msgstr "Un sito handroll non è stato trovato in {current_directory} o uno qualsiasi dei suoi genitori."
 
-#: handroll/composers/__init__.py:71
+#: handroll/composers/__init__.py:87
 msgid "Skipping {filename} ... It is the same as {destination}."
 msgstr "Saltare {filename} ... E 'lo stesso che {destination}."
 
-#: handroll/composers/__init__.py:77
+#: handroll/composers/__init__.py:93
 msgid "{filename} differs from {destination} ..."
 msgstr "{filename} differisce da {destination} ..."
 
-#: handroll/composers/__init__.py:80
+#: handroll/composers/__init__.py:96
 msgid "Copying {filename} to {out_dir} ..."
 msgstr "Copia {filename} a {out_dir} ..."
 

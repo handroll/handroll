@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-09-26 00:18-0400\n"
-"PO-Revision-Date: 2014-10-16 03:04+0000\n"
+"POT-Creation-Date: 2014-11-09 22:24-0500\n"
+"PO-Revision-Date: 2014-11-23 13:21+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
 "Language-Team: French (http://www.transifex.com/projects/p/handroll/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -19,84 +19,101 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: handroll/command.py:29
+#: handroll/command.py:31
 msgid "Invalid site source: {0}"
 msgstr "Invalid source du site: {0}"
 
-#: handroll/command.py:34
+#: handroll/command.py:38
 msgid "Complete."
 msgstr "Complète."
 
-#: handroll/command.py:37
+#: handroll/command.py:41
 msgid "Incomplete."
 msgstr "Incomplète."
 
-#: handroll/command.py:41
+#: handroll/command.py:48
 msgid "A website generator for software artisans"
 msgstr "Un générateur de site internet pour les artisans de logiciels"
 
-#: handroll/command.py:43
+#: handroll/command.py:50
 msgid "the path to your website"
 msgstr "le chemin de votre site"
 
-#: handroll/command.py:45
+#: handroll/command.py:52
 msgid "an optional output directory to create or update if it already exists"
 msgstr "un répertoire de sortie en option pour créer ou mettre à jour si elle existe déjà"
 
-#: handroll/command.py:48
+#: handroll/command.py:55
 msgid "use verbose messages"
 msgstr "utiliser des messages détaillés"
 
-#: handroll/command.py:50
+#: handroll/command.py:57
 msgid "time the execution"
 msgstr "le temps d'exécution"
 
-#: handroll/command.py:53
+#: handroll/command.py:60
 msgid "show debug level messages"
 msgstr "afficher les messages de niveau de débogage"
 
-#: handroll/director.py:44
+#: handroll/command.py:63
+msgid ""
+"watch the site for changes and run a web server in the output directory"
+msgstr "regarder le site pour les changements et exécuter un serveur web dans le répertoire de sortie"
+
+#: handroll/director.py:95
 msgid "Updating {outdir} ..."
 msgstr "Mise à jour {outdir} ..."
 
-#: handroll/director.py:46
+#: handroll/director.py:97
 msgid "Creating {outdir} ..."
 msgstr "Création {outdir} ..."
 
-#: handroll/director.py:61
+#: handroll/director.py:114
 msgid "Populating {dirpath} ..."
 msgstr "Remplissage {dirpath} ..."
 
-#: handroll/director.py:69
+#: handroll/director.py:122
 msgid "Creating directory {out_dir} ..."
 msgstr "Création du répertoire {out_dir} ..."
 
-#: handroll/director.py:111
-msgid "Skipping {filename} with skipped file type '{skip_type}' ..."
-msgstr "Sauter {filename} avec le type de fichier ignoré '{skip_type}' ..."
+#: handroll/director.py:163
+msgid "Skipping {filename} with skipped file type ..."
+msgstr "Sauter {filename} avec le type de fichier ignoré ..."
 
-#: handroll/director.py:118
+#: handroll/director.py:168
 msgid "Skipping special file {filename} ..."
 msgstr "Sauter fichier spécial {filename} ..."
 
-#: handroll/site.py:32
+#: handroll/server.py:49
+msgid ""
+"Serving {outdir} at http://localhost:{port}/.\n"
+"Press Ctrl-C to quit."
+msgstr "Servir {outdir} à l'adresse http://localhost:{port}/.\nAppuyez sur Ctrl-C pour arrêter."
+
+#: handroll/server.py:53
+msgid ""
+"\n"
+"Bye."
+msgstr "\nAu revoir."
+
+#: handroll/site.py:36
 msgid "{path} is not a directory."
 msgstr "{path} n'est pas un répertoire."
 
-#: handroll/site.py:55
+#: handroll/site.py:59
 msgid ""
 "A handroll site was not found in {current_directory} or any of its parents."
 msgstr "Un site handroll n'a pas été trouvé dans {current_directory} ou un de ses parents."
 
-#: handroll/composers/__init__.py:71
+#: handroll/composers/__init__.py:87
 msgid "Skipping {filename} ... It is the same as {destination}."
 msgstr "Sauter {filename} ... Il est le même que {destination}."
 
-#: handroll/composers/__init__.py:77
+#: handroll/composers/__init__.py:93
 msgid "{filename} differs from {destination} ..."
 msgstr "{filename} diffère de {destination} ..."
 
-#: handroll/composers/__init__.py:80
+#: handroll/composers/__init__.py:96
 msgid "Copying {filename} to {out_dir} ..."
 msgstr "Copie {filename} et {out_dir} ..."
 
