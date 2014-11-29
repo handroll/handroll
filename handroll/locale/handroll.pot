@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll 1.4\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-09 22:24-0500\n"
+"POT-Creation-Date: 2014-11-29 15:30-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,27 +57,27 @@ msgstr ""
 msgid "watch the site for changes and run a web server in the output directory"
 msgstr ""
 
-#: handroll/director.py:95
+#: handroll/director.py:109
 msgid "Updating {outdir} ..."
 msgstr ""
 
-#: handroll/director.py:97
+#: handroll/director.py:111
 msgid "Creating {outdir} ..."
 msgstr ""
 
-#: handroll/director.py:114
+#: handroll/director.py:128
 msgid "Populating {dirpath} ..."
 msgstr ""
 
-#: handroll/director.py:122
+#: handroll/director.py:136
 msgid "Creating directory {out_dir} ..."
 msgstr ""
 
-#: handroll/director.py:163
+#: handroll/director.py:177
 msgid "Skipping {filename} with skipped file type ..."
 msgstr ""
 
-#: handroll/director.py:168
+#: handroll/director.py:182
 msgid "Skipping special file {filename} ..."
 msgstr ""
 
