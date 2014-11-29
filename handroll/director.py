@@ -53,9 +53,8 @@ class Director(object):
         This is primarily used for the watchdog handler and would be slow if
         used in the main ``produce`` method.
         """
-        # Because all paths should be absolute, it should be simple to find out
-        # if this file is in the output directory. If so, skip it.
-        if filepath.startswith(self.lookup_outdir()):
+        # Skip files in the output directory.
+        if self.is_in_output(filepath):
             return
 
         dirname = os.path.dirname(filepath)
@@ -68,15 +67,30 @@ class Director(object):
 
         This is used by the watchdog.
         """
-        # Because all paths should be absolute, it should be simple to find out
-        # if this directory is in the output directory. If so, skip it.
-        if directory.startswith(self.lookup_outdir()):
+        # Skip files in the output directory.
+        if self.is_in_output(directory):
             return
 
         dirname, basedir = os.path.split(directory)
         output_dirpath = self._get_output_dirpath(
             dirname, self.lookup_outdir())
         os.mkdir(os.path.join(output_dirpath, basedir))
+
+    def is_in_output(self, path):
+        """Check if the file or directory path is in the output directory.
+
+        Files or directories that are in the output but are also in the source
+        (for the corner case where the source is in the output directory) are
+        ignored.
+        """
+        # Because all paths should be absolute, it should be simple to find out
+        # if this path is in the output directory.
+        outdir = self.lookup_outdir()
+        source_is_in_outdir = self.site.path.startswith(outdir)
+        if source_is_in_outdir and path.startswith(self.site.path):
+            return False
+
+        return path.startswith(outdir)
 
     def produce(self):
         """Walk the site tree and generate the output."""
