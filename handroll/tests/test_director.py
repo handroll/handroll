@@ -134,3 +134,16 @@ class TestDirector(TestCase):
 
         directory_output = os.path.join(config.outdir, 'outdir', 'directory')
         self.assertFalse(os.path.exists(directory_output))
+
+    def test_file_in_source_and_outdir_is_ignored(self):
+        """A source file is ignored when the source dir is in the outdir."""
+        config = Configuration()
+        config.outdir = tempfile.mkdtemp()
+        site_path = os.path.join(config.outdir, 'site')
+        site = Site(site_path)
+        director = Director(config, site)
+        fake_file = os.path.join(site_path, 'fake')
+
+        is_in_output = director.is_in_output(fake_file)
+
+        self.assertFalse(is_in_output)
