@@ -46,7 +46,7 @@ def serve(site, director):
 
     logger.info(
         _('Serving {outdir} at http://localhost:{port}/.'
-          '\nPress Ctrl-C to quit.'.format(outdir=outdir, port=PORT)))
+          '\nPress Ctrl-C to quit.').format(outdir=outdir, port=PORT))
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:

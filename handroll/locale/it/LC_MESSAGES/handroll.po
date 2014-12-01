@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-09 22:24-0500\n"
+"POT-Creation-Date: 2014-11-29 15:30-0500\n"
 "PO-Revision-Date: 2014-11-23 13:29+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
 "Language-Team: Italian (http://www.transifex.com/projects/p/handroll/language/it/)\n"
@@ -60,27 +60,27 @@ msgid ""
 "watch the site for changes and run a web server in the output directory"
 msgstr "guardare il sito per le modifiche e gestire un server Web nella directory di output"
 
-#: handroll/director.py:95
+#: handroll/director.py:109
 msgid "Updating {outdir} ..."
 msgstr "Aggiornamento {outdir} ..."
 
-#: handroll/director.py:97
+#: handroll/director.py:111
 msgid "Creating {outdir} ..."
 msgstr "Creazione {outdir} ..."
 
-#: handroll/director.py:114
+#: handroll/director.py:128
 msgid "Populating {dirpath} ..."
 msgstr "Popolare {dirpath} ..."
 
-#: handroll/director.py:122
+#: handroll/director.py:136
 msgid "Creating directory {out_dir} ..."
 msgstr "Creazione di direttorio {out_dir} ..."
 
-#: handroll/director.py:163
+#: handroll/director.py:177
 msgid "Skipping {filename} with skipped file type ..."
 msgstr "Saltare {filename} con il tipo di file ignorato ..."
 
-#: handroll/director.py:168
+#: handroll/director.py:182
 msgid "Skipping special file {filename} ..."
 msgstr "Salto speciale file {filename} ..."
 

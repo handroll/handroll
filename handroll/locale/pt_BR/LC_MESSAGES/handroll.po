@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-09 22:24-0500\n"
+"POT-Creation-Date: 2014-11-29 15:30-0500\n"
 "PO-Revision-Date: 2014-11-23 13:40+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/handroll/language/pt_BR/)\n"
@@ -60,27 +60,27 @@ msgid ""
 "watch the site for changes and run a web server in the output directory"
 msgstr "monitorar o site para alterações e executar um servidor web no diretório de saída"
 
-#: handroll/director.py:95
+#: handroll/director.py:109
 msgid "Updating {outdir} ..."
 msgstr "Atualizando {outdir} ..."
 
-#: handroll/director.py:97
+#: handroll/director.py:111
 msgid "Creating {outdir} ..."
 msgstr "Criando {outdir} ..."
 
-#: handroll/director.py:114
+#: handroll/director.py:128
 msgid "Populating {dirpath} ..."
 msgstr "Preenchendo {dirpath} ..."
 
-#: handroll/director.py:122
+#: handroll/director.py:136
 msgid "Creating directory {out_dir} ..."
 msgstr "Criando diretório {out_dir} ..."
 
-#: handroll/director.py:163
+#: handroll/director.py:177
 msgid "Skipping {filename} with skipped file type ..."
 msgstr "Ignorando {filename} com o tipo de arquivo ignorado ..."
 
-#: handroll/director.py:168
+#: handroll/director.py:182
 msgid "Skipping special file {filename} ..."
 msgstr "Ignorando arquivo especial {filename} ..."
 

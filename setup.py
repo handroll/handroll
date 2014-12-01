@@ -1,6 +1,7 @@
 # Copyright (c) 2014, Matt Layman
 """
-handroll development is done on `GitHub
+Learn more about handroll at the `project home page
+<http://handroll.github.io>`_. handroll development is done on `GitHub
 <https://github.com/handroll/handroll>`_. Announcements and discussions happen
 on `Google Groups <https://groups.google.com/forum/#!forum/handroll>`_.
 

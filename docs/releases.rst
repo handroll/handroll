@@ -1,8 +1,8 @@
 Releases
 ========
 
-Version 1.4, In Development
----------------------------
+Version 1.4, Released December 1, 2014
+--------------------------------------
 
 * A development server (accessible from the ``watch`` flag) will monitor a site
   and generate new output files as the source is modified.
