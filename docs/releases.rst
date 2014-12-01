@@ -1,6 +1,9 @@
 Releases
 ========
 
+Version 1.5, In Development
+---------------------------
+
 Version 1.4, Released December 1, 2014
 --------------------------------------
 

@@ -61,9 +61,8 @@ Get Involved
 Bring an idea to the table! Implement it in a fork or submit an issue to have
 some discussion about it.
 
-handroll needs a home and a better identity. If you're a web developer or
+handroll needs a better identity. If you're a web developer or
 designer, please consider helping with a
-[website](https://github.com/handroll/handroll/issues/15) or a
 [logo](https://github.com/handroll/handroll/issues/14).
 
 Translators can join the fun by translating at the [Transifex

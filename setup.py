@@ -13,7 +13,7 @@ from setuptools import find_packages, setup
 from setuptools.command.sdist import sdist
 import sys
 
-__version__ = '1.4'
+__version__ = '1.5'
 
 
 class Sdist(sdist):
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     setup(
         name='handroll',
         version=__version__,
-        url='https://github.com/handroll/handroll',
+        url='http://handroll.github.io',
         license='BSD',
         author='Matt Layman',
         author_email='matthewlayman@gmail.com',
