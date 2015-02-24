@@ -1,4 +1,4 @@
-# Copyright (c) 2014, Matt Layman
+# Copyright (c) 2015, Matt Layman
 """The catalog of available templates"""
 
 import os
