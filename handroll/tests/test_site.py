@@ -11,7 +11,7 @@ class TestSite(TestCase):
 
     def test_finds_valid_site_root_from_templates(self):
         original = os.getcwd()
-        valid_site = tempfile.mkdtemp()
+        valid_site = os.path.realpath(tempfile.mkdtemp())
         open(os.path.join(valid_site, 'template.html'), 'w').close()
         os.chdir(valid_site)
 
@@ -22,7 +22,7 @@ class TestSite(TestCase):
 
     def test_finds_valid_site_root_from_conf(self):
         original = os.getcwd()
-        valid_site = tempfile.mkdtemp()
+        valid_site = os.path.realpath(tempfile.mkdtemp())
         open(os.path.join(valid_site, Site.CONFIG), 'w').close()
         os.chdir(valid_site)
 
@@ -33,7 +33,7 @@ class TestSite(TestCase):
 
     def test_site_has_absolute_path(self):
         original = os.getcwd()
-        tempdir = tempfile.mkdtemp()
+        tempdir = os.path.realpath(tempfile.mkdtemp())
         site_path = os.path.join(tempdir, 'site')
         os.mkdir(site_path)
         os.chdir(tempdir)
