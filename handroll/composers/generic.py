@@ -10,7 +10,7 @@ except ImportError:
 
 import yaml
 
-from handroll import logger
+from handroll import logger, signals
 from handroll.composers import Composer
 from handroll.i18n import _
 
@@ -77,6 +77,7 @@ class GenericHTMLComposer(Composer):
                 data = next(documents)
                 if 'title' in data:
                     data['title'] = escape(data['title'])
+                signals.frontmatter_loaded.send(source_file, frontmatter=data)
 
                 # Don't pass all file content to the composer. Find the markup.
                 match = re.search(self.yaml_scanner, source)

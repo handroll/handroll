@@ -151,6 +151,21 @@ class TestGenericHTMLComposer(unittest.TestCase):
         self.assertEqual('A Fake Title', data['title'])
         self.assertEqual('The Content', source)
 
+    @mock.patch('handroll.composers.generic.signals')
+    def test_fires_frontmatter_loaded(self, signals):
+        source = inspect.cleandoc("""%YAML 1.1
+        ---
+        title: A Fake Title
+        ---
+        The Content
+        """)
+        with tempfile.NamedTemporaryFile(delete=False) as f:
+            f.write(source.encode('utf-8'))
+        composer = GenericHTMLComposer()
+        data, source = composer._get_data(f.name)
+        signals.frontmatter_loaded.send.assert_called_once_with(
+            f.name, frontmatter={'title': 'A Fake Title'})
+
     def test_needs_update(self):
         site = tempfile.mkdtemp()
         output_file = os.path.join(site, 'output.md')

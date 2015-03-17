@@ -79,6 +79,7 @@ Documentation
     configuration
     server
     composers
+    signals
     templates
     i18n
     releases

@@ -13,7 +13,7 @@ from setuptools import find_packages, setup
 from setuptools.command.sdist import sdist
 import sys
 
-__version__ = '1.5'
+__version__ = '1.6'
 
 
 class Sdist(sdist):
@@ -32,6 +32,7 @@ if __name__ == '__main__':
 
     install_requires = [
         'argparse',  # For Python 2.6 support
+        'blinker',
         'docutils',
         'Jinja2',
         'Markdown==2.4',  # 2.5 dropped support for Python 2.6.
