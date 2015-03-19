@@ -75,6 +75,9 @@ if __name__ == '__main__':
                 '.sass = handroll.composers.sass:SassComposer',
                 '.scss = handroll.composers.sass:SassComposer',
                 '.textile = handroll.composers.txt:TextileComposer',
+            ],
+            'handroll.extensions': [
+                'blog = handroll.extensions.blog:BlogExtension',
             ]
         },
         include_package_data=True,
