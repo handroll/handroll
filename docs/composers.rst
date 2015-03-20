@@ -3,10 +3,10 @@
 Composers
 =========
 
-``handroll`` uses a plugin system to decide how to process each file type. The
+handroll uses a plugin system to decide how to process each file type. The
 plugins are called composers. A composer is provided a source file and can
-produce whatever output it desires.  ``handroll`` will load each available
-composer using ``setuptools`` entry points. ``handroll`` loads the class and
+produce whatever output it desires.  handroll will load each available
+composer using ``setuptools`` entry points. handroll loads the class and
 constructs a ``Composer`` instance by invoking a no parameter constructor.
 
 .. autoclass:: handroll.composers.Composer

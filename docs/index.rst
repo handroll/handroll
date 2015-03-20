@@ -48,6 +48,7 @@ what handroll is capable of doing.
 * Generate a proper `Atom XML
   <http://en.wikipedia.org/wiki/Atom_%28standard%29>`_ feed from metadata
   stored in JSON.
+* Track blog entries and automatically generate a feed.
 * Run a development server with the ``watch`` flag to monitor your site and
   update the output immediately as you make changes (see :ref:`devserver`).
 * Find the site source root so you don't have to. If you're anywhere in your
@@ -63,7 +64,7 @@ what handroll is capable of doing.
   than the existing output file. This eliminates wasted regeneration on
   unchanged content.
 * Be extensible for users who want to write their own plugins (see
-  :ref:`composers`).
+  :ref:`composers` and :ref:`extensions`).
 * Provide timing information to see file processing time.
 * Translated to many different languages.
 
@@ -79,6 +80,7 @@ Documentation
     configuration
     server
     composers
+    extensions
     signals
     templates
     i18n

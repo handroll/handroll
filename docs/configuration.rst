@@ -21,6 +21,10 @@ configuration file option.
 The ``outdir`` option will determine the output directory. If a tilde character
 (``~``) is supplied, it will be expanded to the user's home directory.
 
+The ``with_blog`` option set to ``true``, ``on``, ``yes``, or ``1`` will
+enable the blog extension.
+See :ref:`blogextension` for setup information.
+
 .. _frontmatter:
 
 Front matter
