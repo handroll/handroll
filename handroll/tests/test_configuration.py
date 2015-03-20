@@ -6,6 +6,7 @@ import tempfile
 import unittest
 
 from handroll import configuration
+from handroll.exceptions import AbortError
 
 
 class FakeArgs(object):
@@ -39,3 +40,25 @@ class TestConfiguration(unittest.TestCase):
 
         expected = os.path.join(os.getcwd(), 'out')
         self.assertEqual(expected, config.outdir)
+
+    def test_finds_active_extensions(self):
+        conf_file = inspect.cleandoc(
+            """[site]
+            with_blog = true""")
+        args = FakeArgs()
+        with tempfile.NamedTemporaryFile(delete=False) as f:
+            f.write(conf_file.encode('utf-8'))
+
+        config = configuration.build_config(f.name, args)
+
+        self.assertTrue('blog' in config.active_extensions)
+
+    def test_no_boolean_extension(self):
+        conf_file = inspect.cleandoc(
+            """[site]
+            with_blog = BOOM!""")
+        args = FakeArgs()
+        with tempfile.NamedTemporaryFile(delete=False) as f:
+            f.write(conf_file.encode('utf-8'))
+
+        self.assertRaises(AbortError, configuration.build_config, f.name, args)

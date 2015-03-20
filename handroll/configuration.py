@@ -6,11 +6,15 @@ except ImportError:  # pragma: no cover
     from configparser import ConfigParser
 import os
 
+from handroll.exceptions import AbortError
+from handroll.i18n import _
+
 
 class Configuration(object):
     """Configuration data used by handroll"""
 
     def __init__(self):
+        self.active_extensions = set()
         # The output directory should be absolute. That constraint will make it
         # easy to check if a filepath is in the output directory.
         self.outdir = None
@@ -34,6 +38,22 @@ class Configuration(object):
             if parser.has_option('site', 'outdir'):
                 self.outdir = os.path.abspath(os.path.expanduser(
                     parser.get('site', 'outdir')))
+            if parser.has_section('site'):
+                self._find_extensions(parser)
+
+    def _find_extensions(self, parser):
+        """Check if the site options have extensions to enable."""
+        for option in parser.options('site'):
+            if option.startswith('with_'):
+                try:
+                    extension = option.split('with_', 1)[1] or option
+                    enabled = parser.getboolean('site', option)
+                    if enabled:
+                        self.active_extensions.add(extension)
+                except ValueError:
+                    raise AbortError(_(
+                        'Cannot determine if {extension} is enabled.').format(
+                            extension=extension))
 
 
 def build_config(config_file, args):

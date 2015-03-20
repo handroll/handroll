@@ -2,7 +2,7 @@ handroll
 ========
 
 [![PyPI version][fury]](https://pypi.python.org/pypi/handroll)
-[![Downloads][pypip]](https://warehouse.python.org/project/handroll/)
+[![Downloads][pypip]](https://pypi.python.org/pypi/handroll)
 [![Build Status][travis]](https://travis-ci.org/handroll/handroll)
 [![Coverage Status][coveralls]](https://coveralls.io/r/handroll/handroll)
 
