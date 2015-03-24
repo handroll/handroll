@@ -1,14 +1,14 @@
 # Translations template for handroll.
-# Copyright (C) 2014 Matt Layman
+# Copyright (C) 2015 Matt Layman
 # This file is distributed under the same license as the handroll project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2015.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: handroll 1.4\n"
+"Project-Id-Version: handroll 1.6\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-29 15:30-0500\n"
+"POT-Creation-Date: 2015-03-24 17:23-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,6 +57,10 @@ msgstr ""
 msgid "watch the site for changes and run a web server in the output directory"
 msgstr ""
 
+#: handroll/configuration.py:54
+msgid "Cannot determine if {extension} is enabled."
+msgstr ""
+
 #: handroll/director.py:109
 msgid "Updating {outdir} ..."
 msgstr ""
@@ -81,7 +85,7 @@ msgstr ""
 msgid "Skipping special file {filename} ..."
 msgstr ""
 
-#: handroll/server.py:49
+#: handroll/server.py:48
 msgid ""
 "Serving {outdir} at http://localhost:{port}/.\n"
 "Press Ctrl-C to quit."

@@ -9,6 +9,7 @@ import requests
 API_URL = 'https://www.transifex.com/api/2'
 LANGUAGES = [
     'de',
+    'el',
     'es',
     'fr',
     'it',

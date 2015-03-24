@@ -1,6 +1,11 @@
 Releases
 ========
 
+Version 1.6, In Development
+---------------------------
+
+* Translated to Greek.
+
 Version 1.5, Released February 24, 2015
 ---------------------------------------
 
