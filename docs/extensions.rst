@@ -18,6 +18,7 @@ Extensions are never directly called,
 but an extension can connect to one of handroll's :ref:`signals`.
 
 .. autoclass:: handroll.extensions.base.Extension
+   :members:
 
 Extension authors can include new extensions by adding to the
 ``handroll.extensions`` entry point. For example, handroll includes
