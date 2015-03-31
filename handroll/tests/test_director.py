@@ -147,3 +147,39 @@ class TestDirector(TestCase):
         is_in_output = director.is_in_output(fake_file)
 
         self.assertFalse(is_in_output)
+
+    @mock.patch('handroll.director.signals')
+    def test_produce_triggers_post_composition(self, signals):
+        config = Configuration()
+        site = self.factory.make_site()
+        director = Director(config, site)
+
+        director.produce()
+
+        signals.post_composition.send.assert_called_once_with(director)
+
+    @mock.patch('handroll.director.signals')
+    def test_process_file_triggers_post_composition(self, signals):
+        config = Configuration()
+        site = self.factory.make_site()
+        director = Director(config, site)
+        marker = os.path.join(site.path, 'marker.txt')
+        open(marker, 'w').close()
+
+        director.process_file(marker)
+
+        signals.post_composition.send.assert_called_once_with(director)
+
+    @mock.patch('handroll.director.signals')
+    def test_process_directory_triggers_post_composition(self, signals):
+        config = Configuration()
+        site = self.factory.make_site()
+        director = Director(config, site)
+        config.outdir = os.path.join(site.path, 'outdir')
+        os.mkdir(config.outdir)
+        directory = os.path.join(site.path, 'directory')
+        os.mkdir(directory)
+
+        director.process_directory(directory)
+
+        signals.post_composition.send.assert_called_once_with(director)
