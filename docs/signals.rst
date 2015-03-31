@@ -16,3 +16,13 @@ will be called with:
 
 * ``source_file`` - The absolute path to the file containing front matter.
 * ``frontmatter`` - The front matter dictionary that was loaded.
+
+post_composition
+----------------
+
+``post_composition`` fires after processing the entire site. When the
+watcher is running (see :ref:`devserver`), the signal will fire after
+any file or directory change. Any handler function that connects to the
+signal will be called with:
+
+* ``director`` - The director instance that processed the site.
