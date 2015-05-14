@@ -17,7 +17,7 @@ class TestSiteHandler(TestCase):
         config = Configuration()
         config.outdir = tempfile.mkdtemp()
         self.site = self.factory.make_site()
-        self.director = Director(config, self.site)
+        self.director = Director(config, self.site, [])
 
     def test_on_create_generates_output(self):
         markdown = os.path.join(self.site.path, 'index.md')

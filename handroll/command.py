@@ -10,6 +10,7 @@ from handroll import logger
 from handroll.configuration import build_config
 from handroll.director import Director
 from handroll.exceptions import AbortError
+from handroll.extensions.loader import ExtensionLoader
 from handroll.i18n import _
 from handroll.server import serve
 from handroll.site import Site
@@ -30,8 +31,12 @@ def main(argv=sys.argv):
         if not valid:
             raise AbortError(_('Invalid site source: {0}').format(message))
 
+        loader = ExtensionLoader()
+        loader.load()
+
         config = build_config(site.config_file, args)
-        director = Director(config, site)
+        extensions = loader.get_active_extensions(config)
+        director = Director(config, site, extensions)
         director.produce()
 
         if not args.watch:

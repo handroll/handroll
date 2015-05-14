@@ -16,7 +16,7 @@ class TestServer(TestCase):
         config = Configuration()
         config.outdir = tempfile.mkdtemp()
         self.site = self.factory.make_site()
-        self.director = Director(config, self.site)
+        self.director = Director(config, self.site, [])
 
     @mock.patch('handroll.server.Observer')
     @mock.patch('handroll.server.socketserver.TCPServer')

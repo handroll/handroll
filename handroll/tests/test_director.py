@@ -19,7 +19,7 @@ class TestDirector(TestCase):
         site = self.factory.make_site()
         marker = 'marker.txt'
         open(os.path.join(site.path, marker), 'w').close()
-        director = Director(config, site)
+        director = Director(config, site, [])
 
         director.produce()
 
@@ -31,7 +31,7 @@ class TestDirector(TestCase):
         site = self.factory.make_site()
         skip = 'to_my_lou.swp'
         open(os.path.join(site.path, skip), 'w').close()
-        director = Director(config, site)
+        director = Director(config, site, [])
 
         director.produce()
 
@@ -43,7 +43,7 @@ class TestDirector(TestCase):
         site = self.factory.make_site()
         skip = Site.CONFIG
         open(os.path.join(site.path, skip), 'w').close()
-        director = Director(config, site)
+        director = Director(config, site, [])
 
         director.produce()
 
@@ -55,7 +55,7 @@ class TestDirector(TestCase):
         site = self.factory.make_site()
         templates = os.path.join(site.path, 'templates')
         os.mkdir(templates)
-        director = Director(config, site)
+        director = Director(config, site, [])
 
         director.produce()
 
@@ -69,7 +69,7 @@ class TestDirector(TestCase):
         open(os.path.join(site.path, 'fake.md'), 'w').close()
         config = Configuration()
         config.timing = True
-        director = Director(config, site)
+        director = Director(config, site, [])
 
         with mock.patch('handroll.director.time.time', mock_time):
             director.produce()
@@ -81,7 +81,7 @@ class TestDirector(TestCase):
         site = self.factory.make_site()
         another = os.path.join(site.path, 'another')
         os.mkdir(another)
-        director = Director(config, site)
+        director = Director(config, site, [])
 
         director.produce()
 
@@ -92,7 +92,7 @@ class TestDirector(TestCase):
         dirnames = ['keep', '.sass-cache', 'another_keeper']
         site = self.factory.make_site()
         config = Configuration()
-        director = Director(config, site)
+        director = Director(config, site, [])
 
         director.prune_skip_directories(dirnames)
 
@@ -112,7 +112,7 @@ class TestDirector(TestCase):
         os.mkdir(config.outdir)
         marker = os.path.join(config.outdir, 'marker.md')
         open(marker, 'w').close()
-        director = Director(config, site)
+        director = Director(config, site, [])
 
         director.process_file(marker)
 
@@ -128,7 +128,7 @@ class TestDirector(TestCase):
         os.mkdir(config.outdir)
         directory = os.path.join(config.outdir, 'directory')
         os.mkdir(directory)
-        director = Director(config, site)
+        director = Director(config, site, [])
 
         director.process_directory(directory)
 
@@ -141,7 +141,7 @@ class TestDirector(TestCase):
         config.outdir = tempfile.mkdtemp()
         site_path = os.path.join(config.outdir, 'site')
         site = Site(site_path)
-        director = Director(config, site)
+        director = Director(config, site, [])
         fake_file = os.path.join(site_path, 'fake')
 
         is_in_output = director.is_in_output(fake_file)
@@ -152,7 +152,7 @@ class TestDirector(TestCase):
     def test_produce_triggers_post_composition(self, signals):
         config = Configuration()
         site = self.factory.make_site()
-        director = Director(config, site)
+        director = Director(config, site, [])
 
         director.produce()
 
@@ -162,7 +162,7 @@ class TestDirector(TestCase):
     def test_process_file_triggers_post_composition(self, signals):
         config = Configuration()
         site = self.factory.make_site()
-        director = Director(config, site)
+        director = Director(config, site, [])
         marker = os.path.join(site.path, 'marker.txt')
         open(marker, 'w').close()
 
@@ -174,7 +174,7 @@ class TestDirector(TestCase):
     def test_process_directory_triggers_post_composition(self, signals):
         config = Configuration()
         site = self.factory.make_site()
-        director = Director(config, site)
+        director = Director(config, site, [])
         config.outdir = os.path.join(site.path, 'outdir')
         os.mkdir(config.outdir)
         directory = os.path.join(site.path, 'directory')

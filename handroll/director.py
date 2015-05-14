@@ -29,9 +29,10 @@ class Director(object):
         Site.CONFIG,
     )
 
-    def __init__(self, config, site):
+    def __init__(self, config, site, extensions):
         self.config = config
         self.site = site
+        self.extensions = extensions
         self.catalog = catalog.TemplateCatalog(site.path)
         self.composers = Composers()
 

@@ -8,7 +8,8 @@ class Extension(object):
 
     handle_frontmatter_loaded = False
 
-    def __init__(self):
+    def __init__(self, config):
+        self._config = config
         # Handler functions are put in a dictionary to keep references to them.
         # Blinker behaves in strange ways without the references.
         self._handlers = {}
