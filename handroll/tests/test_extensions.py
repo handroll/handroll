@@ -44,6 +44,7 @@ class TestExtension(TestCase):
         self.assertRaises(
             NotImplementedError, signals.frontmatter_loaded.send,
             'a_source_file', frontmatter={})
+        signals.frontmatter_loaded.receivers.clear()
 
     @mock.patch('handroll.extensions.base.signals.post_composition')
     def test_post_composition_connection_default(self, post_composition):
@@ -58,3 +59,4 @@ class TestExtension(TestCase):
         self.assertTrue(extension.handle_post_composition)
         self.assertRaises(
             NotImplementedError, signals.post_composition.send, director)
+        signals.post_composition.receivers.clear()
