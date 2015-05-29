@@ -7,6 +7,7 @@ class Extension(object):
     """A base extension which hooks handler methods to handroll's signals."""
 
     handle_frontmatter_loaded = False
+    handle_post_composition = False
 
     def __init__(self, config):
         self._config = config
@@ -20,6 +21,12 @@ class Extension(object):
             self._handlers['frontmatter_loaded'] = _handle_frontmatter_loaded
             signals.frontmatter_loaded.connect(_handle_frontmatter_loaded)
 
+        if self.handle_post_composition:
+            def _handle_post_composition(director, **kwargs):
+                self.on_post_composition(director)
+            self._handlers['post_composition'] = _handle_post_composition
+            signals.post_composition.connect(_handle_post_composition)
+
     def on_frontmatter_loaded(self, source_file, frontmatter):
         """Handle the ``frontmatter_loaded`` signal.
 
@@ -29,4 +36,14 @@ class Extension(object):
         :param source_file: Absolute path of the source file
         :param frontmatter: Dictionary of parsed frontmatter
         """
-        raise NotImplementedError
+        raise NotImplementedError()
+
+    def on_post_composition(self, director):
+        """Handle the ``post_composition`` signal.
+
+        Activate this handler by setting ``handle_post_composition``
+        to ``True`` in the extension subclass.
+
+        :param director: The director instance
+        """
+        raise NotImplementedError()
