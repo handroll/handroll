@@ -39,7 +39,8 @@ class TestExtension(TestCase):
     def test_connects_to_frontmatter_loaded(self):
         class FrontmatterLoader(Extension):
             handle_frontmatter_loaded = True
-        FrontmatterLoader(None)
+        extension = FrontmatterLoader(None)
+        self.assertTrue(extension.handle_frontmatter_loaded)
         self.assertRaises(
             NotImplementedError, signals.frontmatter_loaded.send,
             'a_source_file', frontmatter={})
@@ -53,6 +54,7 @@ class TestExtension(TestCase):
         class PostComposer(Extension):
             handle_post_composition = True
         director = mock.Mock()
-        PostComposer(None)
+        extension = PostComposer(None)
+        self.assertTrue(extension.handle_post_composition)
         self.assertRaises(
             NotImplementedError, signals.post_composition.send, director)
