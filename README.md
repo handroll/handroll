@@ -1,7 +1,8 @@
 handroll
 ========
 
-[![PyPI version][fury]](https://pypi.python.org/pypi/handroll)
+[![PyPI version][pypishield]](https://pypi.python.org/pypi/handroll)
+[![BSD license][license]](https://raw.githubusercontent.com/handroll/handroll/master/LICENSE)
 [![Downloads][shield]](https://pypi.python.org/pypi/handroll)
 [![Build Status][travis]](https://travis-ci.org/handroll/handroll)
 [![Coverage Status][coveralls]](https://coveralls.io/r/handroll/handroll)
@@ -70,7 +71,8 @@ project](https://www.transifex.com/projects/p/handroll/). Additional
 translation details are in the [translation
 documentation](http://handroll.readthedocs.org/en/latest/i18n.html).
 
-[fury]: https://badge.fury.io/py/handroll.png
+[pypishield]: https://img.shields.io/pypi/v/handroll.svg
+[license]: https://img.shields.io/pypi/l/handroll.svg
 [shield]: https://img.shields.io/pypi/dm/handroll.svg
 [travis]: https://travis-ci.org/handroll/handroll.png?branch=master
 [coveralls]: https://coveralls.io/repos/handroll/handroll/badge.png
