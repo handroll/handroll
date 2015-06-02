@@ -4,6 +4,7 @@ import mock
 
 from handroll import signals
 from handroll.configuration import Configuration
+from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
 from handroll.extensions.blog import BlogExtension
 from handroll.extensions.loader import ExtensionLoader
@@ -11,6 +12,11 @@ from handroll.tests import TestCase
 
 
 class TestExtensionLoader(TestCase):
+
+    def tearDown(self):
+        # Clean up any attached extension instance.
+        signals.frontmatter_loaded.receivers.clear()
+        signals.post_composition.receivers.clear()
 
     def test_loads_available_extensions(self):
         loader = ExtensionLoader()
@@ -60,3 +66,36 @@ class TestExtension(TestCase):
         self.assertRaises(
             NotImplementedError, signals.post_composition.send, director)
         signals.post_composition.receivers.clear()
+
+
+class TestBlogExtension(TestCase):
+
+    def tearDown(self):
+        # Clean up any attached extension instance.
+        signals.frontmatter_loaded.receivers.clear()
+        signals.post_composition.receivers.clear()
+
+    def test_handles_frontmatter_loaded(self):
+        extension = BlogExtension(None)
+        self.assertTrue(extension.handle_frontmatter_loaded)
+
+    def test_handles_post_composition(self):
+        extension = BlogExtension(None)
+        self.assertTrue(extension.handle_post_composition)
+
+    def test_registers_blog_post(self):
+        extension = BlogExtension(None)
+        extension.on_frontmatter_loaded('thundercats.md', {'blog': True})
+        post = extension.posts[0]
+        self.assertEqual('thundercats.md', post.source_file)
+
+    def test_ignores_non_blog_post(self):
+        extension = BlogExtension(None)
+        extension.on_frontmatter_loaded('exosquad.md', {})
+        self.assertEqual(0, len(extension.posts))
+
+    def test_blog_must_be_boolean(self):
+        extension = BlogExtension(None)
+        self.assertRaises(
+            AbortError, extension.on_frontmatter_loaded, 'animaniacs.md',
+            {'blog': 'crazy'})
