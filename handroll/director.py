@@ -57,6 +57,7 @@ class Director(object):
         if self.is_in_output(filepath):
             return
 
+        signals.pre_composition.send(self)
         dirname = os.path.dirname(filepath)
         output_dirpath = self._get_output_dirpath(
             dirname, self.lookup_outdir())
@@ -72,6 +73,7 @@ class Director(object):
         if self.is_in_output(directory):
             return
 
+        signals.pre_composition.send(self)
         dirname, basedir = os.path.split(directory)
         output_dirpath = self._get_output_dirpath(
             dirname, self.lookup_outdir())
@@ -96,6 +98,7 @@ class Director(object):
 
     def produce(self):
         """Walk the site tree and generate the output."""
+        signals.pre_composition.send(self)
         self._generate_output(self.lookup_outdir(), self.config.timing)
         signals.post_composition.send(self)
 
