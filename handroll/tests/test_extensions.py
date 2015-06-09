@@ -67,6 +67,21 @@ class TestExtension(TestCase):
             NotImplementedError, signals.post_composition.send, director)
         signals.post_composition.receivers.clear()
 
+    @mock.patch('handroll.extensions.base.signals.pre_composition')
+    def test_pre_composition_connection_default(self, pre_composition):
+        Extension(None)
+        self.assertFalse(pre_composition.connect.called)
+
+    def test_connects_to_pre_composition(self):
+        class PreComposer(Extension):
+            handle_pre_composition = True
+        director = mock.Mock()
+        extension = PreComposer(None)
+        self.assertTrue(extension.handle_pre_composition)
+        self.assertRaises(
+            NotImplementedError, signals.pre_composition.send, director)
+        signals.pre_composition.receivers.clear()
+
 
 class TestBlogExtension(TestCase):
 
