@@ -131,6 +131,20 @@ class TestTemplateCatalog(unittest.TestCase):
         catalog = self._make_one_with_template('confused.bogus')
         self.assertRaises(AbortError, catalog.get_template, 'confused.bogus')
 
+    def test_is_default_template(self):
+        catalog = self._make_one()
+        default = os.path.join(self.site_path, 'template.html')
+        self.assertTrue(catalog.is_template(default))
+
+    def test_is_template_in_templates_directory(self):
+        catalog = self._make_one()
+        path = os.path.join(catalog.templates_path, 'foundme.html')
+        self.assertTrue(catalog.is_template(path))
+
+    def test_is_not_a_template(self):
+        catalog = self._make_one()
+        self.assertFalse(catalog.is_template('nope'))
+
 
 class TestTemplateFunctions(unittest.TestCase):
 

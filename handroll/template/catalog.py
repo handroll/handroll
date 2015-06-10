@@ -95,3 +95,11 @@ class TemplateCatalog(object):
         raise AbortError(
             _('Unknown template type provided for {template}.').format(
                 template=template_path))
+
+    def is_template(self, path):
+        """Check if the path provided looks like a template."""
+        if path.startswith(self.templates_path):
+            return True
+        if path == self._default_template_path:
+            return True
+        return False
