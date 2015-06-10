@@ -20,6 +20,9 @@ class Configuration(object):
         self.outdir = None
         self.timing = None
 
+        # Keep the parser to allow extensions to get configuration file data.
+        self.parser = ConfigParser()
+
     def load_from_arguments(self, args):
         """Load any configuration attributes from the provided command line
         arguments. Arguments have the highest precedent so overwrite any other
@@ -33,13 +36,12 @@ class Configuration(object):
     def load_from_file(self, config_file):
         """Load any configuration attributes from the provided config file."""
         with open(config_file, 'r') as f:
-            parser = ConfigParser()
-            parser.readfp(f)
-            if parser.has_option('site', 'outdir'):
+            self.parser.readfp(f)
+            if self.parser.has_option('site', 'outdir'):
                 self.outdir = os.path.abspath(os.path.expanduser(
-                    parser.get('site', 'outdir')))
-            if parser.has_section('site'):
-                self._find_extensions(parser)
+                    self.parser.get('site', 'outdir')))
+            if self.parser.has_section('site'):
+                self._find_extensions(self.parser)
 
     def _find_extensions(self, parser):
         """Check if the site options have extensions to enable."""

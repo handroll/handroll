@@ -16,6 +16,7 @@ class TestExtensionLoader(TestCase):
     def tearDown(self):
         # Clean up any attached extension instance.
         signals.frontmatter_loaded.receivers.clear()
+        signals.pre_composition.receivers.clear()
         signals.post_composition.receivers.clear()
 
     def test_loads_available_extensions(self):
@@ -88,6 +89,7 @@ class TestBlogExtension(TestCase):
     def tearDown(self):
         # Clean up any attached extension instance.
         signals.frontmatter_loaded.receivers.clear()
+        signals.pre_composition.receivers.clear()
         signals.post_composition.receivers.clear()
 
     def test_handles_frontmatter_loaded(self):
@@ -114,3 +116,13 @@ class TestBlogExtension(TestCase):
         self.assertRaises(
             AbortError, extension.on_frontmatter_loaded, 'animaniacs.md',
             {'blog': 'crazy'})
+
+    def test_handles_pre_composition(self):
+        extension = BlogExtension(None)
+        self.assertTrue(extension.handle_pre_composition)
+
+    def test_requires_blog_section(self):
+        """A config with no blog section aborts."""
+        director = self.factory.make_director()
+        extension = BlogExtension(director.config)
+        self.assertRaises(AbortError, extension.on_pre_composition, director)

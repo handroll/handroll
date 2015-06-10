@@ -15,11 +15,18 @@ class BlogExtension(Extension):
     """Track files marked as blog entries and generate a feed."""
 
     handle_frontmatter_loaded = True
+    handle_pre_composition = True
     handle_post_composition = True
 
     def __init__(self, config):
         super(BlogExtension, self).__init__(config)
         self.posts = []
+
+    def on_pre_composition(self, director):
+        """Check that all the required configuration exists."""
+        if not self._config.parser.has_section('blog'):
+            raise AbortError(
+                _('A blog section is missing in the configuration file.'))
 
     def on_frontmatter_loaded(self, source_file, frontmatter):
         """Scan for blog posts.
