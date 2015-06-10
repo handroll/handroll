@@ -56,6 +56,9 @@ class Director(object):
         # Skip files in the output directory.
         if self.is_in_output(filepath):
             return
+        # Skip templates.
+        if self.catalog.is_template(filepath):
+            return
 
         signals.pre_composition.send(self)
         dirname = os.path.dirname(filepath)
@@ -71,6 +74,9 @@ class Director(object):
         """
         # Skip files in the output directory.
         if self.is_in_output(directory):
+            return
+        # Skip templates.
+        if self.catalog.is_template(directory):
             return
 
         signals.pre_composition.send(self)

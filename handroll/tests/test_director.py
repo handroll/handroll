@@ -219,3 +219,32 @@ class TestDirector(TestCase):
         director.process_directory(directory)
 
         signals.pre_composition.send.assert_called_once_with(director)
+
+    def test_process_file_ignores_templates(self):
+        config = Configuration()
+        site = self.factory.make_site()
+        default = os.path.join(site.path, 'template.html')
+        open(default, 'w').close()
+        config.outdir = os.path.join(site.path, 'outdir')
+        os.mkdir(config.outdir)
+        director = Director(config, site, [])
+
+        director.process_file(default)
+
+        default_output = os.path.join(config.outdir, 'template.html')
+        self.assertFalse(os.path.exists(default_output))
+
+    def test_process_directory_ignores_templates(self):
+        config = Configuration()
+        site = self.factory.make_site()
+        config.outdir = os.path.join(site.path, 'outdir')
+        os.mkdir(config.outdir)
+        director = Director(config, site, [])
+        directory = os.path.join(director.catalog.templates_path, 'test')
+        os.makedirs(directory)
+
+        director.process_directory(directory)
+
+        directory_output = os.path.join(
+            config.outdir, director.catalog.TEMPLATES_DIR, 'test')
+        self.assertFalse(os.path.exists(directory_output))
