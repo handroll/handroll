@@ -92,6 +92,16 @@ class TestBlogExtension(TestCase):
         signals.pre_composition.receivers.clear()
         signals.post_composition.receivers.clear()
 
+    def _add_blog_section(self, parser, exclude=None):
+        parser.add_section('blog')
+        metadata = {
+            'atom_title': 'Amazing blog',
+        }
+        for option, value in metadata.items():
+            if option == exclude:
+                continue
+            parser.set('blog', option, value)
+
     def test_handles_frontmatter_loaded(self):
         extension = BlogExtension(None)
         self.assertTrue(extension.handle_frontmatter_loaded)
@@ -126,3 +136,20 @@ class TestBlogExtension(TestCase):
         director = self.factory.make_director()
         extension = BlogExtension(director.config)
         self.assertRaises(AbortError, extension.on_pre_composition, director)
+
+    def test_requires_atom_title(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser, exclude='atom_title')
+        extension = BlogExtension(director.config)
+        try:
+            extension.on_pre_composition(director)
+            self.fail()
+        except AbortError as ae:
+            self.assertTrue('atom_title' in str(ae))
+
+    def test_has_atom_title_in_metadata(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser)
+        extension = BlogExtension(director.config)
+        extension.on_pre_composition(director)
+        self.assertEqual('Amazing blog', extension.atom_metadata['title'])

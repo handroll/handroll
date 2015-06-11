@@ -1,5 +1,10 @@
 # Copyright (c) 2015, Matt Layman
 
+try:
+    import ConfigParser as configparser
+except ImportError:  # pragma: no cover
+    import configparser
+
 from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
 from handroll.i18n import _
@@ -21,12 +26,14 @@ class BlogExtension(Extension):
     def __init__(self, config):
         super(BlogExtension, self).__init__(config)
         self.posts = []
+        self.atom_metadata = {}
 
     def on_pre_composition(self, director):
         """Check that all the required configuration exists."""
         if not self._config.parser.has_section('blog'):
             raise AbortError(
                 _('A blog section is missing in the configuration file.'))
+        self._add_atom_metadata('title', 'atom_title')
 
     def on_frontmatter_loaded(self, source_file, frontmatter):
         """Scan for blog posts.
@@ -42,3 +49,12 @@ class BlogExtension(Extension):
             self.posts.append(BlogPost(
                 source_file=source_file,
             ))
+
+    def _add_atom_metadata(self, name, option):
+        """Add atom metadata from the config parser."""
+        try:
+            self.atom_metadata[name] = self._config.parser.get('blog', option)
+        except configparser.NoOptionError:
+            raise AbortError(
+                _('The blog extension requires the {option} option.').format(
+                    option=option))
