@@ -23,6 +23,11 @@ class BlogExtension(Extension):
     handle_pre_composition = True
     handle_post_composition = True
 
+    required_metadata = {
+        'author': 'atom_author',
+        'title': 'atom_title',
+    }
+
     def __init__(self, config):
         super(BlogExtension, self).__init__(config)
         self.posts = []
@@ -33,7 +38,8 @@ class BlogExtension(Extension):
         if not self._config.parser.has_section('blog'):
             raise AbortError(
                 _('A blog section is missing in the configuration file.'))
-        self._add_atom_metadata('title', 'atom_title')
+        for metadata, option in self.required_metadata.items():
+            self._add_atom_metadata(metadata, option)
 
     def on_frontmatter_loaded(self, source_file, frontmatter):
         """Scan for blog posts.
