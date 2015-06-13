@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll 1.6\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-03-24 17:23-0400\n"
+"POT-Creation-Date: 2015-06-13 08:01-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,71 +17,71 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: handroll/command.py:31
+#: handroll/command.py:32
 msgid "Invalid site source: {0}"
 msgstr ""
 
-#: handroll/command.py:38
+#: handroll/command.py:43
 msgid "Complete."
 msgstr ""
 
-#: handroll/command.py:41
+#: handroll/command.py:46
 msgid "Incomplete."
 msgstr ""
 
-#: handroll/command.py:48
+#: handroll/command.py:53
 msgid "A website generator for software artisans"
 msgstr ""
 
-#: handroll/command.py:50
+#: handroll/command.py:55
 msgid "the path to your website"
 msgstr ""
 
-#: handroll/command.py:52
+#: handroll/command.py:57
 msgid "an optional output directory to create or update if it already exists"
 msgstr ""
 
-#: handroll/command.py:55
+#: handroll/command.py:60
 msgid "use verbose messages"
 msgstr ""
 
-#: handroll/command.py:57
+#: handroll/command.py:62
 msgid "time the execution"
 msgstr ""
 
-#: handroll/command.py:60
+#: handroll/command.py:65
 msgid "show debug level messages"
 msgstr ""
 
-#: handroll/command.py:63
+#: handroll/command.py:68
 msgid "watch the site for changes and run a web server in the output directory"
 msgstr ""
 
-#: handroll/configuration.py:54
+#: handroll/configuration.py:56
 msgid "Cannot determine if {extension} is enabled."
 msgstr ""
 
-#: handroll/director.py:109
+#: handroll/director.py:121
 msgid "Updating {outdir} ..."
 msgstr ""
 
-#: handroll/director.py:111
+#: handroll/director.py:123
 msgid "Creating {outdir} ..."
 msgstr ""
 
-#: handroll/director.py:128
+#: handroll/director.py:140
 msgid "Populating {dirpath} ..."
 msgstr ""
 
-#: handroll/director.py:136
+#: handroll/director.py:148
 msgid "Creating directory {out_dir} ..."
 msgstr ""
 
-#: handroll/director.py:177
+#: handroll/director.py:189
 msgid "Skipping {filename} with skipped file type ..."
 msgstr ""
 
-#: handroll/director.py:182
+#: handroll/director.py:194
 msgid "Skipping special file {filename} ..."
 msgstr ""
 
@@ -157,6 +157,18 @@ msgstr ""
 msgid ""
 "Sass failed to generate CSS:\n"
 "{0}"
+msgstr ""
+
+#: handroll/extensions/blog.py:40
+msgid "A blog section is missing in the configuration file."
+msgstr ""
+
+#: handroll/extensions/blog.py:52
+msgid "Invalid blog frontmatter (expects True or False): {blog_value}"
+msgstr ""
+
+#: handroll/extensions/blog.py:65
+msgid "The blog extension requires the {option} option."
 msgstr ""
 
 #: handroll/template/catalog.py:86
