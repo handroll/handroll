@@ -25,6 +25,7 @@ class BlogExtension(Extension):
 
     required_metadata = {
         'author': 'atom_author',
+        'id': 'atom_id',
         'title': 'atom_title',
     }
 
