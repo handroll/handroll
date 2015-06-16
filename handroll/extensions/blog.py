@@ -27,6 +27,7 @@ class BlogExtension(Extension):
         'author': 'atom_author',
         'id': 'atom_id',
         'title': 'atom_title',
+        'url': 'atom_url',
     }
 
     def __init__(self, config):

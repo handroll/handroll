@@ -98,6 +98,7 @@ class TestBlogExtension(TestCase):
             'atom_author': 'Nikola Tesla',
             'atom_id': 'https://www.example.com/feed.xml',
             'atom_title': 'Amazing blog',
+            'atom_url': 'https://www.example.com/archive.html',
         }
         for option, value in metadata.items():
             if option == exclude:
@@ -190,3 +191,21 @@ class TestBlogExtension(TestCase):
         extension.on_pre_composition(director)
         self.assertEqual(
             'https://www.example.com/feed.xml', extension.atom_metadata['id'])
+
+    def test_requires_atom_url(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser, exclude='atom_url')
+        extension = BlogExtension(director.config)
+        try:
+            extension.on_pre_composition(director)
+            self.fail()
+        except AbortError as ae:
+            self.assertTrue('atom_url' in str(ae))
+
+    def test_has_atom_url_in_metadata(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser)
+        extension = BlogExtension(director.config)
+        extension.on_pre_composition(director)
+        self.assertEqual(
+            'https://www.example.com/archive.html', extension.atom_metadata['url'])
