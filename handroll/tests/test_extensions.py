@@ -208,4 +208,5 @@ class TestBlogExtension(TestCase):
         extension = BlogExtension(director.config)
         extension.on_pre_composition(director)
         self.assertEqual(
-            'https://www.example.com/archive.html', extension.atom_metadata['url'])
+            'https://www.example.com/archive.html',
+            extension.atom_metadata['url'])
