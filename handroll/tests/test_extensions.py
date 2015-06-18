@@ -94,13 +94,14 @@ class TestBlogExtension(TestCase):
 
     def _add_blog_section(self, parser, exclude=None):
         parser.add_section('blog')
-        metadata = {
+        configuration = {
             'atom_author': 'Nikola Tesla',
             'atom_id': 'https://www.example.com/feed.xml',
+            'atom_output': 'feed.xml',
             'atom_title': 'Amazing blog',
             'atom_url': 'https://www.example.com/archive.html',
         }
-        for option, value in metadata.items():
+        for option, value in configuration.items():
             if option == exclude:
                 continue
             parser.set('blog', option, value)
@@ -210,3 +211,20 @@ class TestBlogExtension(TestCase):
         self.assertEqual(
             'https://www.example.com/archive.html',
             extension.atom_metadata['url'])
+
+    def test_requires_atom_output(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser, exclude='atom_output')
+        extension = BlogExtension(director.config)
+        try:
+            extension.on_pre_composition(director)
+            self.fail()
+        except AbortError as ae:
+            self.assertTrue('atom_output' in str(ae))
+
+    def test_has_atom_output_in_metadata(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser)
+        extension = BlogExtension(director.config)
+        extension.on_pre_composition(director)
+        self.assertEqual('feed.xml', extension.atom_output)

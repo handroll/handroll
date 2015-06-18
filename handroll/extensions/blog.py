@@ -34,6 +34,7 @@ class BlogExtension(Extension):
         super(BlogExtension, self).__init__(config)
         self.posts = []
         self.atom_metadata = {}
+        self.atom_output = ''
 
     def on_pre_composition(self, director):
         """Check that all the required configuration exists."""
@@ -42,6 +43,7 @@ class BlogExtension(Extension):
                 _('A blog section is missing in the configuration file.'))
         for metadata, option in self.required_metadata.items():
             self._add_atom_metadata(metadata, option)
+        self.atom_output = self._get_option('atom_output')
 
     def on_frontmatter_loaded(self, source_file, frontmatter):
         """Scan for blog posts.
@@ -60,8 +62,12 @@ class BlogExtension(Extension):
 
     def _add_atom_metadata(self, name, option):
         """Add atom metadata from the config parser."""
+        self.atom_metadata[name] = self._get_option(option)
+
+    def _get_option(self, option):
+        """Get an option out of the blog section."""
         try:
-            self.atom_metadata[name] = self._config.parser.get('blog', option)
+            return self._config.parser.get('blog', option)
         except configparser.NoOptionError:
             raise AbortError(
                 _('The blog extension requires the {option} option.').format(
