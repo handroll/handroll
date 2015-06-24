@@ -1,4 +1,5 @@
 # Copyright (c) 2015, Matt Layman
+import os
 
 import mock
 
@@ -105,6 +106,13 @@ class TestBlogExtension(TestCase):
             if option == exclude:
                 continue
             parser.set('blog', option, value)
+
+    def _make_preprocessed_one(self, director):
+        """Make an instance that has all default metadata already parsed."""
+        self._add_blog_section(director.config.parser)
+        extension = BlogExtension(director.config)
+        extension.on_pre_composition(director)
+        return extension
 
     def test_handles_frontmatter_loaded(self):
         extension = BlogExtension(None)
@@ -228,3 +236,11 @@ class TestBlogExtension(TestCase):
         extension = BlogExtension(director.config)
         extension.on_pre_composition(director)
         self.assertEqual('feed.xml', extension.atom_output)
+
+    def test_post_composition_generates_feed(self):
+        director = self.factory.make_director()
+        os.mkdir(director.outdir)
+        extension = self._make_preprocessed_one(director)
+        extension.on_post_composition(director)
+        feed = os.path.join(director.outdir, extension.atom_output)
+        self.assertTrue(os.path.exists(feed))

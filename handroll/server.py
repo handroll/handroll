@@ -39,7 +39,7 @@ def serve(site, director):
 
     # The simple HTTP server is pretty dumb and does not even take a path to
     # serve. The only way to serve the right path is to change the directory.
-    outdir = director.lookup_outdir()
+    outdir = director.outdir
     os.chdir(outdir)
 
     httpd = socketserver.TCPServer(('', PORT), SimpleHTTPRequestHandler)

@@ -36,7 +36,8 @@ class Director(object):
         self.catalog = catalog.TemplateCatalog(site.path)
         self.composers = Composers()
 
-    def lookup_outdir(self):
+    @property
+    def outdir(self):
         """Look up the output directory based on what configuration is
         available.
         """
@@ -62,8 +63,7 @@ class Director(object):
 
         signals.pre_composition.send(self)
         dirname = os.path.dirname(filepath)
-        output_dirpath = self._get_output_dirpath(
-            dirname, self.lookup_outdir())
+        output_dirpath = self._get_output_dirpath(dirname, self.outdir)
         self._process_file(filepath, output_dirpath, self.config.timing)
         signals.post_composition.send(self)
 
@@ -81,8 +81,7 @@ class Director(object):
 
         signals.pre_composition.send(self)
         dirname, basedir = os.path.split(directory)
-        output_dirpath = self._get_output_dirpath(
-            dirname, self.lookup_outdir())
+        output_dirpath = self._get_output_dirpath(dirname, self.outdir)
         os.mkdir(os.path.join(output_dirpath, basedir))
         signals.post_composition.send(self)
 
@@ -95,7 +94,7 @@ class Director(object):
         """
         # Because all paths should be absolute, it should be simple to find out
         # if this path is in the output directory.
-        outdir = self.lookup_outdir()
+        outdir = self.outdir
         source_is_in_outdir = self.site.path.startswith(outdir)
         if source_is_in_outdir and path.startswith(self.site.path):
             return False
@@ -105,7 +104,7 @@ class Director(object):
     def produce(self):
         """Walk the site tree and generate the output."""
         signals.pre_composition.send(self)
-        self._generate_output(self.lookup_outdir(), self.config.timing)
+        self._generate_output(self.outdir, self.config.timing)
         signals.post_composition.send(self)
 
     def prune_skip_directories(self, dirnames):

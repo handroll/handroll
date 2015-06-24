@@ -1,9 +1,13 @@
 # Copyright (c) 2015, Matt Layman
 
+import os
+
 try:
     import ConfigParser as configparser
 except ImportError:  # pragma: no cover
     import configparser
+
+from werkzeug.contrib.atom import AtomFeed
 
 from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
@@ -59,6 +63,14 @@ class BlogExtension(Extension):
             self.posts.append(BlogPost(
                 source_file=source_file,
             ))
+
+    def on_post_composition(self, director):
+        """Generate the atom feed."""
+        feed = AtomFeed(**self.atom_metadata)
+        output_file = os.path.join(director.outdir, self.atom_output)
+        with open(output_file, 'wb') as out:
+            out.write(feed.to_string().encode('utf-8'))
+            out.write(b'<!-- handrolled for excellence -->\n')
 
     def _add_atom_metadata(self, name, option):
         """Add atom metadata from the config parser."""
