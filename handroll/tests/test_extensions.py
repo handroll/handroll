@@ -7,7 +7,7 @@ from handroll import signals
 from handroll.configuration import Configuration
 from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
-from handroll.extensions.blog import BlogExtension
+from handroll.extensions.blog import BlogExtension, FeedBuilder
 from handroll.extensions.loader import ExtensionLoader
 from handroll.tests import TestCase
 
@@ -114,6 +114,13 @@ class TestBlogExtension(TestCase):
         extension.on_pre_composition(director)
         return extension
 
+    def _make_blog_post_frontmatter(self):
+        frontmatter = {
+            'blog': True,
+            'title': 'A Blog Post',
+        }
+        return frontmatter
+
     def test_handles_frontmatter_loaded(self):
         extension = BlogExtension(None)
         self.assertTrue(extension.handle_frontmatter_loaded)
@@ -124,7 +131,8 @@ class TestBlogExtension(TestCase):
 
     def test_registers_blog_post(self):
         extension = BlogExtension(None)
-        extension.on_frontmatter_loaded('thundercats.md', {'blog': True})
+        frontmatter = self._make_blog_post_frontmatter()
+        extension.on_frontmatter_loaded('thundercats.md', frontmatter)
         post = extension.posts[0]
         self.assertEqual('thundercats.md', post.source_file)
 
@@ -244,3 +252,33 @@ class TestBlogExtension(TestCase):
         extension.on_post_composition(director)
         feed = os.path.join(director.outdir, extension.atom_output)
         self.assertTrue(os.path.exists(feed))
+
+    @mock.patch.object(FeedBuilder, 'add')
+    def test_adds_post(self, builder_add):
+        director = self.factory.make_director()
+        os.mkdir(director.outdir)
+        extension = self._make_preprocessed_one(director)
+        post = mock.Mock()
+        extension.posts.append(post)
+        extension.on_post_composition(director)
+        builder_add.assert_called_once_with(post)
+
+
+class TestFeedBuilder(TestCase):
+
+    def _make_one(self):
+        self.atom_metadata = {
+            'id': 'http://www.example.com/feed.xml',
+            'title': 'Awesome sauce',
+        }
+        return FeedBuilder(self.atom_metadata)
+
+    def test_has_metadata(self):
+        builder = self._make_one()
+        self.assertEqual(self.atom_metadata, builder.metadata)
+
+    def test_post_creates_feed_entry(self):
+        builder = self._make_one()
+        post = self.factory.make_blog_post()
+        builder.add(post)
+        self.assertEqual(1, len(builder._feed.entries))

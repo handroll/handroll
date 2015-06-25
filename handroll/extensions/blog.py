@@ -7,7 +7,7 @@ try:
 except ImportError:  # pragma: no cover
     import configparser
 
-from werkzeug.contrib.atom import AtomFeed
+from werkzeug.contrib.atom import AtomFeed, FeedEntry
 
 from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
@@ -18,6 +18,7 @@ class BlogPost(object):
 
     def __init__(self, **kwargs):
         self.source_file = kwargs['source_file']
+        self.title = kwargs['title']
 
 
 class BlogExtension(Extension):
@@ -62,15 +63,16 @@ class BlogExtension(Extension):
         if is_post:
             self.posts.append(BlogPost(
                 source_file=source_file,
+                title=frontmatter['title'],
             ))
 
     def on_post_composition(self, director):
         """Generate the atom feed."""
-        feed = AtomFeed(**self.atom_metadata)
+        builder = FeedBuilder(self.atom_metadata)
+        for post in self.posts:
+            builder.add(post)
         output_file = os.path.join(director.outdir, self.atom_output)
-        with open(output_file, 'wb') as out:
-            out.write(feed.to_string().encode('utf-8'))
-            out.write(b'<!-- handrolled for excellence -->\n')
+        builder.write_to(output_file)
 
     def _add_atom_metadata(self, name, option):
         """Add atom metadata from the config parser."""
@@ -84,3 +86,29 @@ class BlogExtension(Extension):
             raise AbortError(
                 _('The blog extension requires the {option} option.').format(
                     option=option))
+
+
+class FeedBuilder(object):
+    """Transform blog metadata and posts into an Atom feed."""
+
+    def __init__(self, metadata):
+        self.metadata = metadata
+        self._feed = AtomFeed(**metadata)
+
+    def add(self, post):
+        """Add a blog post to the feed."""
+        import datetime
+        entry = FeedEntry(
+            title=post.title,
+            # TODO: Dynamically generate a URL.
+            url='foo.html',
+            # TODO: Get the date from the frontmatter.
+            updated=datetime.datetime.now(),
+        )
+        self._feed.add(entry)
+
+    def write_to(self, filepath):
+        """Write the feed to the provided filepath."""
+        with open(filepath, 'wb') as out:
+            out.write(self._feed.to_string().encode('utf-8'))
+            out.write(b'<!-- handrolled for excellence -->\n')

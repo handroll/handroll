@@ -5,11 +5,19 @@ import tempfile
 
 from handroll.configuration import Configuration
 from handroll.director import Director
+from handroll.extensions.blog import BlogPost
 from handroll.site import Site
 
 
 class Factory(object):
     """A factory to produce commonly needed objects"""
+
+    def make_blog_post(self):
+        kwargs = {
+            'source_file': 'a_source_file.md',
+            'title': 'A Blog Post',
+        }
+        return BlogPost(**kwargs)
 
     def make_director(self):
         config = Configuration()
