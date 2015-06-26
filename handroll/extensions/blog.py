@@ -9,6 +9,7 @@ except ImportError:  # pragma: no cover
 
 from werkzeug.contrib.atom import AtomFeed, FeedEntry
 
+from handroll import date
 from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
 from handroll.i18n import _
@@ -17,6 +18,7 @@ from handroll.i18n import _
 class BlogPost(object):
 
     def __init__(self, **kwargs):
+        self.date = kwargs['date']
         self.source_file = kwargs['source_file']
         self.title = kwargs['title']
 
@@ -60,8 +62,11 @@ class BlogExtension(Extension):
             raise AbortError(
                 _('Invalid blog frontmatter (expects True or False): '
                   '{blog_value}').format(blog_value=is_post))
+        # TODO: Validate that the post has the required fields.
         if is_post:
+            self._update_date(frontmatter)
             self.posts.append(BlogPost(
+                date=frontmatter['date'],
                 source_file=source_file,
                 title=frontmatter['title'],
             ))
@@ -87,6 +92,10 @@ class BlogExtension(Extension):
                 _('The blog extension requires the {option} option.').format(
                     option=option))
 
+    def _update_date(self, frontmatter):
+        """Update the frontmatter date into an actual datetime instance."""
+        frontmatter['date'] = date.convert(frontmatter['date'])
+
 
 class FeedBuilder(object):
     """Transform blog metadata and posts into an Atom feed."""
@@ -97,13 +106,11 @@ class FeedBuilder(object):
 
     def add(self, post):
         """Add a blog post to the feed."""
-        import datetime
         entry = FeedEntry(
             title=post.title,
             # TODO: Dynamically generate a URL.
             url='foo.html',
-            # TODO: Get the date from the frontmatter.
-            updated=datetime.datetime.now(),
+            updated=post.date,
         )
         self._feed.add(entry)
 

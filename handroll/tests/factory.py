@@ -1,5 +1,6 @@
 # Copyright (c) 2015, Matt Layman
 
+import datetime
 import os
 import tempfile
 
@@ -14,6 +15,7 @@ class Factory(object):
 
     def make_blog_post(self):
         kwargs = {
+            'date': datetime.datetime.today(),
             'source_file': 'a_source_file.md',
             'title': 'A Blog Post',
         }

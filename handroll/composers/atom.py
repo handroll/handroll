@@ -1,15 +1,13 @@
 # Copyright (c) 2015, Matt Layman
 
-from datetime import datetime
 import io
 import json
 import os
-import time
 
 from werkzeug.contrib.atom import AtomFeed
 from werkzeug.contrib.atom import FeedEntry
 
-from handroll import logger
+from handroll import date, logger
 from handroll.composers import Composer
 from handroll.exceptions import AbortError
 from handroll.i18n import _
@@ -82,15 +80,9 @@ class AtomComposer(Composer):
     def _make_entry(self, data):
         # Convert dates into datetime instances.
         if 'updated' in data:
-            data['updated'] = self._convert_date(data['updated'])
+            data['updated'] = date.convert(data['updated'])
 
         if 'published' in data:
-            data['published'] = self._convert_date(data['published'])
+            data['published'] = date.convert(data['published'])
 
         return FeedEntry(**data)
-
-    def _convert_date(self, date):
-        """Convert a date string into a datetime instance. Assumes date string
-        is RfC 3389 format."""
-        time_s = time.strptime(date, '%Y-%m-%dT%H:%M:%S')
-        return datetime.fromtimestamp(time.mktime(time_s))
