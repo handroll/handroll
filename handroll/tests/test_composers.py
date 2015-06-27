@@ -297,7 +297,8 @@ class TestSassComposer(unittest.TestCase):
             AbortError, composer.compose, None, source_file, output_dir)
 
     def test_output_extension(self):
-        composer = SassComposer()
+        fake_bin = self._make_fake_sass_bin()
+        composer = SassComposer(fake_bin)
         self.assertEqual('.css', composer.output_extension)
 
 
