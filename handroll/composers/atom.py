@@ -30,10 +30,11 @@ class AtomComposer(Composer):
 
     .. literalinclude:: ../sample/atom_sample.atom
     """
+    output_extension = '.xml'
 
     def compose(self, catalog, source_file, out_dir):
         root, ext = os.path.splitext(os.path.basename(source_file))
-        filename = root + '.xml'
+        filename = root + self.output_extension
         output_file = os.path.join(out_dir, filename)
         if self._needs_update(source_file, output_file):
             logger.info(_('Generating Atom XML for {source_file} ...').format(

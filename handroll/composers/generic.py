@@ -21,6 +21,7 @@ class GenericHTMLComposer(Composer):
     The title will be extracted from the first line and the remaining source
     lines will be passed to a template method for further processing.
     """
+    output_extension = '.html'
 
     # A pattern to get source content from a file with YAML front matter.
     yaml_scanner = re.compile(r""".*?    # YAML header
@@ -40,7 +41,7 @@ class GenericHTMLComposer(Composer):
 
         # Determine the output filename.
         root, ext = os.path.splitext(os.path.basename(source_file))
-        filename = root + '.html'
+        filename = root + self.output_extension
         output_file = os.path.join(out_dir, filename)
 
         if self._needs_update(template, source_file, output_file):

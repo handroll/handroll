@@ -21,6 +21,7 @@ class SassComposer(Composer):
     installed separately before it can be used. Check out the `installation
     options <http://sass-lang.com/install>`_.
     """
+    output_extension = '.css'
 
     def __init__(self, path=None):
         self.sass = spawn.find_executable('sass', path)
@@ -29,7 +30,7 @@ class SassComposer(Composer):
 
     def compose(self, catalog, source_file, out_dir):
         root, ext = os.path.splitext(os.path.basename(source_file))
-        filename = root + '.css'
+        filename = root + self.output_extension
         output_file = os.path.join(out_dir, filename)
 
         logger.info(_('Generating CSS for {source_file} ...').format(

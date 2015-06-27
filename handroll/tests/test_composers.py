@@ -27,6 +27,11 @@ class TestComposer(unittest.TestCase):
         self.assertRaises(
             NotImplementedError, composer.compose, None, None, None)
 
+    def test_output_extension_not_implemented(self):
+        composer = Composer()
+        self.assertRaises(
+            NotImplementedError, lambda: composer.output_extension)
+
 
 class TestComposers(unittest.TestCase):
 
@@ -81,6 +86,10 @@ class TestAtomComposer(unittest.TestCase):
         composer.compose(None, self.source_file, self.outdir)
         self.assertFalse(json.loads.called)
 
+    def test_output_extension(self):
+        composer = AtomComposer()
+        self.assertEqual('.xml', composer.output_extension)
+
 
 class TestCopyComposer(unittest.TestCase):
 
@@ -108,6 +117,15 @@ class TestCopyComposer(unittest.TestCase):
         composer = CopyComposer()
         composer.compose(None, source_file, outdir)
         self.assertTrue(shutil.copy.called)
+
+    def test_output_extension(self):
+        """The copy composer takes the extension of the source file.
+
+        This composer is the fallback composer and resolution should
+        never rely on this composer's output extension.
+        """
+        composer = CopyComposer()
+        self.assertRaises(AttributeError, lambda: composer.output_extension)
 
 
 class TestGenericHTMLComposer(unittest.TestCase):
@@ -188,6 +206,10 @@ class TestGenericHTMLComposer(unittest.TestCase):
         template.last_modified = past
         self.assertFalse(
             composer._needs_update(template, source_file, output_file))
+
+    def test_output_extension(self):
+        composer = GenericHTMLComposer()
+        self.assertEqual('.html', composer.output_extension)
 
 
 class TestMarkdownComposer(unittest.TestCase):
@@ -273,6 +295,10 @@ class TestSassComposer(unittest.TestCase):
         subprocess.Popen.return_value.returncode = 1
         self.assertRaises(
             AbortError, composer.compose, None, source_file, output_dir)
+
+    def test_output_extension(self):
+        composer = SassComposer()
+        self.assertEqual('.css', composer.output_extension)
 
 
 class TestTextileComposer(unittest.TestCase):
