@@ -11,6 +11,7 @@ from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
 from handroll.extensions.blog import BlogExtension, FeedBuilder
 from handroll.extensions.loader import ExtensionLoader
+from handroll.resolver import FileResolver
 from handroll.tests import TestCase
 
 
@@ -274,6 +275,13 @@ class TestBlogExtension(TestCase):
         expected_date = datetime.date(2015, 6, 25)
         self.assertEqual(expected_date, frontmatter['date'].date())
         self.assertEqual(expected_date, post.date.date())
+
+    def test_obtains_resolver(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser)
+        extension = BlogExtension(director.config)
+        extension.on_pre_composition(director)
+        self.assertTrue(isinstance(extension._resolver, FileResolver))
 
 
 class TestFeedBuilder(TestCase):

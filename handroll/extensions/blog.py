@@ -42,6 +42,7 @@ class BlogExtension(Extension):
         self.posts = []
         self.atom_metadata = {}
         self.atom_output = ''
+        self._resolver = None
 
     def on_pre_composition(self, director):
         """Check that all the required configuration exists."""
@@ -51,6 +52,8 @@ class BlogExtension(Extension):
         for metadata, option in self.required_metadata.items():
             self._add_atom_metadata(metadata, option)
         self.atom_output = self._get_option('atom_output')
+        # Grab the resolver from the director for determining URLs for posts.
+        self._resolver = director.resolver
 
     def on_frontmatter_loaded(self, source_file, frontmatter):
         """Scan for blog posts.
