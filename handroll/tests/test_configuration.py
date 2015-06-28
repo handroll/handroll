@@ -62,3 +62,19 @@ class TestConfiguration(unittest.TestCase):
             f.write(conf_file.encode('utf-8'))
 
         self.assertRaises(AbortError, configuration.build_config, f.name, args)
+
+    def test_no_domain_aborts(self):
+        config = configuration.Configuration()
+        self.assertRaises(AbortError, lambda: config.domain)
+
+    def test_loads_domain_from_site(self):
+        conf_file = inspect.cleandoc(
+            """[site]
+            domain = a_fake_domain""")
+        args = FakeArgs()
+        with tempfile.NamedTemporaryFile(delete=False) as f:
+            f.write(conf_file.encode('utf-8'))
+
+        config = configuration.build_config(f.name, args)
+
+        self.assertEqual('a_fake_domain', config.domain)

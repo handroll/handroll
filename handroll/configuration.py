@@ -23,6 +23,15 @@ class Configuration(object):
         # Keep the parser to allow extensions to get configuration file data.
         self.parser = ConfigParser()
 
+        self._domain = None
+
+    @property
+    def domain(self):
+        if self._domain is None:
+            raise AbortError(
+                _('You are missing a domain setting in the site section.'))
+        return self._domain
+
     def load_from_arguments(self, args):
         """Load any configuration attributes from the provided command line
         arguments. Arguments have the highest precedent so overwrite any other
@@ -37,6 +46,8 @@ class Configuration(object):
         """Load any configuration attributes from the provided config file."""
         with open(config_file, 'r') as f:
             self.parser.readfp(f)
+            if self.parser.has_option('site', 'domain'):
+                self._domain = self.parser.get('site', 'domain')
             if self.parser.has_option('site', 'outdir'):
                 self.outdir = os.path.abspath(os.path.expanduser(
                     self.parser.get('site', 'outdir')))

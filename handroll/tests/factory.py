@@ -21,6 +21,11 @@ class Factory(object):
         }
         return BlogPost(**kwargs)
 
+    def make_configuration(self):
+        config = Configuration()
+        config._domain = 'http://www.example.com'
+        return config
+
     def make_director(self):
         config = Configuration()
         site = self.make_site()
