@@ -7,6 +7,7 @@ import mock
 
 from handroll.configuration import Configuration
 from handroll.director import Director
+from handroll.resolver import FileResolver
 from handroll.site import Site
 from handroll.tests import TestCase
 
@@ -248,3 +249,7 @@ class TestDirector(TestCase):
         directory_output = os.path.join(
             config.outdir, director.catalog.TEMPLATES_DIR, 'test')
         self.assertFalse(os.path.exists(directory_output))
+
+    def test_has_resolver(self):
+        director = self.factory.make_director()
+        self.assertTrue(isinstance(director.resolver, FileResolver))

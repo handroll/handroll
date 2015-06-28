@@ -6,6 +6,7 @@ import time
 from handroll import logger, signals, template
 from handroll.composers import Composers
 from handroll.i18n import _
+from handroll.resolver import FileResolver
 from handroll.site import Site
 from handroll.template import catalog
 
@@ -35,6 +36,7 @@ class Director(object):
         self.extensions = extensions
         self.catalog = catalog.TemplateCatalog(site.path)
         self.composers = Composers()
+        self.resolver = FileResolver(site.path, self.composers, config)
 
     @property
     def outdir(self):
