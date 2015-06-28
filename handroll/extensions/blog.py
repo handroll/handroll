@@ -21,6 +21,7 @@ class BlogPost(object):
         self.date = kwargs['date']
         self.source_file = kwargs['source_file']
         self.title = kwargs['title']
+        self.url = kwargs['url']
 
 
 class BlogExtension(Extension):
@@ -72,6 +73,7 @@ class BlogExtension(Extension):
                 date=frontmatter['date'],
                 source_file=source_file,
                 title=frontmatter['title'],
+                url=self._resolver.as_url(source_file),
             ))
 
     def on_post_composition(self, director):
@@ -111,8 +113,7 @@ class FeedBuilder(object):
         """Add a blog post to the feed."""
         entry = FeedEntry(
             title=post.title,
-            # TODO: Dynamically generate a URL.
-            url='foo.html',
+            url=post.url,
             updated=post.date,
         )
         self._feed.add(entry)

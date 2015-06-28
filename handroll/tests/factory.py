@@ -18,6 +18,7 @@ class Factory(object):
             'date': datetime.datetime.today(),
             'source_file': 'a_source_file.md',
             'title': 'A Blog Post',
+            'url': 'http://www.example.com/a_source_file.html',
         }
         return BlogPost(**kwargs)
 
@@ -27,7 +28,7 @@ class Factory(object):
         return config
 
     def make_director(self):
-        config = Configuration()
+        config = self.make_configuration()
         site = self.make_site()
         return Director(config, site, [])
 

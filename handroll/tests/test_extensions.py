@@ -110,8 +110,10 @@ class TestBlogExtension(TestCase):
                 continue
             parser.set('blog', option, value)
 
-    def _make_preprocessed_one(self, director):
+    def _make_preprocessed_one(self, director=None):
         """Make an instance that has all default metadata already parsed."""
+        if director is None:
+            director = self.factory.make_director()
         self._add_blog_section(director.config.parser)
         extension = BlogExtension(director.config)
         extension.on_pre_composition(director)
@@ -134,7 +136,7 @@ class TestBlogExtension(TestCase):
         self.assertTrue(extension.handle_post_composition)
 
     def test_registers_blog_post(self):
-        extension = BlogExtension(None)
+        extension = self._make_preprocessed_one()
         frontmatter = self._make_blog_post_frontmatter()
         extension.on_frontmatter_loaded('thundercats.md', frontmatter)
         post = extension.posts[0]
@@ -268,7 +270,7 @@ class TestBlogExtension(TestCase):
         builder_add.assert_called_once_with(post)
 
     def test_date_string_converted_to_datetime_in_frontmatter(self):
-        extension = BlogExtension(None)
+        extension = self._make_preprocessed_one()
         frontmatter = self._make_blog_post_frontmatter()
         extension.on_frontmatter_loaded('thundercats.md', frontmatter)
         post = extension.posts[0]
@@ -302,3 +304,9 @@ class TestFeedBuilder(TestCase):
         post = self.factory.make_blog_post()
         builder.add(post)
         self.assertEqual(1, len(builder._feed.entries))
+
+    def test_feed_entry_has_post_url(self):
+        builder = self._make_one()
+        post = self.factory.make_blog_post()
+        builder.add(post)
+        self.assertEqual(post.url, builder._feed.entries[0].url)
