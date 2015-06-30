@@ -9,7 +9,6 @@ except ImportError:  # pragma: no cover
 
 from werkzeug.contrib.atom import AtomFeed, FeedEntry
 
-from handroll import date
 from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
 from handroll.i18n import _
@@ -69,7 +68,6 @@ class BlogExtension(Extension):
                   '{blog_value}').format(blog_value=is_post))
         # TODO: Validate that the post has the required fields.
         if is_post:
-            self._update_date(frontmatter)
             self.posts.append(BlogPost(
                 date=frontmatter['date'],
                 source_file=source_file,
@@ -98,10 +96,6 @@ class BlogExtension(Extension):
             raise AbortError(
                 _('The blog extension requires the {option} option.').format(
                     option=option))
-
-    def _update_date(self, frontmatter):
-        """Update the frontmatter date into an actual datetime instance."""
-        frontmatter['date'] = date.convert(frontmatter['date'])
 
 
 class FeedBuilder(object):

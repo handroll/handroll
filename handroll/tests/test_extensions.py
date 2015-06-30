@@ -124,7 +124,7 @@ class TestBlogExtension(TestCase):
     def _make_blog_post_frontmatter(self):
         frontmatter = {
             'blog': True,
-            'date': '2015-06-25T21:04:00',
+            'date': datetime.datetime(2015, 6, 25, 12, 0, 0),
             'title': 'A Blog Post',
         }
         return frontmatter
@@ -271,13 +271,12 @@ class TestBlogExtension(TestCase):
         extension.on_post_composition(director)
         builder_add.assert_called_once_with(post)
 
-    def test_date_string_converted_to_datetime_in_frontmatter(self):
+    def test_date_in_post(self):
         extension = self._make_preprocessed_one()
         frontmatter = self._make_blog_post_frontmatter()
         extension.on_frontmatter_loaded('thundercats.md', frontmatter)
         post = extension.posts[0]
         expected_date = datetime.date(2015, 6, 25)
-        self.assertEqual(expected_date, frontmatter['date'].date())
         self.assertEqual(expected_date, post.date.date())
 
     def test_obtains_resolver(self):
