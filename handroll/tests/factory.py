@@ -17,6 +17,7 @@ class Factory(object):
         kwargs = {
             'date': datetime.datetime.today(),
             'source_file': 'a_source_file.md',
+            'summary': 'The post summary',
             'title': 'A Blog Post',
             'url': 'http://www.example.com/a_source_file.html',
         }

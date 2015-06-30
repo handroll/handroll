@@ -20,6 +20,7 @@ class BlogPost(object):
     def __init__(self, **kwargs):
         self.date = kwargs['date']
         self.source_file = kwargs['source_file']
+        self.summary = kwargs['summary']
         self.title = kwargs['title']
         self.url = kwargs['url']
 
@@ -72,6 +73,7 @@ class BlogExtension(Extension):
             self.posts.append(BlogPost(
                 date=frontmatter['date'],
                 source_file=source_file,
+                summary=frontmatter.get('summary'),
                 title=frontmatter['title'],
                 url=self._resolver.as_url(source_file),
             ))
@@ -112,6 +114,7 @@ class FeedBuilder(object):
     def add(self, post):
         """Add a blog post to the feed."""
         entry = FeedEntry(
+            summary=post.summary,
             title=post.title,
             url=post.url,
             updated=post.date,

@@ -18,6 +18,7 @@ from handroll.tests import TestCase
 class TestExtensionLoader(TestCase):
 
     def tearDown(self):
+        super(TestExtensionLoader, self).tearDown()
         # Clean up any attached extension instance.
         signals.frontmatter_loaded.receivers.clear()
         signals.pre_composition.receivers.clear()
@@ -91,6 +92,7 @@ class TestExtension(TestCase):
 class TestBlogExtension(TestCase):
 
     def tearDown(self):
+        super(TestBlogExtension, self).tearDown()
         # Clean up any attached extension instance.
         signals.frontmatter_loaded.receivers.clear()
         signals.pre_composition.receivers.clear()
@@ -310,3 +312,9 @@ class TestFeedBuilder(TestCase):
         post = self.factory.make_blog_post()
         builder.add(post)
         self.assertEqual(post.url, builder._feed.entries[0].url)
+
+    def test_feed_entry_has_summary(self):
+        builder = self._make_one()
+        post = self.factory.make_blog_post()
+        builder.add(post)
+        self.assertEqual(post.summary, builder._feed.entries[0].summary)
