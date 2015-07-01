@@ -353,3 +353,14 @@ class TestFeedBuilder(TestCase):
         post = self.factory.make_blog_post()
         builder.add(post)
         self.assertEqual(post.summary, builder._feed.entries[0].summary)
+
+    def test_title_type_is_html(self):
+        """The title type is HTML.
+
+        The title frontmatter is automatically HTML escaped so the
+        title type should be HTML to handle that escaped title.
+        """
+        builder = self._make_one()
+        post = self.factory.make_blog_post()
+        builder.add(post)
+        self.assertEqual('html', builder._feed.entries[0].title_type)

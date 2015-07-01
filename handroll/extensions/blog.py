@@ -120,6 +120,7 @@ class FeedBuilder(object):
         entry = FeedEntry(
             summary=post.summary,
             title=post.title,
+            title_type='html',
             url=post.url,
             updated=post.date,
         )
