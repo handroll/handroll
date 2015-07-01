@@ -23,6 +23,13 @@ class BlogPost(object):
         self.title = kwargs['title']
         self.url = kwargs['url']
 
+    def __hash__(self):
+        """A set of blog posts is constrained by the source file."""
+        return hash(self.source_file)
+
+    def __eq__(x, y):
+        return x.source_file == y.source_file
+
 
 class BlogExtension(Extension):
     """Track files marked as blog entries and generate a feed."""
@@ -40,7 +47,7 @@ class BlogExtension(Extension):
 
     def __init__(self, config):
         super(BlogExtension, self).__init__(config)
-        self.posts = []
+        self.posts = set([])
         self.atom_metadata = {}
         self.atom_output = ''
         self._resolver = None
@@ -68,18 +75,21 @@ class BlogExtension(Extension):
                   '{blog_value}').format(blog_value=is_post))
         # TODO: Validate that the post has the required fields.
         if is_post:
-            self.posts.append(BlogPost(
+            post = BlogPost(
                 date=frontmatter['date'],
                 source_file=source_file,
                 summary=frontmatter.get('summary'),
                 title=frontmatter['title'],
                 url=self._resolver.as_url(source_file),
-            ))
+            )
+            # Discard the older version of the post if it exists.
+            self.posts.discard(post)
+            self.posts.add(post)
 
     def on_post_composition(self, director):
         """Generate the atom feed."""
         builder = FeedBuilder(self.atom_metadata)
-        for post in self.posts:
+        for post in sorted(self.posts, key=lambda p: p.date, reverse=True):
             builder.add(post)
         output_file = os.path.join(director.outdir, self.atom_output)
         builder.write_to(output_file)

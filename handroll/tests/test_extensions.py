@@ -89,6 +89,23 @@ class TestExtension(TestCase):
         signals.pre_composition.receivers.clear()
 
 
+class TestBlogPost(TestCase):
+
+    def test_source_file_is_unique_constraint(self):
+        """The source file is used as the unique constraint for hashing."""
+        post = self.factory.make_blog_post()
+        hash_value = post.__hash__()
+        self.assertEqual(hash(post.source_file), hash_value)
+
+    def test_matching_source_file_posts_limit_set(self):
+        post_1 = self.factory.make_blog_post()
+        post_1.source_file = 'source.md'
+        post_2 = self.factory.make_blog_post()
+        post_2.source_file = 'source.md'
+        posts = set([post_1])
+        self.assertTrue(post_2 in posts)
+
+
 class TestBlogExtension(TestCase):
 
     def tearDown(self):
@@ -141,7 +158,7 @@ class TestBlogExtension(TestCase):
         extension = self._make_preprocessed_one()
         frontmatter = self._make_blog_post_frontmatter()
         extension.on_frontmatter_loaded('thundercats.md', frontmatter)
-        post = extension.posts[0]
+        post = extension.posts.pop()
         self.assertEqual('thundercats.md', post.source_file)
 
     def test_ignores_non_blog_post(self):
@@ -266,8 +283,8 @@ class TestBlogExtension(TestCase):
         director = self.factory.make_director()
         os.mkdir(director.outdir)
         extension = self._make_preprocessed_one(director)
-        post = mock.Mock()
-        extension.posts.append(post)
+        post = self.factory.make_blog_post()
+        extension.posts.add(post)
         extension.on_post_composition(director)
         builder_add.assert_called_once_with(post)
 
@@ -275,7 +292,7 @@ class TestBlogExtension(TestCase):
         extension = self._make_preprocessed_one()
         frontmatter = self._make_blog_post_frontmatter()
         extension.on_frontmatter_loaded('thundercats.md', frontmatter)
-        post = extension.posts[0]
+        post = extension.posts.pop()
         expected_date = datetime.date(2015, 6, 25)
         self.assertEqual(expected_date, post.date.date())
 
@@ -285,6 +302,25 @@ class TestBlogExtension(TestCase):
         extension = BlogExtension(director.config)
         extension.on_pre_composition(director)
         self.assertTrue(isinstance(extension._resolver, FileResolver))
+
+    @mock.patch.object(FeedBuilder, 'add')
+    def test_posts_added_to_builder_by_date(self, builder_add):
+        current = self.factory.make_blog_post()
+        current.source_file = 'current.md'
+        older = self.factory.make_blog_post()
+        older.source_file = 'older.md'
+        older.date = older.date - datetime.timedelta(days=-1)
+        oldest = self.factory.make_blog_post()
+        oldest.source_file = 'oldest.md'
+        oldest.date = oldest.date - datetime.timedelta(days=-2)
+        extension = self._make_preprocessed_one()
+        extension.posts.update([older, current, oldest])
+        director = self.factory.make_director()
+        os.mkdir(director.outdir)
+        extension.on_post_composition(director)
+        self.assertEqual(oldest, builder_add.call_args_list[0][0][0])
+        self.assertEqual(older, builder_add.call_args_list[1][0][0])
+        self.assertEqual(current, builder_add.call_args_list[2][0][0])
 
 
 class TestFeedBuilder(TestCase):
