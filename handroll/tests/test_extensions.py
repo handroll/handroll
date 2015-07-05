@@ -89,23 +89,6 @@ class TestExtension(TestCase):
         signals.pre_composition.receivers.clear()
 
 
-class TestBlogPost(TestCase):
-
-    def test_source_file_is_unique_constraint(self):
-        """The source file is used as the unique constraint for hashing."""
-        post = self.factory.make_blog_post()
-        hash_value = post.__hash__()
-        self.assertEqual(hash(post.source_file), hash_value)
-
-    def test_matching_source_file_posts_limit_set(self):
-        post_1 = self.factory.make_blog_post()
-        post_1.source_file = 'source.md'
-        post_2 = self.factory.make_blog_post()
-        post_2.source_file = 'source.md'
-        posts = set([post_1])
-        self.assertTrue(post_2 in posts)
-
-
 class TestBlogExtension(TestCase):
 
     def tearDown(self):
@@ -158,7 +141,7 @@ class TestBlogExtension(TestCase):
         extension = self._make_preprocessed_one()
         frontmatter = self._make_blog_post_frontmatter()
         extension.on_frontmatter_loaded('thundercats.md', frontmatter)
-        post = extension.posts.pop()
+        post = extension.posts['thundercats.md']
         self.assertEqual('thundercats.md', post.source_file)
 
     def test_ignores_non_blog_post(self):
@@ -284,7 +267,7 @@ class TestBlogExtension(TestCase):
         os.mkdir(director.outdir)
         extension = self._make_preprocessed_one(director)
         post = self.factory.make_blog_post()
-        extension.posts.add(post)
+        extension.posts[post.source_file] = post
         extension.on_post_composition(director)
         builder_add.assert_called_once_with(post)
 
@@ -292,7 +275,7 @@ class TestBlogExtension(TestCase):
         extension = self._make_preprocessed_one()
         frontmatter = self._make_blog_post_frontmatter()
         extension.on_frontmatter_loaded('thundercats.md', frontmatter)
-        post = extension.posts.pop()
+        post = extension.posts['thundercats.md']
         expected_date = datetime.date(2015, 6, 25)
         self.assertEqual(expected_date, post.date.date())
 
@@ -314,7 +297,9 @@ class TestBlogExtension(TestCase):
         oldest.source_file = 'oldest.md'
         oldest.date = oldest.date - datetime.timedelta(days=-2)
         extension = self._make_preprocessed_one()
-        extension.posts.update([older, current, oldest])
+        extension.posts['current.md'] = current
+        extension.posts['older.md'] = older
+        extension.posts['oldest.md'] = oldest
         director = self.factory.make_director()
         os.mkdir(director.outdir)
         extension.on_post_composition(director)
