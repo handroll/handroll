@@ -106,6 +106,8 @@ class TestBlogExtension(TestCase):
             'atom_output': 'feed.xml',
             'atom_title': 'Amazing blog',
             'atom_url': 'https://www.example.com/archive.html',
+            'list_template': 'archive.j2',
+            'list_output': 'archive.html',
         }
         for option, value in configuration.items():
             if option == exclude:
@@ -306,6 +308,37 @@ class TestBlogExtension(TestCase):
         self.assertEqual(oldest, builder_add.call_args_list[0][0][0])
         self.assertEqual(older, builder_add.call_args_list[1][0][0])
         self.assertEqual(current, builder_add.call_args_list[2][0][0])
+
+    def test_list_template_not_required(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser, exclude='list_template')
+        extension = BlogExtension(director.config)
+        extension.on_pre_composition(director)
+        self.assertIsNone(extension.list_template)
+
+    def test_has_list_template_in_extension(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser)
+        extension = BlogExtension(director.config)
+        extension.on_pre_composition(director)
+        self.assertEqual('archive.j2', extension.list_template)
+
+    def test_has_list_output_in_extension(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser)
+        extension = BlogExtension(director.config)
+        extension.on_pre_composition(director)
+        self.assertEqual('archive.html', extension.list_output)
+
+    def test_list_output_required_with_list_template(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser, exclude='list_output')
+        extension = BlogExtension(director.config)
+        try:
+            extension.on_pre_composition(director)
+            self.fail()
+        except AbortError as ae:
+            self.assertTrue('list_output' in str(ae))
 
 
 class TestFeedBuilder(TestCase):

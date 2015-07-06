@@ -43,6 +43,8 @@ class BlogExtension(Extension):
         self.posts = {}
         self.atom_metadata = {}
         self.atom_output = ''
+        self.list_template = None
+        self.list_output = None
         self._resolver = None
 
     def on_pre_composition(self, director):
@@ -50,9 +52,17 @@ class BlogExtension(Extension):
         if not self._config.parser.has_section('blog'):
             raise AbortError(
                 _('A blog section is missing in the configuration file.'))
+
+        # Collect atom feed configuration.
         for metadata, option in self.required_metadata.items():
             self._add_atom_metadata(metadata, option)
         self.atom_output = self._get_option('atom_output')
+
+        # Collect HTML listing configuration.
+        if self._config.parser.has_option('blog', 'list_template'):
+            self.list_template = self._get_option('list_template')
+            self.list_output = self._get_option('list_output')
+
         # Grab the resolver from the director for determining URLs for posts.
         self._resolver = director.resolver
 
