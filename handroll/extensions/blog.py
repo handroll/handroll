@@ -77,6 +77,7 @@ class BlogExtension(Extension):
                 _('Invalid blog frontmatter (expects True or False): '
                   '{blog_value}').format(blog_value=is_post))
         # TODO: Validate that the post has the required fields.
+        # TODO: add dirty checking so the output won't write all the time.
         if is_post:
             post = BlogPost(
                 date=frontmatter['date'],
@@ -88,12 +89,25 @@ class BlogExtension(Extension):
             self.posts[source_file] = post
 
     def on_post_composition(self, director):
+        """Generate blog output."""
+        blog_posts = sorted(self.posts.values(), key=lambda p: p.date)
+        self._generate_atom_feed(director, blog_posts)
+        if self.list_template is not None:
+            self._generate_list_page(director, blog_posts)
+
+    def _generate_atom_feed(self, director, blog_posts):
         """Generate the atom feed."""
         builder = FeedBuilder(self.atom_metadata)
-        blog_posts = self.posts.values()
-        for post in sorted(blog_posts, key=lambda p: p.date, reverse=True):
-            builder.add(post)
+        # The feed expects oldest entries first.
+        builder.add(reversed(blog_posts))
         output_file = os.path.join(director.outdir, self.atom_output)
+        builder.write_to(output_file)
+
+    def _generate_list_page(self, director, blog_posts):
+        """Generate the list page."""
+        builder = ListPageBuilder()
+        builder.add(blog_posts)
+        output_file = os.path.join(director.outdir, self.list_output)
         builder.write_to(output_file)
 
     def _add_atom_metadata(self, name, option):
@@ -110,26 +124,53 @@ class BlogExtension(Extension):
                     option=option))
 
 
-class FeedBuilder(object):
+class BlogBuilder(object):
+    """A template pattern class for generating output related to a blog."""
+
+    def _generate_output(self):
+        """Generate output that belongs in the destination file.
+
+        Subclasses must implement this method.
+        """
+        raise NotImplementedError()
+
+    def write_to(self, filepath):
+        """Write the output to the provided filepath."""
+        output = self._generate_output()
+        with open(filepath, 'wb') as out:
+            out.write(output.encode('utf-8'))
+            out.write(b'<!-- handrolled for excellence -->\n')
+
+
+class FeedBuilder(BlogBuilder):
     """Transform blog metadata and posts into an Atom feed."""
 
     def __init__(self, metadata):
         self.metadata = metadata
         self._feed = AtomFeed(**metadata)
 
-    def add(self, post):
-        """Add a blog post to the feed."""
-        entry = FeedEntry(
-            summary=post.summary,
-            title=post.title,
-            title_type='html',
-            url=post.url,
-            updated=post.date,
-        )
-        self._feed.add(entry)
+    def add(self, posts):
+        """Add blog posts to the feed."""
+        for post in posts:
+            self._feed.add(FeedEntry(
+                summary=post.summary,
+                title=post.title,
+                title_type='html',
+                url=post.url,
+                updated=post.date,
+            ))
 
-    def write_to(self, filepath):
-        """Write the feed to the provided filepath."""
-        with open(filepath, 'wb') as out:
-            out.write(self._feed.to_string().encode('utf-8'))
-            out.write(b'<!-- handrolled for excellence -->\n')
+    def _generate_output(self):
+        return self._feed.to_string()
+
+
+class ListPageBuilder(BlogBuilder):
+    """Transform blog posts into a list page."""
+
+    def add(self, posts):
+        """Add the posts and generate a blog list."""
+        # TODO: Generate the HTML.
+
+    def _generate_output(self):
+        # TODO: Fetch the template and render it.
+        return ''

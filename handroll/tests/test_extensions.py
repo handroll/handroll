@@ -9,7 +9,8 @@ from handroll import signals
 from handroll.configuration import Configuration
 from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
-from handroll.extensions.blog import BlogExtension, FeedBuilder
+from handroll.extensions.blog import (
+    BlogExtension, BlogBuilder, FeedBuilder, ListPageBuilder)
 from handroll.extensions.loader import ExtensionLoader
 from handroll.resolver import FileResolver
 from handroll.tests import TestCase
@@ -114,11 +115,11 @@ class TestBlogExtension(TestCase):
                 continue
             parser.set('blog', option, value)
 
-    def _make_preprocessed_one(self, director=None):
+    def _make_preprocessed_one(self, director=None, exclude=None):
         """Make an instance that has all default metadata already parsed."""
         if director is None:
             director = self.factory.make_director()
-        self._add_blog_section(director.config.parser)
+        self._add_blog_section(director.config.parser, exclude=exclude)
         extension = BlogExtension(director.config)
         extension.on_pre_composition(director)
         return extension
@@ -271,7 +272,8 @@ class TestBlogExtension(TestCase):
         post = self.factory.make_blog_post()
         extension.posts[post.source_file] = post
         extension.on_post_composition(director)
-        builder_add.assert_called_once_with(post)
+        received_post = next(builder_add.call_args[0][0])
+        self.assertEqual(post, received_post)
 
     def test_date_in_post(self):
         extension = self._make_preprocessed_one()
@@ -295,19 +297,15 @@ class TestBlogExtension(TestCase):
         older = self.factory.make_blog_post()
         older.source_file = 'older.md'
         older.date = older.date - datetime.timedelta(days=-1)
-        oldest = self.factory.make_blog_post()
-        oldest.source_file = 'oldest.md'
-        oldest.date = oldest.date - datetime.timedelta(days=-2)
         extension = self._make_preprocessed_one()
         extension.posts['current.md'] = current
         extension.posts['older.md'] = older
-        extension.posts['oldest.md'] = oldest
         director = self.factory.make_director()
         os.mkdir(director.outdir)
         extension.on_post_composition(director)
-        self.assertEqual(oldest, builder_add.call_args_list[0][0][0])
-        self.assertEqual(older, builder_add.call_args_list[1][0][0])
-        self.assertEqual(current, builder_add.call_args_list[2][0][0])
+        posts = builder_add.call_args[0][0]
+        self.assertEqual(older, next(posts))
+        self.assertEqual(current, next(posts))
 
     def test_list_template_not_required(self):
         director = self.factory.make_director()
@@ -340,6 +338,35 @@ class TestBlogExtension(TestCase):
         except AbortError as ae:
             self.assertTrue('list_output' in str(ae))
 
+    @mock.patch.object(ListPageBuilder, 'write_to')
+    def test_builds_list_page(self, write_to):
+        director = self.factory.make_director()
+        os.mkdir(director.outdir)
+        extension = self._make_preprocessed_one(director=director)
+        extension.on_post_composition(director)
+        expected_output = os.path.join(director.outdir, 'archive.html')
+        write_to.assert_called_once_with(expected_output)
+
+    @mock.patch.object(ListPageBuilder, 'write_to')
+    def test_skip_list_page_building_when_no_template_exists(self, write_to):
+        director = self.factory.make_director()
+        os.mkdir(director.outdir)
+        extension = self._make_preprocessed_one(
+            director=director, exclude='list_template')
+        extension.on_post_composition(director)
+        self.assertFalse(write_to.called)
+
+
+class TestBlogBuilder(TestCase):
+
+    def test_generate_output_not_implemented(self):
+        builder = BlogBuilder()
+        try:
+            builder.write_to('doesnotmatter.html')
+            self.fail()
+        except NotImplementedError:
+            pass
+
 
 class TestFeedBuilder(TestCase):
 
@@ -357,19 +384,19 @@ class TestFeedBuilder(TestCase):
     def test_post_creates_feed_entry(self):
         builder = self._make_one()
         post = self.factory.make_blog_post()
-        builder.add(post)
+        builder.add([post])
         self.assertEqual(1, len(builder._feed.entries))
 
     def test_feed_entry_has_post_url(self):
         builder = self._make_one()
         post = self.factory.make_blog_post()
-        builder.add(post)
+        builder.add([post])
         self.assertEqual(post.url, builder._feed.entries[0].url)
 
     def test_feed_entry_has_summary(self):
         builder = self._make_one()
         post = self.factory.make_blog_post()
-        builder.add(post)
+        builder.add([post])
         self.assertEqual(post.summary, builder._feed.entries[0].summary)
 
     def test_title_type_is_html(self):
@@ -380,5 +407,5 @@ class TestFeedBuilder(TestCase):
         """
         builder = self._make_one()
         post = self.factory.make_blog_post()
-        builder.add(post)
+        builder.add([post])
         self.assertEqual('html', builder._feed.entries[0].title_type)
