@@ -105,7 +105,8 @@ class BlogExtension(Extension):
 
     def _generate_list_page(self, director, blog_posts):
         """Generate the list page."""
-        builder = ListPageBuilder()
+        template = director.catalog.get_template(self.list_template)
+        builder = ListPageBuilder(template)
         builder.add(blog_posts)
         output_file = os.path.join(director.outdir, self.list_output)
         builder.write_to(output_file)
@@ -166,6 +167,9 @@ class FeedBuilder(BlogBuilder):
 
 class ListPageBuilder(BlogBuilder):
     """Transform blog posts into a list page."""
+
+    def __init__(self, template):
+        self._template = template
 
     def add(self, posts):
         """Add the posts and generate a blog list."""

@@ -122,6 +122,9 @@ class TestBlogExtension(TestCase):
         self._add_blog_section(director.config.parser, exclude=exclude)
         extension = BlogExtension(director.config)
         extension.on_pre_composition(director)
+        templates = os.path.join(director.site.path, 'templates')
+        os.mkdir(templates)
+        open(os.path.join(templates, 'archive.j2'), 'w').close()
         return extension
 
     def _make_blog_post_frontmatter(self):
@@ -297,10 +300,10 @@ class TestBlogExtension(TestCase):
         older = self.factory.make_blog_post()
         older.source_file = 'older.md'
         older.date = older.date - datetime.timedelta(days=-1)
-        extension = self._make_preprocessed_one()
+        director = self.factory.make_director()
+        extension = self._make_preprocessed_one(director=director)
         extension.posts['current.md'] = current
         extension.posts['older.md'] = older
-        director = self.factory.make_director()
         os.mkdir(director.outdir)
         extension.on_post_composition(director)
         posts = builder_add.call_args[0][0]
