@@ -21,6 +21,7 @@ class BlogPost(object):
         self.source_file = kwargs['source_file']
         self.summary = kwargs['summary']
         self.title = kwargs['title']
+        self.route = kwargs['route']
         self.url = kwargs['url']
 
 
@@ -78,12 +79,15 @@ class BlogExtension(Extension):
                   '{blog_value}').format(blog_value=is_post))
         # TODO: Validate that the post has the required fields.
         # TODO: add dirty checking so the output won't write all the time.
+        # TODO: Log some messages to show that the feed and list page generate.
         if is_post:
             post = BlogPost(
                 date=frontmatter['date'],
                 source_file=source_file,
                 summary=frontmatter.get('summary'),
                 title=frontmatter['title'],
+                # TODO: get route from resolver.
+                route='/a_source_file.html',
                 url=self._resolver.as_url(source_file),
             )
             self.posts[source_file] = post
@@ -170,11 +174,19 @@ class ListPageBuilder(BlogBuilder):
 
     def __init__(self, template):
         self._template = template
+        self._blog_list = ''
 
     def add(self, posts):
         """Add the posts and generate a blog list."""
-        # TODO: Generate the HTML.
+        li_html = []
+        for post in posts:
+            li_html.append(
+                '<li><a href="{route}">{title}</a></li>\n'.format(
+                    route=post.route, title=post.title))
+        self._blog_list = ''.join(li_html)
 
     def _generate_output(self):
-        # TODO: Fetch the template and render it.
-        return ''
+        context = {
+            'blog_list': self._blog_list,
+        }
+        return self._template.render(context)

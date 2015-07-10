@@ -19,6 +19,7 @@ class Factory(object):
             'source_file': 'a_source_file.md',
             'summary': 'The post summary',
             'title': 'A Blog Post',
+            'route': '/a_source_file.html',
             'url': 'http://www.example.com/a_source_file.html',
         }
         return BlogPost(**kwargs)

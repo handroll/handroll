@@ -335,3 +335,32 @@ class TestFeedBuilder(TestCase):
         post = self.factory.make_blog_post()
         builder.add([post])
         self.assertEqual('html', builder._feed.entries[0].title_type)
+
+
+class TestListPageBuilder(TestCase):
+
+    def test_output_is_rendered(self):
+        mock_template = mock.Mock()
+        mock_template.render.return_value = 'fake HTML'
+        builder = ListPageBuilder(mock_template)
+        output = builder._generate_output()
+        self.assertEqual('fake HTML', output)
+
+    def test_blog_list_in_context(self):
+        mock_template = mock.Mock()
+        builder = ListPageBuilder(mock_template)
+        builder._blog_list = 'fake li items'
+        builder._generate_output()
+        context = mock_template.render.call_args[0][0]
+        self.assertEqual('fake li items', context['blog_list'])
+
+    def test_adds_posts_to_blog_list_html(self):
+        post = self.factory.make_blog_post()
+        another = self.factory.make_blog_post()
+        another.title = 'Another Blog Post'
+        builder = ListPageBuilder(None)
+        builder.add([post, another])
+        self.assertEqual(
+            '<li><a href="/a_source_file.html">A Blog Post</a></li>\n'
+            '<li><a href="/a_source_file.html">Another Blog Post</a></li>\n',
+            builder._blog_list)
