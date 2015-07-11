@@ -25,6 +25,14 @@ class BlogPost(object):
         self.route = kwargs['route']
         self.url = kwargs['url']
 
+    def __eq__(self, other):
+        if other is None:
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
 
 class BlogExtension(Extension):
     """Track files marked as blog entries and generate a feed."""
@@ -48,6 +56,7 @@ class BlogExtension(Extension):
         self.list_template = None
         self.list_output = None
         self._resolver = None
+        self._should_generate = True
 
     def on_pre_composition(self, director):
         """Check that all the required configuration exists."""
@@ -79,24 +88,29 @@ class BlogExtension(Extension):
                 _('Invalid blog frontmatter (expects True or False): '
                   '{blog_value}').format(blog_value=is_post))
         # TODO: Validate that the post has the required fields.
-        # TODO: add dirty checking so the output won't write all the time.
-        if is_post:
-            post = BlogPost(
-                date=frontmatter['date'],
-                source_file=source_file,
-                summary=frontmatter.get('summary'),
-                title=frontmatter['title'],
-                route=self._resolver.as_route(source_file),
-                url=self._resolver.as_url(source_file),
-            )
+        if not is_post:
+            return
+        post = BlogPost(
+            date=frontmatter['date'],
+            source_file=source_file,
+            summary=frontmatter.get('summary'),
+            title=frontmatter['title'],
+            route=self._resolver.as_route(source_file),
+            url=self._resolver.as_url(source_file),
+        )
+        if post != self.posts.get(source_file):
             self.posts[source_file] = post
+            self._should_generate = True
 
     def on_post_composition(self, director):
         """Generate blog output."""
+        if not self._should_generate:
+            return
         blog_posts = sorted(self.posts.values(), key=lambda p: p.date)
         self._generate_atom_feed(director, blog_posts)
         if self.list_template is not None:
             self._generate_list_page(director, blog_posts)
+        self._should_generate = False
 
     def _generate_atom_feed(self, director, blog_posts):
         """Generate the atom feed."""

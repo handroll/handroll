@@ -282,6 +282,43 @@ class TestBlogExtension(TestCase):
         extension.on_post_composition(director)
         self.assertFalse(write_to.called)
 
+    def test_should_generate_output_at_start(self):
+        director = self.factory.make_director()
+        self._add_blog_section(director.config.parser)
+        extension = BlogExtension(director.config)
+        self.assertTrue(extension._should_generate)
+
+    def test_post_composition_signals_stop_generation(self):
+        director = self.factory.make_director()
+        os.mkdir(director.outdir)
+        extension = self._make_preprocessed_one(director=director)
+        extension.on_post_composition(director)
+        self.assertFalse(extension._should_generate)
+
+    @mock.patch.object(ListPageBuilder, 'write_to')
+    def test_does_not_generate(self, write_to):
+        director = self.factory.make_director()
+        os.mkdir(director.outdir)
+        extension = self._make_preprocessed_one(director=director)
+        extension._should_generate = False
+        extension.on_post_composition(director)
+        self.assertFalse(write_to.called)
+
+    def test_new_post_triggers_need_for_generation(self):
+        extension = self._make_preprocessed_one()
+        extension._should_generate = False
+        frontmatter = self._make_blog_post_frontmatter()
+        extension.on_frontmatter_loaded('thundercats.md', frontmatter)
+        self.assertTrue(extension._should_generate)
+
+    def test_same_post_does_not_signal_generation(self):
+        extension = self._make_preprocessed_one()
+        frontmatter = self._make_blog_post_frontmatter()
+        extension.on_frontmatter_loaded('thundercats.md', frontmatter)
+        extension._should_generate = False
+        extension.on_frontmatter_loaded('thundercats.md', frontmatter)
+        self.assertFalse(extension._should_generate)
+
 
 class TestBlogBuilder(TestCase):
 
