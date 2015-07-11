@@ -36,7 +36,7 @@ if __name__ == '__main__':
         'docutils',
         'Jinja2',
         'Markdown==2.4',  # 2.5 dropped support for Python 2.6.
-        'mock',
+        'mock<1.1.0',  # 1.1 dropped support for Python 2.6.
         'Pygments',
         'PyYAML',
         'textile',
