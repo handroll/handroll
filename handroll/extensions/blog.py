@@ -78,18 +78,10 @@ class BlogExtension(Extension):
         self._resolver = director.resolver
 
     def on_frontmatter_loaded(self, source_file, frontmatter):
-        """Scan for blog posts.
-
-        If a post is found, record it.
-        """
-        is_post = frontmatter.get('blog', False)
-        if type(is_post) != bool:
-            raise AbortError(
-                _('Invalid blog frontmatter (expects True or False): '
-                  '{blog_value}').format(blog_value=is_post))
-        # TODO: Validate that the post has the required fields.
-        if not is_post:
+        """Record any new blog posts."""
+        if not self._is_post(frontmatter):
             return
+        # TODO: Validate that the post has the required fields.
         post = BlogPost(
             date=frontmatter['date'],
             source_file=source_file,
@@ -111,6 +103,15 @@ class BlogExtension(Extension):
         if self.list_template is not None:
             self._generate_list_page(director, blog_posts)
         self._should_generate = False
+
+    def _is_post(self, frontmatter):
+        """Check if the front matter looks like a blog post."""
+        is_post = frontmatter.get('blog', False)
+        if type(is_post) != bool:
+            raise AbortError(
+                _('Invalid blog frontmatter (expects True or False): '
+                  '{blog_value}').format(blog_value=is_post))
+        return is_post
 
     def _generate_atom_feed(self, director, blog_posts):
         """Generate the atom feed."""
