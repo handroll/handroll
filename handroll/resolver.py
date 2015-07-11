@@ -11,11 +11,14 @@ class FileResolver(object):
         self.composers = composers
         self.config = config
 
+    def as_route(self, source_path):
+        """Resolve the output route of the provided source path."""
+        path = os.path.relpath(source_path, self.site_path)
+        return '/' + self._convert_to_url(path)
+
     def as_url(self, source_path):
         """Resolve the output URL of the provided source path."""
-        path = os.path.relpath(source_path, self.site_path)
-        url_path = self._convert_to_url(path)
-        return "/".join([self.config.domain, url_path])
+        return self.config.domain + self.as_route(source_path)
 
     def _convert_to_url(self, path):
         """"Convert the path to a URL path by swapping the extension."""
