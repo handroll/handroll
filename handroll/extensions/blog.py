@@ -86,8 +86,7 @@ class BlogExtension(Extension):
                 source_file=source_file,
                 summary=frontmatter.get('summary'),
                 title=frontmatter['title'],
-                # TODO: get route from resolver.
-                route='/a_source_file.html',
+                route=self._resolver.as_route(source_file),
                 url=self._resolver.as_url(source_file),
             )
             self.posts[source_file] = post
