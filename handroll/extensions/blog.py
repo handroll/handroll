@@ -9,6 +9,7 @@ except ImportError:  # pragma: no cover
 
 from werkzeug.contrib.atom import AtomFeed, FeedEntry
 
+from handroll import logger
 from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
 from handroll.i18n import _
@@ -79,7 +80,6 @@ class BlogExtension(Extension):
                   '{blog_value}').format(blog_value=is_post))
         # TODO: Validate that the post has the required fields.
         # TODO: add dirty checking so the output won't write all the time.
-        # TODO: Log some messages to show that the feed and list page generate.
         if is_post:
             post = BlogPost(
                 date=frontmatter['date'],
@@ -100,6 +100,7 @@ class BlogExtension(Extension):
 
     def _generate_atom_feed(self, director, blog_posts):
         """Generate the atom feed."""
+        logger.info(_('Generating Atom XML feed ...'))
         builder = FeedBuilder(self.atom_metadata)
         # The feed expects oldest entries first.
         builder.add(reversed(blog_posts))
@@ -108,6 +109,7 @@ class BlogExtension(Extension):
 
     def _generate_list_page(self, director, blog_posts):
         """Generate the list page."""
+        logger.info(_('Generating blog list page ...'))
         template = director.catalog.get_template(self.list_template)
         builder = ListPageBuilder(template)
         builder.add(blog_posts)
