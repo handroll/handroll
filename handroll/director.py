@@ -56,6 +56,8 @@ class Director(object):
         This is primarily used for the watchdog handler and would be slow if
         used in the main ``produce`` method.
         """
+        if self._should_skip(filepath):
+            return
         # Skip files in the output directory.
         if self.is_in_output(filepath):
             return

@@ -253,3 +253,9 @@ class TestDirector(TestCase):
     def test_has_resolver(self):
         director = self.factory.make_director()
         self.assertTrue(isinstance(director.resolver, FileResolver))
+
+    @mock.patch('handroll.director.signals')
+    def test_process_file_ignores_skip_files(self, signals):
+        director = self.factory.make_director()
+        director.process_file('fake.swp')
+        self.assertFalse(signals.pre_composition.called)
