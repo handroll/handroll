@@ -98,7 +98,8 @@ class BlogExtension(Extension):
         """Generate blog output."""
         if not self._should_generate:
             return
-        blog_posts = sorted(self.posts.values(), key=lambda p: p.date)
+        blog_posts = sorted(
+            self.posts.values(), key=lambda p: p.date, reverse=True)
         self._generate_atom_feed(director, blog_posts)
         if self.list_template is not None:
             self._generate_list_page(director, blog_posts)
@@ -117,8 +118,7 @@ class BlogExtension(Extension):
         """Generate the atom feed."""
         logger.info(_('Generating Atom XML feed ...'))
         builder = FeedBuilder(self.atom_metadata)
-        # The feed expects oldest entries first.
-        builder.add(reversed(blog_posts))
+        builder.add(blog_posts)
         output_file = os.path.join(director.outdir, self.atom_output)
         builder.write_to(output_file)
 

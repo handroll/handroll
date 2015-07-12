@@ -198,7 +198,7 @@ class TestBlogExtension(TestCase):
         post = self.factory.make_blog_post()
         extension.posts[post.source_file] = post
         extension.on_post_composition(director)
-        received_post = next(builder_add.call_args[0][0])
+        received_post = builder_add.call_args[0][0][0]
         self.assertEqual(post, received_post)
 
     def test_date_in_post(self):
@@ -230,8 +230,8 @@ class TestBlogExtension(TestCase):
         os.mkdir(director.outdir)
         extension.on_post_composition(director)
         posts = builder_add.call_args[0][0]
-        self.assertEqual(older, next(posts))
-        self.assertEqual(current, next(posts))
+        self.assertEqual(older, posts[0])
+        self.assertEqual(current, posts[1])
 
     def test_list_template_not_required(self):
         director = self.factory.make_director()
