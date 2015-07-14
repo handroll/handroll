@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll 1.6\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-06-13 08:01-0400\n"
+"POT-Creation-Date: 2015-07-13 20:29-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,31 +57,35 @@ msgstr ""
 msgid "watch the site for changes and run a web server in the output directory"
 msgstr ""
 
-#: handroll/configuration.py:56
+#: handroll/configuration.py:32
+msgid "You are missing a domain setting in the site section."
+msgstr ""
+
+#: handroll/configuration.py:67
 msgid "Cannot determine if {extension} is enabled."
 msgstr ""
 
-#: handroll/director.py:121
+#: handroll/director.py:124
 msgid "Updating {outdir} ..."
 msgstr ""
 
-#: handroll/director.py:123
+#: handroll/director.py:126
 msgid "Creating {outdir} ..."
 msgstr ""
 
-#: handroll/director.py:140
+#: handroll/director.py:143
 msgid "Populating {dirpath} ..."
 msgstr ""
 
-#: handroll/director.py:148
+#: handroll/director.py:151
 msgid "Creating directory {out_dir} ..."
 msgstr ""
 
-#: handroll/director.py:189
+#: handroll/director.py:192
 msgid "Skipping {filename} with skipped file type ..."
 msgstr ""
 
-#: handroll/director.py:194
+#: handroll/director.py:197
 msgid "Skipping special file {filename} ..."
 msgstr ""
 
@@ -107,67 +111,75 @@ msgid ""
 "parents."
 msgstr ""
 
-#: handroll/composers/__init__.py:87
+#: handroll/composers/__init__.py:92
 msgid "Skipping {filename} ... It is the same as {destination}."
 msgstr ""
 
-#: handroll/composers/__init__.py:93
+#: handroll/composers/__init__.py:98
 msgid "{filename} differs from {destination} ..."
 msgstr ""
 
-#: handroll/composers/__init__.py:96
+#: handroll/composers/__init__.py:101
 msgid "Copying {filename} to {out_dir} ..."
 msgstr ""
 
-#: handroll/composers/atom.py:41
+#: handroll/composers/atom.py:40
 msgid "Generating Atom XML for {source_file} ..."
 msgstr ""
 
-#: handroll/composers/atom.py:49 handroll/composers/generic.py:52
+#: handroll/composers/atom.py:48 handroll/composers/generic.py:53
 msgid "Skipping {filename} ... It is up to date."
 msgstr ""
 
-#: handroll/composers/atom.py:67
+#: handroll/composers/atom.py:66
 msgid "Missing entries list."
 msgstr ""
 
-#: handroll/composers/atom.py:77
+#: handroll/composers/atom.py:76
 msgid "Invalid feed {source_file}: {error}"
 msgstr ""
 
-#: handroll/composers/generic.py:47
+#: handroll/composers/generic.py:48
 msgid "Generating HTML for {source_file} ..."
 msgstr ""
 
-#: handroll/composers/sass.py:28
+#: handroll/composers/sass.py:29
 msgid "Sass is not installed."
 msgstr ""
 
-#: handroll/composers/sass.py:35
+#: handroll/composers/sass.py:36
 msgid "Generating CSS for {source_file} ..."
 msgstr ""
 
-#: handroll/composers/sass.py:44
+#: handroll/composers/sass.py:45
 msgid ""
 "Received output from sass:\n"
 "{0}"
 msgstr ""
 
-#: handroll/composers/sass.py:47
+#: handroll/composers/sass.py:48
 msgid ""
 "Sass failed to generate CSS:\n"
 "{0}"
 msgstr ""
 
-#: handroll/extensions/blog.py:40
+#: handroll/extensions/blog.py:65
 msgid "A blog section is missing in the configuration file."
 msgstr ""
 
-#: handroll/extensions/blog.py:52
+#: handroll/extensions/blog.py:113
 msgid "Invalid blog frontmatter (expects True or False): {blog_value}"
 msgstr ""
 
-#: handroll/extensions/blog.py:65
+#: handroll/extensions/blog.py:119
+msgid "Generating Atom XML feed ..."
+msgstr ""
+
+#: handroll/extensions/blog.py:127
+msgid "Generating blog list page ..."
+msgstr ""
+
+#: handroll/extensions/blog.py:144
 msgid "The blog extension requires the {option} option."
 msgstr ""
 
