@@ -197,9 +197,9 @@ class ListPageBuilder(BlogBuilder):
         li_html = []
         for post in posts:
             li_html.append(
-                '<li><a href="{route}">{title}</a></li>\n'.format(
+                u'<li><a href="{route}">{title}</a></li>'.format(
                     route=post.route, title=post.title))
-        self._blog_list = ''.join(li_html)
+        self._blog_list = u'\n'.join(li_html)
 
     def _generate_output(self):
         context = {

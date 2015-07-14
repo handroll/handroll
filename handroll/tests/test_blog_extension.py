@@ -399,5 +399,5 @@ class TestListPageBuilder(TestCase):
         builder.add([post, another])
         self.assertEqual(
             '<li><a href="/a_source_file.html">A Blog Post</a></li>\n'
-            '<li><a href="/a_source_file.html">Another Blog Post</a></li>\n',
+            '<li><a href="/a_source_file.html">Another Blog Post</a></li>',
             builder._blog_list)
