@@ -5,6 +5,8 @@ Version 1.6, In Development
 ---------------------------
 
 * Translated to Greek.
+* Added an extension interface for plugin authors to integrate
+  with various events.
 
 Version 1.5, Released February 24, 2015
 ---------------------------------------
