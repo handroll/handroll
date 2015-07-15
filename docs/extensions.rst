@@ -73,4 +73,38 @@ In this example, the atom feed would be stored
 in the root of the output directory
 with a filename of ``feed.xml``.
 
-TODO: Document the entry list template handling.
+To create a blog list page,
+add a ``list_template`` option to your ``blog`` section.
+If you include ``list_template``,
+then you must also include ``list_output``.
+``list_output`` is a path relative to the output directory.
+
+When the blog extension generates the list page,
+the context will receive a ``blog_list``.
+The ``blog_list`` is an HTML fragment of list item tags.
+There is one list item tag for every post.
+
+Here is a possible sample template.
+
+.. code-block:: html+jinja
+
+    <html>
+    <body>
+      <ul>
+        {{ blog_list }}
+      </ul
+    </body>
+    </html>
+
+And here is some possible output.
+
+.. code-block:: html
+
+    <html>
+    <body>
+      <ul>
+        <li><a href="/another_post.html">Another post</a></li>
+        <li><a href="/a_post.html">First post!</a></li>
+      </ul
+    </body>
+    </html>
