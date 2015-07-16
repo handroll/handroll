@@ -92,7 +92,7 @@ Here is a possible sample template.
     <body>
       <ul>
         {{ blog_list }}
-      </ul
+      </ul>
     </body>
     </html>
 
@@ -105,6 +105,6 @@ And here is some possible output.
       <ul>
         <li><a href="/another_post.html">Another post</a></li>
         <li><a href="/a_post.html">First post!</a></li>
-      </ul
+      </ul>
     </body>
     </html>
