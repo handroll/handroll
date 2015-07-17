@@ -47,6 +47,9 @@ It can also create an entry list for one of your pages.
 Enable the blog extension by adding ``with_blog = True`` to
 the ``site`` section of your configuration file.
 
+Atom feed
+~~~~~~~~~
+
 The extension requires some additional information
 to create a valid atom feed.
 Add a ``blog`` section to your configruation file
@@ -72,6 +75,9 @@ The path provided is relative to the output directory.
 In this example, the atom feed would be stored
 in the root of the output directory
 with a filename of ``feed.xml``.
+
+List page
+~~~~~~~~~
 
 To create a blog list page,
 add a ``list_template`` option to your ``blog`` section.
@@ -108,3 +114,21 @@ And here is some possible output.
       </ul>
     </body>
     </html>
+
+Blog post frontmatter
+~~~~~~~~~~~~~~~~~~~~~
+
+A source file is marked as a blog post by setting ``blog: True``
+in the front matter.
+The blog front matter has required and optional fields.
+
+Required fields:
+
+* ``title`` - The title of the post
+* ``date`` - The published date of the post.
+  The date should be in RfC 3339 format
+  (e.g., ``2015-07-15T12:00:00Z``).
+
+Optional fields:
+
+* ``summary`` - A summary of the post.
