@@ -1,5 +1,5 @@
 # Translations template for handroll.
-# Copyright (C) 2014 Matt Layman
+# Copyright (C) 2015 Matt Layman
 # This file is distributed under the same license as the handroll project.
 # 
 # Translators:
@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-29 15:30-0500\n"
-"PO-Revision-Date: 2015-02-24 01:39+0000\n"
+"POT-Creation-Date: 2015-07-13 20:29-0400\n"
+"PO-Revision-Date: 2015-07-18 13:17+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
-"Language-Team: Dutch (http://www.transifex.com/projects/p/handroll/language/nl/)\n"
+"Language-Team: Dutch (http://www.transifex.com/p/handroll/language/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,72 +19,80 @@ msgstr ""
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: handroll/command.py:31
+#: handroll/command.py:32
 msgid "Invalid site source: {0}"
 msgstr "Ongeldige website bron: {0}"
 
-#: handroll/command.py:38
+#: handroll/command.py:43
 msgid "Complete."
 msgstr "Compleet."
 
-#: handroll/command.py:41
+#: handroll/command.py:46
 msgid "Incomplete."
 msgstr "Onvolledige."
 
-#: handroll/command.py:48
+#: handroll/command.py:53
 msgid "A website generator for software artisans"
 msgstr "Een website generator voor software ambachtslieden"
 
-#: handroll/command.py:50
+#: handroll/command.py:55
 msgid "the path to your website"
 msgstr "het pad naar uw website"
 
-#: handroll/command.py:52
+#: handroll/command.py:57
 msgid "an optional output directory to create or update if it already exists"
 msgstr "een optionele output directory te maken of bij te werken als het al bestaat"
 
-#: handroll/command.py:55
+#: handroll/command.py:60
 msgid "use verbose messages"
 msgstr "Gebruik uitgebreide berichten"
 
-#: handroll/command.py:57
+#: handroll/command.py:62
 msgid "time the execution"
 msgstr "tijd de uitvoering"
 
-#: handroll/command.py:60
+#: handroll/command.py:65
 msgid "show debug level messages"
 msgstr "tonen debug level berichten"
 
-#: handroll/command.py:63
+#: handroll/command.py:68
 msgid ""
 "watch the site for changes and run a web server in the output directory"
 msgstr "kijken naar de site voor wijzigingen en uitvoeren van een webserver in de output directory"
 
-#: handroll/director.py:109
+#: handroll/configuration.py:32
+msgid "You are missing a domain setting in the site section."
+msgstr "Je mist een domeinnaam instelling in de sectie website."
+
+#: handroll/configuration.py:67
+msgid "Cannot determine if {extension} is enabled."
+msgstr "Kan niet bepalen of {extension} is ingeschakeld."
+
+#: handroll/director.py:124
 msgid "Updating {outdir} ..."
 msgstr "Actualisering {outdir} ..."
 
-#: handroll/director.py:111
+#: handroll/director.py:126
 msgid "Creating {outdir} ..."
 msgstr "Het creëren van {outdir} ..."
 
-#: handroll/director.py:128
+#: handroll/director.py:143
 msgid "Populating {dirpath} ..."
 msgstr "Bevolken {dirpath} ..."
 
-#: handroll/director.py:136
+#: handroll/director.py:151
 msgid "Creating directory {out_dir} ..."
 msgstr "Het creëren van directory {out_dir} ..."
 
-#: handroll/director.py:177
+#: handroll/director.py:192
 msgid "Skipping {filename} with skipped file type ..."
 msgstr "Overslaan {filename} met overgeslagen bestandstype ..."
 
-#: handroll/director.py:182
+#: handroll/director.py:197
 msgid "Skipping special file {filename} ..."
 msgstr "Overslaan speciaal bestand {filename} ..."
 
-#: handroll/server.py:49
+#: handroll/server.py:48
 msgid ""
 "Serving {outdir} at http://localhost:{port}/.\n"
 "Press Ctrl-C to quit."
@@ -105,57 +113,77 @@ msgid ""
 "A handroll site was not found in {current_directory} or any of its parents."
 msgstr "Een handroll site is niet gevonden in {current_directory} of een van haar ouders."
 
-#: handroll/composers/__init__.py:87
+#: handroll/composers/__init__.py:92
 msgid "Skipping {filename} ... It is the same as {destination}."
 msgstr "Overslaan {filename} ... Het is hetzelfde als {destination}."
 
-#: handroll/composers/__init__.py:93
+#: handroll/composers/__init__.py:98
 msgid "{filename} differs from {destination} ..."
 msgstr "{filename} verschilt van {destination} ..."
 
-#: handroll/composers/__init__.py:96
+#: handroll/composers/__init__.py:101
 msgid "Copying {filename} to {out_dir} ..."
 msgstr "Kopiëren {filename} te {out_dir} ..."
 
-#: handroll/composers/atom.py:41
+#: handroll/composers/atom.py:40
 msgid "Generating Atom XML for {source_file} ..."
 msgstr "Genereren Atom XML voor {source_file} ..."
 
-#: handroll/composers/atom.py:49 handroll/composers/generic.py:52
+#: handroll/composers/atom.py:48 handroll/composers/generic.py:53
 msgid "Skipping {filename} ... It is up to date."
 msgstr "Overslaan {filename} ... Het is up to date."
 
-#: handroll/composers/atom.py:67
+#: handroll/composers/atom.py:66
 msgid "Missing entries list."
 msgstr "Ontbrekende items lijst."
 
-#: handroll/composers/atom.py:77
+#: handroll/composers/atom.py:76
 msgid "Invalid feed {source_file}: {error}"
 msgstr "Ongeldige-feed {source_file}: {error}"
 
-#: handroll/composers/generic.py:47
+#: handroll/composers/generic.py:48
 msgid "Generating HTML for {source_file} ..."
 msgstr "Het genereren van HTML voor {source_file} ..."
 
-#: handroll/composers/sass.py:28
+#: handroll/composers/sass.py:29
 msgid "Sass is not installed."
 msgstr "Sass is niet geïnstalleerd."
 
-#: handroll/composers/sass.py:35
+#: handroll/composers/sass.py:36
 msgid "Generating CSS for {source_file} ..."
 msgstr "Genereren van CSS voor {source_file} ..."
 
-#: handroll/composers/sass.py:44
+#: handroll/composers/sass.py:45
 msgid ""
 "Received output from sass:\n"
 "{0}"
 msgstr "Ontvangen output van sass:\n{0}"
 
-#: handroll/composers/sass.py:47
+#: handroll/composers/sass.py:48
 msgid ""
 "Sass failed to generate CSS:\n"
 "{0}"
 msgstr "Sass nagelaten CSS genereren:\n{0}"
+
+#: handroll/extensions/blog.py:65
+msgid "A blog section is missing in the configuration file."
+msgstr "Een blog sectie ontbreekt in het configuratiebestand."
+
+#: handroll/extensions/blog.py:113
+msgid "Invalid blog frontmatter (expects True or False): {blog_value}"
+msgstr "Ongeldige blog voorste materie (verwacht True of False): {blog_value}"
+
+#: handroll/extensions/blog.py:119
+msgid "Generating Atom XML feed ..."
+msgstr "Genereren Atom XML ..."
+
+#: handroll/extensions/blog.py:127
+msgid "Generating blog list page ..."
+msgstr "Het genereren blog lijst pagina ..."
+
+#: handroll/extensions/blog.py:144
+msgid "The blog extension requires the {option} option."
+msgstr "De blog uitbreiding vereist de optie {option}."
 
 #: handroll/template/catalog.py:86
 msgid "No template found at {template_path}."

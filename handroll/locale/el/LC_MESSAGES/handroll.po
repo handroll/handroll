@@ -1,5 +1,5 @@
 # Translations template for handroll.
-# Copyright (C) 2014 Matt Layman
+# Copyright (C) 2015 Matt Layman
 # This file is distributed under the same license as the handroll project.
 # 
 # Translators:
@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2014-11-29 15:30-0500\n"
-"PO-Revision-Date: 2015-03-23 02:34+0000\n"
+"POT-Creation-Date: 2015-07-13 20:29-0400\n"
+"PO-Revision-Date: 2015-07-18 13:20+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
-"Language-Team: Greek (http://www.transifex.com/projects/p/handroll/language/el/)\n"
+"Language-Team: Greek (http://www.transifex.com/p/handroll/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,72 +19,80 @@ msgstr ""
 "Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: handroll/command.py:31
+#: handroll/command.py:32
 msgid "Invalid site source: {0}"
 msgstr "Μη έγκυρη πηγή ιστοσελίδα: {0}"
 
-#: handroll/command.py:38
+#: handroll/command.py:43
 msgid "Complete."
 msgstr "Πλήρης."
 
-#: handroll/command.py:41
+#: handroll/command.py:46
 msgid "Incomplete."
 msgstr "Ελλιπής."
 
-#: handroll/command.py:48
+#: handroll/command.py:53
 msgid "A website generator for software artisans"
 msgstr "Μια γεννήτρια ιστοσελίδα για τεχνίτες λογισμικού"
 
-#: handroll/command.py:50
+#: handroll/command.py:55
 msgid "the path to your website"
 msgstr "ο δρόμος προς την ιστοσελίδα σας"
 
-#: handroll/command.py:52
+#: handroll/command.py:57
 msgid "an optional output directory to create or update if it already exists"
 msgstr "ένα προαιρετικό κατάλογο εξόδου για να δημιουργήσετε ή να ενημερώσετε εάν υπάρχει ήδη"
 
-#: handroll/command.py:55
+#: handroll/command.py:60
 msgid "use verbose messages"
 msgstr "Χρησιμοποιήστε τη λεπτομερή μηνύματα"
 
-#: handroll/command.py:57
+#: handroll/command.py:62
 msgid "time the execution"
 msgstr "φορά η εκτέλεση"
 
-#: handroll/command.py:60
+#: handroll/command.py:65
 msgid "show debug level messages"
 msgstr "εμφανίζουν μηνύματα σφαλμάτων επίπεδο"
 
-#: handroll/command.py:63
+#: handroll/command.py:68
 msgid ""
 "watch the site for changes and run a web server in the output directory"
 msgstr "να παρακολουθήσετε το site για αλλαγές και να τρέξει ένα web server στον κατάλογο εξόδου"
 
-#: handroll/director.py:109
+#: handroll/configuration.py:32
+msgid "You are missing a domain setting in the site section."
+msgstr "Σας λείπει μια περιοχή ρύθμισης στην ενότητα ιστοσελίδα."
+
+#: handroll/configuration.py:67
+msgid "Cannot determine if {extension} is enabled."
+msgstr "Δεν μπορεί να καθορίσει αν {extension} είναι ενεργοποιημένη."
+
+#: handroll/director.py:124
 msgid "Updating {outdir} ..."
 msgstr "Ενημέρωση {outdir} ..."
 
-#: handroll/director.py:111
+#: handroll/director.py:126
 msgid "Creating {outdir} ..."
 msgstr "Δημιουργία {outdir} ..."
 
-#: handroll/director.py:128
+#: handroll/director.py:143
 msgid "Populating {dirpath} ..."
 msgstr "Εποίκηση {dirpath} ..."
 
-#: handroll/director.py:136
+#: handroll/director.py:151
 msgid "Creating directory {out_dir} ..."
 msgstr "Δημιουργία καταλόγου {out_dir} ..."
 
-#: handroll/director.py:177
+#: handroll/director.py:192
 msgid "Skipping {filename} with skipped file type ..."
 msgstr "Παράκαμψη {filename} με παραλείφθηκε τύπο αρχείου ..."
 
-#: handroll/director.py:182
+#: handroll/director.py:197
 msgid "Skipping special file {filename} ..."
 msgstr "Παράκαμψη ειδικό αρχείο {filename} ..."
 
-#: handroll/server.py:49
+#: handroll/server.py:48
 msgid ""
 "Serving {outdir} at http://localhost:{port}/.\n"
 "Press Ctrl-C to quit."
@@ -105,57 +113,77 @@ msgid ""
 "A handroll site was not found in {current_directory} or any of its parents."
 msgstr "Ένα site handroll δεν βρέθηκε σε {current_directory} ή κάποιος από τους γονείς του."
 
-#: handroll/composers/__init__.py:87
+#: handroll/composers/__init__.py:92
 msgid "Skipping {filename} ... It is the same as {destination}."
 msgstr "Παράκαμψη {filename} ... Είναι το ίδιο όπως {destination}."
 
-#: handroll/composers/__init__.py:93
+#: handroll/composers/__init__.py:98
 msgid "{filename} differs from {destination} ..."
 msgstr "{filename} διαφέρει από τον {destination} ..."
 
-#: handroll/composers/__init__.py:96
+#: handroll/composers/__init__.py:101
 msgid "Copying {filename} to {out_dir} ..."
 msgstr "Αντιγραφή {filename} σε {out_dir} ..."
 
-#: handroll/composers/atom.py:41
+#: handroll/composers/atom.py:40
 msgid "Generating Atom XML for {source_file} ..."
 msgstr "Δημιουργία Atom XML για {source_file} ..."
 
-#: handroll/composers/atom.py:49 handroll/composers/generic.py:52
+#: handroll/composers/atom.py:48 handroll/composers/generic.py:53
 msgid "Skipping {filename} ... It is up to date."
 msgstr "Παράκαμψη {filename} ... Είναι μέχρι σήμερα."
 
-#: handroll/composers/atom.py:67
+#: handroll/composers/atom.py:66
 msgid "Missing entries list."
 msgstr "Λείπει λίστα καταχωρήσεων."
 
-#: handroll/composers/atom.py:77
+#: handroll/composers/atom.py:76
 msgid "Invalid feed {source_file}: {error}"
 msgstr "Άκυρη ζωοτροφών {source_file}: {error}"
 
-#: handroll/composers/generic.py:47
+#: handroll/composers/generic.py:48
 msgid "Generating HTML for {source_file} ..."
 msgstr "Δημιουργία HTML για {source_file} ..."
 
-#: handroll/composers/sass.py:28
+#: handroll/composers/sass.py:29
 msgid "Sass is not installed."
 msgstr "Sass δεν έχει εγκατασταθεί."
 
-#: handroll/composers/sass.py:35
+#: handroll/composers/sass.py:36
 msgid "Generating CSS for {source_file} ..."
 msgstr "Δημιουργία CSS για {source_file} ..."
 
-#: handroll/composers/sass.py:44
+#: handroll/composers/sass.py:45
 msgid ""
 "Received output from sass:\n"
 "{0}"
 msgstr "Ελήφθη εξόδου από sass:\n{0}"
 
-#: handroll/composers/sass.py:47
+#: handroll/composers/sass.py:48
 msgid ""
 "Sass failed to generate CSS:\n"
 "{0}"
 msgstr "Sass απέτυχε να δημιουργήσει CSS:\n{0}"
+
+#: handroll/extensions/blog.py:65
+msgid "A blog section is missing in the configuration file."
+msgstr "Ένα τμήμα blog λείπει στο αρχείο ρυθμίσεων."
+
+#: handroll/extensions/blog.py:113
+msgid "Invalid blog frontmatter (expects True or False): {blog_value}"
+msgstr "Μη έγκυρο blog μπροστά ύλης (αναμένει True ή False): {blog_value}"
+
+#: handroll/extensions/blog.py:119
+msgid "Generating Atom XML feed ..."
+msgstr "Δημιουργία Atom XML ..."
+
+#: handroll/extensions/blog.py:127
+msgid "Generating blog list page ..."
+msgstr "Δημιουργία λίστας ιστολογίων σελίδα ..."
+
+#: handroll/extensions/blog.py:144
+msgid "The blog extension requires the {option} option."
+msgstr "Η επέκταση blog απαιτεί την επιλογή {option}."
 
 #: handroll/template/catalog.py:86
 msgid "No template found at {template_path}."
