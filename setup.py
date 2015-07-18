@@ -10,10 +10,22 @@ Markdown, ReStructuredText, and Textile.
 """
 
 from setuptools import find_packages, setup
+from setuptools.command.build_py import build_py
 from setuptools.command.sdist import sdist
 import sys
 
 __version__ = '1.6'
+
+
+class BuildPy(build_py):
+    """Custom ``build_py`` command to always build mo files for wheels."""
+
+    def run(self):
+        # Babel fails hard on Python 3. Let Python 2 make the mo files.
+        if sys.version_info < (3, 0, 0):
+            self.run_command('compile_catalog')
+        # build_py is an old style class so super cannot be used.
+        build_py.run(self)
 
 
 class Sdist(sdist):
@@ -54,6 +66,8 @@ if __name__ == '__main__':
             'requests',
             'Sphinx',
             'tox',
+            'twine',
+            'wheel',
         ])
 
     setup(
@@ -113,5 +127,8 @@ if __name__ == '__main__':
             'ReStructuredText',
             'Textile',
         ],
-        cmdclass={'sdist': Sdist},
+        cmdclass={
+            'build_py': BuildPy,
+            'sdist': Sdist,
+        },
     )
