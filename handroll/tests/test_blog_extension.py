@@ -319,6 +319,36 @@ class TestBlogExtension(TestCase):
         extension.on_frontmatter_loaded('thundercats.md', frontmatter)
         self.assertFalse(extension._should_generate)
 
+    def test_post_requires_date(self):
+        extension = self._make_preprocessed_one()
+        frontmatter = self._make_blog_post_frontmatter()
+        del frontmatter['date']
+        try:
+            extension.on_frontmatter_loaded('thundercats.md', frontmatter)
+            self.fail()
+        except AbortError as ae:
+            self.assertTrue('date' in str(ae))
+
+    def test_post_requires_title(self):
+        extension = self._make_preprocessed_one()
+        frontmatter = self._make_blog_post_frontmatter()
+        del frontmatter['title']
+        try:
+            extension.on_frontmatter_loaded('thundercats.md', frontmatter)
+            self.fail()
+        except AbortError as ae:
+            self.assertTrue('title' in str(ae))
+
+    def test_post_requires_error_includes_post_filename(self):
+        extension = self._make_preprocessed_one()
+        frontmatter = self._make_blog_post_frontmatter()
+        del frontmatter['title']
+        try:
+            extension.on_frontmatter_loaded('thundercats.md', frontmatter)
+            self.fail()
+        except AbortError as ae:
+            self.assertTrue('thundercats.md' in str(ae))
+
 
 class TestBlogBuilder(TestCase):
 

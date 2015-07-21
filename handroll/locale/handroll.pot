@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll 1.6\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-13 20:29-0400\n"
+"POT-Creation-Date: 2015-07-21 11:36-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -171,15 +171,19 @@ msgstr ""
 msgid "Invalid blog frontmatter (expects True or False): {blog_value}"
 msgstr ""
 
-#: handroll/extensions/blog.py:119
+#: handroll/extensions/blog.py:129
+msgid "The blog post, {filename}, is missing required fields: {missing_fields}"
+msgstr ""
+
+#: handroll/extensions/blog.py:133
 msgid "Generating Atom XML feed ..."
 msgstr ""
 
-#: handroll/extensions/blog.py:127
+#: handroll/extensions/blog.py:141
 msgid "Generating blog list page ..."
 msgstr ""
 
-#: handroll/extensions/blog.py:144
+#: handroll/extensions/blog.py:158
 msgid "The blog extension requires the {option} option."
 msgstr ""
 

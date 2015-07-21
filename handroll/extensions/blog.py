@@ -81,7 +81,7 @@ class BlogExtension(Extension):
         """Record any new blog posts."""
         if not self._is_post(frontmatter):
             return
-        # TODO: Validate that the post has the required fields.
+        self._validate_post(source_file, frontmatter)
         post = BlogPost(
             date=frontmatter['date'],
             source_file=source_file,
@@ -113,6 +113,20 @@ class BlogExtension(Extension):
                 _('Invalid blog frontmatter (expects True or False): '
                   '{blog_value}').format(blog_value=is_post))
         return is_post
+
+    def _validate_post(self, source_file, frontmatter):
+        """Validate that the post contains all the required fields."""
+        required = set([
+            'date',
+            'title',
+        ])
+        fields = set(frontmatter.keys())
+        missing = required - fields
+        if missing:
+            raise AbortError(_(
+                'The blog post, {filename}, '
+                'is missing required fields: {missing_fields}'.format(
+                    filename=source_file, missing_fields=', '.join(missing))))
 
     def _generate_atom_feed(self, director, blog_posts):
         """Generate the atom feed."""
