@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-13 20:29-0400\n"
-"PO-Revision-Date: 2015-07-18 13:21+0000\n"
+"POT-Creation-Date: 2015-07-21 11:36-0400\n"
+"PO-Revision-Date: 2015-07-22 15:15+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
-"Language-Team: Italian (http://www.transifex.com/p/handroll/language/it/)\n"
+"Language-Team: Italian (http://www.transifex.com/projects/p/handroll/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -173,15 +173,20 @@ msgstr "Una sezione del blog non è presente nel file di configurazione."
 msgid "Invalid blog frontmatter (expects True or False): {blog_value}"
 msgstr "Blog non valido avantesto (si aspetta True o False): {blog_value}"
 
-#: handroll/extensions/blog.py:119
+#: handroll/extensions/blog.py:129
+msgid ""
+"The blog post, {filename}, is missing required fields: {missing_fields}"
+msgstr "Il post sul blog, {filename}, manca campi obbligatori: {missing_fields}"
+
+#: handroll/extensions/blog.py:133
 msgid "Generating Atom XML feed ..."
 msgstr "Generazione di XML Atom ..."
 
-#: handroll/extensions/blog.py:127
+#: handroll/extensions/blog.py:141
 msgid "Generating blog list page ..."
 msgstr "Generazione pagina dell'elenco blog ..."
 
-#: handroll/extensions/blog.py:144
+#: handroll/extensions/blog.py:158
 msgid "The blog extension requires the {option} option."
 msgstr "L'estensione del blog richiede l'opzione {option}."
 
