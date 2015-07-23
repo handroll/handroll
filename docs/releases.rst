@@ -4,9 +4,11 @@ Releases
 Version 1.6, In Development
 ---------------------------
 
-* Translated to Greek.
 * Added an extension interface for plugin authors to integrate
   with various events.
+* Added a blog extension to automatically generate an Atom XML
+  feed and blog listing page.
+* Translated to Greek.
 
 Version 1.5, Released February 24, 2015
 ---------------------------------------
