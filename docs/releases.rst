@@ -1,7 +1,7 @@
 Releases
 ========
 
-Version 1.6, In Development
+Version 2.0, In Development
 ---------------------------
 
 * Added an extension interface for plugin authors to integrate

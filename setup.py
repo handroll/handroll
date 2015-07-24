@@ -14,7 +14,7 @@ from setuptools.command.build_py import build_py
 from setuptools.command.sdist import sdist
 import sys
 
-__version__ = '1.6'
+__version__ = '2.0'
 
 
 class BuildPy(build_py):
