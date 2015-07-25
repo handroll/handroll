@@ -28,33 +28,33 @@ Just the facts
 `handroll` walks your website source (i.e. `site` as shown above), copying
 everything that it can find. When it encounters:
 
-1.  a template (either `template.html` or anything in `templates`), the file
-    will be skipped.
-2.  anything ending in `.md`, the file will be read, the first line of the file
+1.  anything ending in `.md`, the file will be read, the first line of the file
     will become the `title`, and the remainder will be converted from Markdown
     into HTML to become the `content`. `title` and `content` will be combined
     with a template to produce the final HTML file.
-3.  any other "known" extension will be handled by a corresponding composer.
+2.  any other "known" extension will be handled by a corresponding composer.
     `handroll` works with Markdown, reStructuredText, and Textile out of the
     box.
+3.  a template (either `template.html` or anything in `templates`), the file
+    will be skipped.
 
 Everything else
 ---------------
 
-Check out [the feature
-list](http://handroll.readthedocs.org/en/latest/#features) to see if handroll
-meets your needs. If not, please tell us with a GitHub issue or on the mailing
-list.
+Check out
+[the feature list](http://handroll.readthedocs.org/en/latest/#features)
+to see if handroll meets your needs.
+If not, please tell us with a GitHub issue or on the mailing list.
 
-All the other stuff you may be interested in regarding `handroll` (e.g.,
-writing a plugin for your favorite markup language) is found at [Read the
-Docs](http://handroll.readthedocs.org/en/latest/).
+All the other stuff you may be interested in regarding `handroll`
+(e.g., writing a plugin for your favorite markup language)
+is found at [Read the Docs](http://handroll.readthedocs.org/en/latest/).
 
-If you want to share some ideas or find announcements, check out the [Google
-Group](https://groups.google.com/forum/#!forum/handroll).
+If you want to share some ideas or find announcements,
+check out the [Google Group](https://groups.google.com/forum/#!forum/handroll).
 
-handroll is [BSD
-licensed](https://github.com/handroll/handroll/blob/master/LICENSE).
+handroll is
+[BSD licensed](https://github.com/handroll/handroll/blob/master/LICENSE).
 
 Get Involved
 ------------
@@ -66,9 +66,9 @@ handroll needs a better identity. If you're a web developer or
 designer, please consider helping with a
 [logo](https://github.com/handroll/handroll/issues/14).
 
-Translators can join the fun by translating at the [Transifex
-project](https://www.transifex.com/projects/p/handroll/). Additional
-translation details are in the [translation
+Translators can join the fun by translating at the
+[Transifex project](https://www.transifex.com/projects/p/handroll/).
+Additional translation details are in the[translation
 documentation](http://handroll.readthedocs.org/en/latest/i18n.html).
 
 [pypishield]: https://img.shields.io/pypi/v/handroll.svg
