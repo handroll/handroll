@@ -1,8 +1,8 @@
 Releases
 ========
 
-Version 2.0, In Development
----------------------------
+Version 2.0, Released July 25, 2015
+-----------------------------------
 
 * Added an extension interface for plugin authors to integrate
   with various events.
