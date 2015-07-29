@@ -18,6 +18,7 @@ class Director(object):
 
     SKIP_EXTENSION = (
         '~',
+        '.swo',
         '.swp',
         '.swpx',
         '.swx',
