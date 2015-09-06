@@ -4,6 +4,9 @@ Releases
 Version 2.1, In Development
 ---------------------------
 
+* Use the SmartyPants library to generate better quotation
+  marks for Markdown.
+
 Version 2.0, Released July 25, 2015
 -----------------------------------
 

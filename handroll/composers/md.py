@@ -28,11 +28,15 @@ class MarkdownComposer(GenericHTMLComposer):
     .. code-block:: bash
 
         $ pygmentize -S default -f html > pygments.css
+
+    The ``MarkdownComposer`` generates better typographical quotes
+    by using the SmartyPants library.
     """
 
     EXTENSIONS = [
         'codehilite',
         'fenced_code',
+        'smarty',
     ]
 
     def _generate_content(self, source):

@@ -239,6 +239,12 @@ class TestMarkdownComposer(unittest.TestCase):
         composer.compose(catalog, source_file, outdir)
         self.assertFalse(template.render.called)
 
+    def test_uses_smartypants(self):
+        source = '"quoted"'
+        composer = MarkdownComposer()
+        html = composer._generate_content(source)
+        self.assertEqual('<p>&ldquo;quoted&rdquo;</p>', html)
+
 
 class TestReStructuredTextComposer(unittest.TestCase):
 
