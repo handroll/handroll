@@ -61,6 +61,9 @@ def parse_args(argv):
     parser.add_argument(
         '-t', '--timing', action='store_true', help=_('time the execution'))
     parser.add_argument(
+        '-f', '--force', action='store_true',
+        help=_('force composers to write output'))
+    parser.add_argument(
         '-d', '--debug', action='store_true',
         help=_('show debug level messages'))
     parser.add_argument(

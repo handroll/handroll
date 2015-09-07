@@ -93,6 +93,20 @@ class TestArguments(TestCase):
         args = command.parse_args(self.arguments)
         self.assertEqual(outdir, args.outdir)
 
+    def test_force_argument(self):
+        args = command.parse_args(self.arguments)
+        self.assertFalse(args.force)
+
+        argv = list(self.arguments)
+        argv.append('-f')
+        args = command.parse_args(argv)
+        self.assertTrue(args.force)
+
+        argv = list(self.arguments)
+        argv.append('--force')
+        args = command.parse_args(argv)
+        self.assertTrue(args.force)
+
 
 class TestMain(TestCase):
 
