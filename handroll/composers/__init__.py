@@ -32,7 +32,8 @@ class Composer(object):
 class Composers(object):
     """A collection of available composers"""
 
-    def __init__(self):
+    def __init__(self, config):
+        self._config = config
         self._available_composers = {}
         self._composers = {}
         self.default_composer = CopyComposer()

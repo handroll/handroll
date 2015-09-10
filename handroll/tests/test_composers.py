@@ -4,7 +4,6 @@ import inspect
 import os
 import stat
 import tempfile
-import unittest
 
 import mock
 
@@ -18,9 +17,10 @@ from handroll.composers.rst import ReStructuredTextComposer
 from handroll.composers.sass import SassComposer
 from handroll.composers.txt import TextileComposer
 from handroll.exceptions import AbortError
+from handroll.tests import TestCase
 
 
-class TestComposer(unittest.TestCase):
+class TestComposer(TestCase):
 
     def test_compose_not_implemented(self):
         composer = Composer()
@@ -33,15 +33,24 @@ class TestComposer(unittest.TestCase):
             NotImplementedError, lambda: composer.output_extension)
 
 
-class TestComposers(unittest.TestCase):
+class TestComposers(TestCase):
+
+    def _make_one(self):
+        config = self.factory.make_configuration()
+        return Composers(config)
 
     def test_selects_composer(self):
-        composers = Composers()
+        composers = self._make_one()
         composer = composers.select_composer_for('sample.md')
         self.assertTrue(isinstance(composer, MarkdownComposer))
 
+    def test_has_config(self):
+        config = self.factory.make_configuration()
+        composers = Composers(config)
+        self.assertEqual(config, composers._config)
 
-class TestAtomComposer(unittest.TestCase):
+
+class TestAtomComposer(TestCase):
 
     def setUp(self):
         site = tempfile.mkdtemp()
@@ -91,7 +100,7 @@ class TestAtomComposer(unittest.TestCase):
         self.assertEqual('.xml', composer.output_extension)
 
 
-class TestCopyComposer(unittest.TestCase):
+class TestCopyComposer(TestCase):
 
     @mock.patch('handroll.composers.shutil')
     def test_skips_same_files(self, shutil):
@@ -128,7 +137,7 @@ class TestCopyComposer(unittest.TestCase):
         self.assertRaises(AttributeError, lambda: composer.output_extension)
 
 
-class TestGenericHTMLComposer(unittest.TestCase):
+class TestGenericHTMLComposer(TestCase):
 
     def test_composes_file(self):
         catalog = mock.MagicMock()
@@ -212,7 +221,7 @@ class TestGenericHTMLComposer(unittest.TestCase):
         self.assertEqual('.html', composer.output_extension)
 
 
-class TestMarkdownComposer(unittest.TestCase):
+class TestMarkdownComposer(TestCase):
 
     def test_generates_html(self):
         source = '**bold**'
@@ -246,7 +255,7 @@ class TestMarkdownComposer(unittest.TestCase):
         self.assertEqual('<p>&ldquo;quoted&rdquo;</p>', html)
 
 
-class TestReStructuredTextComposer(unittest.TestCase):
+class TestReStructuredTextComposer(TestCase):
 
     def test_generates_html(self):
         source = '**bold**'
@@ -258,7 +267,7 @@ class TestReStructuredTextComposer(unittest.TestCase):
         self.assertEqual(expected, html)
 
 
-class TestSassComposer(unittest.TestCase):
+class TestSassComposer(TestCase):
 
     def _make_fake_sass_bin(self):
         fake_bin = tempfile.mkdtemp()
@@ -308,7 +317,7 @@ class TestSassComposer(unittest.TestCase):
         self.assertEqual('.css', composer.output_extension)
 
 
-class TestTextileComposer(unittest.TestCase):
+class TestTextileComposer(TestCase):
 
     def test_generates_html(self):
         source = '*bold*'

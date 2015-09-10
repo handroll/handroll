@@ -36,7 +36,7 @@ class Director(object):
         self.site = site
         self.extensions = extensions
         self.catalog = catalog.TemplateCatalog(site.path)
-        self.composers = Composers()
+        self.composers = Composers(config)
         self.resolver = FileResolver(site.path, self.composers, config)
 
     @property

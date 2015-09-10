@@ -11,8 +11,8 @@ class TestFileResolver(TestCase):
 
     def test_as_url(self):
         site = self.factory.make_site()
-        composers = Composers()
         config = self.factory.make_configuration()
+        composers = Composers(config)
         resolver = FileResolver(site.path, composers, config)
         md_file = os.path.join(site.path, 'a_dir', 'test.md')
         url = resolver.as_url(md_file)
@@ -20,8 +20,8 @@ class TestFileResolver(TestCase):
 
     def test_as_route(self):
         site = self.factory.make_site()
-        composers = Composers()
         config = self.factory.make_configuration()
+        composers = Composers(config)
         resolver = FileResolver(site.path, composers, config)
         md_file = os.path.join(site.path, 'a_dir', 'test.md')
         route = resolver.as_route(md_file)
