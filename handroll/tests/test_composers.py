@@ -22,15 +22,24 @@ from handroll.tests import TestCase
 
 class TestComposer(TestCase):
 
+    def _make_one(self):
+        config = self.factory.make_configuration()
+        return Composer(config)
+
     def test_compose_not_implemented(self):
-        composer = Composer()
+        composer = self._make_one()
         self.assertRaises(
             NotImplementedError, composer.compose, None, None, None)
 
     def test_output_extension_not_implemented(self):
-        composer = Composer()
+        composer = self._make_one()
         self.assertRaises(
             NotImplementedError, lambda: composer.output_extension)
+
+    def test_has_config(self):
+        config = self.factory.make_configuration()
+        composer = Composer(config)
+        self.assertEqual(config, composer._config)
 
 
 class TestComposers(TestCase):
@@ -51,6 +60,10 @@ class TestComposers(TestCase):
 
 
 class TestAtomComposer(TestCase):
+
+    def _make_one(self):
+        config = self.factory.make_configuration()
+        return AtomComposer(config)
 
     def setUp(self):
         site = tempfile.mkdtemp()
@@ -73,7 +86,7 @@ class TestAtomComposer(TestCase):
         }"""
         with open(self.source_file, 'w') as f:
             f.write(source)
-        composer = AtomComposer()
+        composer = self._make_one()
         composer.compose(None, self.source_file, self.outdir)
         self.assertTrue(os.path.exists(self.output_file))
 
@@ -84,23 +97,27 @@ class TestAtomComposer(TestCase):
         }"""
         with open(self.source_file, 'w') as f:
             f.write(source)
-        composer = AtomComposer()
+        composer = self._make_one()
         self.assertRaises(
             AbortError, composer.compose, None, self.source_file, self.outdir)
 
     @mock.patch('handroll.composers.atom.json')
     def test_skips_up_to_date(self, json):
         open(self.output_file, 'w').close()
-        composer = AtomComposer()
+        composer = self._make_one()
         composer.compose(None, self.source_file, self.outdir)
         self.assertFalse(json.loads.called)
 
     def test_output_extension(self):
-        composer = AtomComposer()
+        composer = self._make_one()
         self.assertEqual('.xml', composer.output_extension)
 
 
 class TestCopyComposer(TestCase):
+
+    def _make_one(self):
+        config = self.factory.make_configuration()
+        return CopyComposer(config)
 
     @mock.patch('handroll.composers.shutil')
     def test_skips_same_files(self, shutil):
@@ -110,7 +127,7 @@ class TestCopyComposer(TestCase):
         outdir = tempfile.mkdtemp()
         open(source_file, 'w').close()
         open(os.path.join(outdir, marker), 'w').close()
-        composer = CopyComposer()
+        composer = self._make_one()
         composer.compose(None, source_file, outdir)
         self.assertFalse(shutil.copy.called)
 
@@ -123,7 +140,7 @@ class TestCopyComposer(TestCase):
         open(source_file, 'w').close()
         with open(os.path.join(outdir, marker), 'w') as f:
             f.write('something different')
-        composer = CopyComposer()
+        composer = self._make_one()
         composer.compose(None, source_file, outdir)
         self.assertTrue(shutil.copy.called)
 
@@ -133,11 +150,15 @@ class TestCopyComposer(TestCase):
         This composer is the fallback composer and resolution should
         never rely on this composer's output extension.
         """
-        composer = CopyComposer()
+        composer = self._make_one()
         self.assertRaises(AttributeError, lambda: composer.output_extension)
 
 
 class TestGenericHTMLComposer(TestCase):
+
+    def _make_one(self):
+        config = self.factory.make_configuration()
+        return GenericHTMLComposer(config)
 
     def test_composes_file(self):
         catalog = mock.MagicMock()
@@ -145,7 +166,7 @@ class TestGenericHTMLComposer(TestCase):
         source_file = os.path.join(site, 'sample.generic')
         open(source_file, 'w').close()
         outdir = ''
-        composer = GenericHTMLComposer()
+        composer = self._make_one()
         self.assertRaises(
             NotImplementedError,
             composer.compose, catalog, source_file, outdir)
@@ -154,13 +175,13 @@ class TestGenericHTMLComposer(TestCase):
         catalog = mock.MagicMock()
         default = mock.PropertyMock()
         type(catalog).default = default
-        composer = GenericHTMLComposer()
+        composer = self._make_one()
         composer.select_template(catalog, {})
         self.assertTrue(default.called)
 
     def test_selects_specified_template(self):
         catalog = mock.MagicMock()
-        composer = GenericHTMLComposer()
+        composer = self._make_one()
         composer.select_template(catalog, {'template': 'base.j2'})
         catalog.get_template.assert_called_once_with('base.j2')
 
@@ -173,7 +194,7 @@ class TestGenericHTMLComposer(TestCase):
         """)
         with tempfile.NamedTemporaryFile(delete=False) as f:
             f.write(source.encode('utf-8'))
-        composer = GenericHTMLComposer()
+        composer = self._make_one()
         data, source = composer._get_data(f.name)
         self.assertEqual('A Fake Title', data['title'])
         self.assertEqual('The Content', source)
@@ -188,7 +209,7 @@ class TestGenericHTMLComposer(TestCase):
         """)
         with tempfile.NamedTemporaryFile(delete=False) as f:
             f.write(source.encode('utf-8'))
-        composer = GenericHTMLComposer()
+        composer = self._make_one()
         data, source = composer._get_data(f.name)
         signals.frontmatter_loaded.send.assert_called_once_with(
             f.name, frontmatter={'title': 'A Fake Title'})
@@ -204,7 +225,7 @@ class TestGenericHTMLComposer(TestCase):
         template = mock.MagicMock()
         template.last_modified = future
 
-        composer = GenericHTMLComposer()
+        composer = self._make_one()
         self.assertTrue(composer._needs_update(None, source_file, output_file))
 
         past = future - 10
@@ -217,15 +238,19 @@ class TestGenericHTMLComposer(TestCase):
             composer._needs_update(template, source_file, output_file))
 
     def test_output_extension(self):
-        composer = GenericHTMLComposer()
+        composer = self._make_one()
         self.assertEqual('.html', composer.output_extension)
 
 
 class TestMarkdownComposer(TestCase):
 
+    def _make_one(self):
+        config = self.factory.make_configuration()
+        return MarkdownComposer(config)
+
     def test_generates_html(self):
         source = '**bold**'
-        composer = MarkdownComposer()
+        composer = self._make_one()
         html = composer._generate_content(source)
         self.assertEqual('<p><strong>bold</strong></p>', html)
 
@@ -244,22 +269,26 @@ class TestMarkdownComposer(TestCase):
         catalog = mock.MagicMock()
         catalog.default = template
 
-        composer = MarkdownComposer()
+        composer = self._make_one()
         composer.compose(catalog, source_file, outdir)
         self.assertFalse(template.render.called)
 
     def test_uses_smartypants(self):
         source = '"quoted"'
-        composer = MarkdownComposer()
+        composer = self._make_one()
         html = composer._generate_content(source)
         self.assertEqual('<p>&ldquo;quoted&rdquo;</p>', html)
 
 
 class TestReStructuredTextComposer(TestCase):
 
+    def _make_one(self):
+        config = self.factory.make_configuration()
+        return ReStructuredTextComposer(config)
+
     def test_generates_html(self):
         source = '**bold**'
-        composer = ReStructuredTextComposer()
+        composer = self._make_one()
         html = composer._generate_content(source)
         expected = '<div class="document">\n' \
                    '<p><strong>bold</strong></p>\n' \
@@ -321,6 +350,7 @@ class TestTextileComposer(TestCase):
 
     def test_generates_html(self):
         source = '*bold*'
-        composer = TextileComposer()
+        config = self.factory.make_configuration()
+        composer = TextileComposer(config)
         html = composer._generate_content(source)
         self.assertEqual('\t<p><strong>bold</strong></p>', html)
