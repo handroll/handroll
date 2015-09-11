@@ -15,7 +15,7 @@ class Composer(object):
     """Interface for all composers"""
 
     def __init__(self, config):
-        """Each composer is given access to the configuration."""
+        """Each composer is given the configuration when instantiated."""
         self._config = config
 
     def compose(self, catalog, source_file, out_dir):

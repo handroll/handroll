@@ -12,6 +12,8 @@ constructs a ``Composer`` instance by invoking a no parameter constructor.
 .. autoclass:: handroll.composers.Composer
    :members:
 
+   .. automethod:: handroll.composers.Composer.__init__
+
 A plugin should be added to the ``handroll.composers`` entry point group. For
 example, the ``MarkdownComposer`` plugin included by default defines its entry
 point in ``setup.py`` as:
