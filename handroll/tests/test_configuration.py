@@ -12,6 +12,7 @@ from handroll.exceptions import AbortError
 class FakeArgs(object):
 
     def __init__(self):
+        self.force = False
         self.outdir = None
         self.timing = None
 
@@ -27,6 +28,15 @@ class TestConfiguration(unittest.TestCase):
 
         expected = os.path.join(os.getcwd(), args.outdir)
         self.assertEqual(expected, config.outdir)
+
+    def test_loads_from_force_argument(self):
+        config = configuration.Configuration()
+        args = FakeArgs()
+        args.force = True
+
+        config.load_from_arguments(args)
+
+        self.assertTrue(config.force)
 
     def test_build_config_from_file(self):
         conf_file = inspect.cleandoc(

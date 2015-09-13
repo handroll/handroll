@@ -36,6 +36,9 @@ class Configuration(object):
         """Load any configuration attributes from the provided command line
         arguments. Arguments have the highest precedent so overwrite any other
         value if a value exists."""
+        if args.force:
+            self.force = True
+
         if args.outdir is not None:
             self.outdir = os.path.abspath(args.outdir)
 
