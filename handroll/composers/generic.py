@@ -98,6 +98,9 @@ class GenericHTMLComposer(Composer):
     def _needs_update(self, template, source_file, output_file):
         """Check if the output file needs to be updated by looking at the
         modified times of the template, source file, and output file."""
+        if self._config.force:
+            return True
+
         out_modified_time = None
         if os.path.exists(output_file):
             out_modified_time = os.path.getmtime(output_file)

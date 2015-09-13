@@ -112,6 +112,25 @@ class TestAtomComposer(TestCase):
         composer = self._make_one()
         self.assertEqual('.xml', composer.output_extension)
 
+    @mock.patch('handroll.composers.atom.json')
+    def test_forces_update(self, json):
+        json.loads.return_value = {
+            'title': 'Fakity Fake',
+            'id': "let's pretend this is unique",
+            'entries': [{
+                'title': 'Sample A',
+                'updated': '2014-02-23T00:00:00',
+                'published': '2014-02-22T00:00:00',
+                'url': 'http://some.website.com/a.html',
+                'summary': 'A summary of the sample post'
+            }]
+        }
+        open(self.output_file, 'w').close()
+        composer = self._make_one()
+        composer._config.force = True
+        composer.compose(None, self.source_file, self.outdir)
+        self.assertTrue(json.loads.called)
+
 
 class TestCopyComposer(TestCase):
 
@@ -152,6 +171,19 @@ class TestCopyComposer(TestCase):
         """
         composer = self._make_one()
         self.assertRaises(AttributeError, lambda: composer.output_extension)
+
+    @mock.patch('handroll.composers.shutil')
+    def test_copies_when_forced(self, shutil):
+        marker = 'marker.txt'
+        source = tempfile.mkdtemp()
+        source_file = os.path.join(source, marker)
+        outdir = tempfile.mkdtemp()
+        open(source_file, 'w').close()
+        open(os.path.join(outdir, marker), 'w').close()
+        composer = self._make_one()
+        composer._config.force = True
+        composer.compose(None, source_file, outdir)
+        self.assertTrue(shutil.copy.called)
 
 
 class TestGenericHTMLComposer(TestCase):
@@ -240,6 +272,20 @@ class TestGenericHTMLComposer(TestCase):
     def test_output_extension(self):
         composer = self._make_one()
         self.assertEqual('.html', composer.output_extension)
+
+    def test_forces_update(self):
+        site = tempfile.mkdtemp()
+        output_file = os.path.join(site, 'output.md')
+        open(output_file, 'w').close()
+        past = os.path.getmtime(output_file) - 10
+        source_file = os.path.join(site, 'test.md')
+        open(source_file, 'w').close()
+        os.utime(source_file, (past, past))
+        template = mock.MagicMock(last_modified=past)
+        composer = self._make_one()
+        composer._config.force = True
+        self.assertTrue(
+            composer._needs_update(template, source_file, output_file))
 
 
 class TestMarkdownComposer(TestCase):

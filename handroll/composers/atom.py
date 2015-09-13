@@ -51,6 +51,9 @@ class AtomComposer(Composer):
     def _needs_update(self, source_file, out_file):
         """Check if the output file needs to be updated by looking at the
         modified times of the source file and output file."""
+        if self._config.force:
+            return True
+
         if os.path.exists(out_file):
             return os.path.getmtime(source_file) > os.path.getmtime(out_file)
         else:

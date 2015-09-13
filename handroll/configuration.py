@@ -15,6 +15,7 @@ class Configuration(object):
 
     def __init__(self):
         self.active_extensions = set()
+        self.force = False
         # The output directory should be absolute. That constraint will make it
         # easy to check if a filepath is in the output directory.
         self.outdir = None

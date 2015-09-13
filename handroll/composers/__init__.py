@@ -93,7 +93,10 @@ class CopyComposer(Composer):
         # Do not copy files that are already there unless different.
         destination = os.path.join(out_dir, filename)
         if os.path.exists(destination):
-            if filecmp.cmp(source_file, destination):
+            if (
+                not self._config.force and
+                filecmp.cmp(source_file, destination)
+            ):
                 # Files are equal. Do nothing.
                 logger.debug(_('Skipping {filename} ... It is the same as '
                                '{destination}.').format(
