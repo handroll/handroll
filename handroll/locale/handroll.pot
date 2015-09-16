@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: handroll 1.6\n"
+"Project-Id-Version: handroll 2.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-21 11:36-0400\n"
+"POT-Creation-Date: 2015-09-15 21:01-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,42 +50,46 @@ msgid "time the execution"
 msgstr ""
 
 #: handroll/command.py:65
-msgid "show debug level messages"
+msgid "force composers to write output"
 msgstr ""
 
 #: handroll/command.py:68
+msgid "show debug level messages"
+msgstr ""
+
+#: handroll/command.py:71
 msgid "watch the site for changes and run a web server in the output directory"
 msgstr ""
 
-#: handroll/configuration.py:32
+#: handroll/configuration.py:33
 msgid "You are missing a domain setting in the site section."
 msgstr ""
 
-#: handroll/configuration.py:67
+#: handroll/configuration.py:71
 msgid "Cannot determine if {extension} is enabled."
 msgstr ""
 
-#: handroll/director.py:124
+#: handroll/director.py:125
 msgid "Updating {outdir} ..."
 msgstr ""
 
-#: handroll/director.py:126
+#: handroll/director.py:127
 msgid "Creating {outdir} ..."
 msgstr ""
 
-#: handroll/director.py:143
+#: handroll/director.py:144
 msgid "Populating {dirpath} ..."
 msgstr ""
 
-#: handroll/director.py:151
+#: handroll/director.py:152
 msgid "Creating directory {out_dir} ..."
 msgstr ""
 
-#: handroll/director.py:192
+#: handroll/director.py:193
 msgid "Skipping {filename} with skipped file type ..."
 msgstr ""
 
-#: handroll/director.py:197
+#: handroll/director.py:198
 msgid "Skipping special file {filename} ..."
 msgstr ""
 
@@ -111,15 +115,15 @@ msgid ""
 "parents."
 msgstr ""
 
-#: handroll/composers/__init__.py:92
+#: handroll/composers/__init__.py:101
 msgid "Skipping {filename} ... It is the same as {destination}."
 msgstr ""
 
-#: handroll/composers/__init__.py:98
+#: handroll/composers/__init__.py:107
 msgid "{filename} differs from {destination} ..."
 msgstr ""
 
-#: handroll/composers/__init__.py:101
+#: handroll/composers/__init__.py:110
 msgid "Copying {filename} to {out_dir} ..."
 msgstr ""
 
@@ -131,11 +135,11 @@ msgstr ""
 msgid "Skipping {filename} ... It is up to date."
 msgstr ""
 
-#: handroll/composers/atom.py:66
+#: handroll/composers/atom.py:69
 msgid "Missing entries list."
 msgstr ""
 
-#: handroll/composers/atom.py:76
+#: handroll/composers/atom.py:79
 msgid "Invalid feed {source_file}: {error}"
 msgstr ""
 
