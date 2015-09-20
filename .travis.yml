@@ -5,10 +5,13 @@ env:
   - TOX_ENV=py27
   - TOX_ENV=py33
   - TOX_ENV=py34
-  - TOX_ENV=py35
+# Disable until Travis *really* supports Python 3.5
+# https://github.com/travis-ci/travis-ci/issues/4794
+#  - TOX_ENV=py35
   - TOX_ENV=pypy
   - TOX_ENV=flake8
-# Disable coverage until coveralls is fixed. See https://github.com/lemurheavy/coveralls-public/issues/522.
+# Disable coverage until coveralls is fixed.
+# See https://github.com/lemurheavy/coveralls-public/issues/522.
 #  - TOX_ENV=cover
   - TOX_ENV=language_ar
   - TOX_ENV=language_de
