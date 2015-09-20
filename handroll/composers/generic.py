@@ -93,7 +93,7 @@ class GenericHTMLComposer(Composer):
     def _has_frontmatter(self, first_line):
         """Check if the document has any front matter. handroll only supports
         front matter from YAML documents."""
-        return first_line.startswith('%YAML')
+        return first_line.startswith(('%YAML', '---'))
 
     def _needs_update(self, template, source_file, output_file):
         """Check if the output file needs to be updated by looking at the

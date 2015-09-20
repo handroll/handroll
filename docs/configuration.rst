@@ -37,6 +37,12 @@ template, the data will be accessible by whatever name was provided. An
 example Markdown source document would look like:
 
 .. literalinclude:: ../sample/frontmatter.md
+   :lines: 2-
+
+You may also include the YAML directive (e.g., ``%YAML 1.1``).
+The following example is equally valid.
+
+.. literalinclude:: ../sample/frontmatter.md
 
 Note: When using front matter, handroll does not infer the title from the first
 line of the document. If a title is desired, the attribute must be explicitly

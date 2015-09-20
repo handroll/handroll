@@ -8,6 +8,8 @@ Version 2.1, In Development
   marks for Markdown.
 * Composers can be forced to compose with the ``--force`` flag.
 * Translated to Arabic.
+* Relax the frontmatter requirement and don't force the
+  inclusion of the YAML directive (e.g., ``%YAML 1.1``).
 
 Version 2.0, Released July 25, 2015
 -----------------------------------

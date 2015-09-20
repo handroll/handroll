@@ -2,6 +2,7 @@
 
 import inspect
 import os
+import re
 import stat
 import tempfile
 
@@ -245,6 +246,17 @@ class TestGenericHTMLComposer(TestCase):
         data, source = composer._get_data(f.name)
         signals.frontmatter_loaded.send.assert_called_once_with(
             f.name, frontmatter={'title': 'A Fake Title'})
+
+    def test_looks_like_frontmatter(self):
+        composer = self._make_one()
+        self.assertTrue(composer._has_frontmatter('%YAML 1.1'))
+        self.assertTrue(composer._has_frontmatter('---'))
+
+    def test_frontmatter_pattern_captures_markup(self):
+        minimal = '---\n---\nabc'
+        composer = self._make_one()
+        match = re.search(composer.yaml_scanner, minimal)
+        self.assertEqual('abc', match.group('markup'))
 
     def test_needs_update(self):
         site = tempfile.mkdtemp()
