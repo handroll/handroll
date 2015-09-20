@@ -57,19 +57,19 @@ def parse_args(argv):
         'outdir', nargs='?', help=_('an optional output directory to create or'
                                     ' update if it already exists'))
     parser.add_argument(
+        '-w', '--watch', action='store_true',
+        help=_('watch the site for changes and'
+               ' run a web server in the output directory'))
+    parser.add_argument(
         '-v', '--verbose', action='store_true', help=_('use verbose messages'))
+    parser.add_argument(
+        '-d', '--debug', action='store_true',
+        help=_('show debug level messages'))
     parser.add_argument(
         '-t', '--timing', action='store_true', help=_('time the execution'))
     parser.add_argument(
         '-f', '--force', action='store_true',
         help=_('force composers to write output'))
-    parser.add_argument(
-        '-d', '--debug', action='store_true',
-        help=_('show debug level messages'))
-    parser.add_argument(
-        '-w', '--watch', action='store_true',
-        help=_('watch the site for changes and'
-               ' run a web server in the output directory'))
 
     # argparse expects the executable to be removed from argv.
     args = parser.parse_args(argv[1:])
