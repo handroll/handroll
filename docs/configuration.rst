@@ -18,8 +18,23 @@ configuration file option.
 ``site`` section
 ----------------
 
-The ``outdir`` option will determine the output directory. If a tilde character
-(``~``) is supplied, it will be expanded to the user's home directory.
+The ``outdir`` option will determine the output directory.
+
+The ``outdir`` permits relative paths.
+One useful pattern with relative paths
+is to set ``outdir = ..`` as the value.
+Source and output can exist
+in a single repository or directory.
+Putting the output at the root of a repository
+makes it easy to deploy the entire project as a website.
+When generating output
+or watching the source directory,
+handroll is aware of the source and
+allows the two directories to coexist
+without interference.
+
+If a tilde character (``~``) is supplied,
+it will be expanded to the user's home directory.
 
 The ``with_blog`` option set to ``true``, ``on``, ``yes``, or ``1`` will
 enable the blog extension.

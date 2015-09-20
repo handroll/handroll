@@ -88,3 +88,13 @@ class TestConfiguration(unittest.TestCase):
         config = configuration.build_config(f.name, args)
 
         self.assertEqual('a_fake_domain', config.domain)
+
+    def test_converts_relative_paths(self):
+        conf_file = inspect.cleandoc(
+            """[site]
+            outdir = ..""")
+        with tempfile.NamedTemporaryFile(delete=False) as f:
+            f.write(conf_file.encode('utf-8'))
+        config = configuration.Configuration()
+        config.load_from_file(f.name)
+        self.assertEqual(os.path.abspath('..'), config.outdir)

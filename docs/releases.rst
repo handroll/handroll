@@ -11,6 +11,7 @@ Version 2.1, In Development
 * Relax the frontmatter requirement and don't force the
   inclusion of the YAML directive (e.g., ``%YAML 1.1``).
 * Support Python 3.5.
+* An output directory can be a relative path.
 
 Version 2.0, Released July 25, 2015
 -----------------------------------
