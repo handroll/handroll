@@ -52,9 +52,14 @@ class Configuration(object):
             self.parser.readfp(f)
             if self.parser.has_option('site', 'domain'):
                 self._domain = self.parser.get('site', 'domain')
+
             if self.parser.has_option('site', 'outdir'):
-                self.outdir = os.path.abspath(os.path.expanduser(
-                    self.parser.get('site', 'outdir')))
+                outdir = os.path.expanduser(self.parser.get('site', 'outdir'))
+                if not os.path.isabs(outdir):
+                    path = os.path.dirname(config_file)
+                    outdir = os.path.abspath(os.sep.join([path, outdir]))
+                self.outdir = outdir
+
             if self.parser.has_section('site'):
                 self._find_extensions(self.parser)
 

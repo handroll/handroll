@@ -48,7 +48,7 @@ class TestConfiguration(unittest.TestCase):
 
         config = configuration.build_config(f.name, args)
 
-        expected = os.path.join(os.getcwd(), 'out')
+        expected = os.path.join(os.path.dirname(f.name), 'out')
         self.assertEqual(expected, config.outdir)
 
     def test_finds_active_extensions(self):
@@ -97,4 +97,7 @@ class TestConfiguration(unittest.TestCase):
             f.write(conf_file.encode('utf-8'))
         config = configuration.Configuration()
         config.load_from_file(f.name)
-        self.assertEqual(os.path.abspath('..'), config.outdir)
+        # Relative output directories are anchored to the site config file.
+        self.assertEqual(
+            os.path.dirname(os.path.dirname(f.name)),
+            config.outdir)
