@@ -6,7 +6,7 @@ import logging
 import os
 import sys
 
-from handroll import logger
+from handroll import logger, scaffolder
 from handroll.configuration import build_config
 from handroll.director import Director
 from handroll.exceptions import AbortError
@@ -60,6 +60,11 @@ def parse_args(argv):
         '-w', '--watch', action='store_true',
         help=_('watch the site for changes and'
                ' run a web server in the output directory'))
+    parser.add_argument(
+        '-s', '--scaffold', action='store',
+        nargs='?', const=scaffolder.LIST_SCAFFOLDS, metavar='scaffold',
+        help=_('make a new handroll site from a scaffold '
+               'or list the available scaffolds'))
     parser.add_argument(
         '-v', '--verbose', action='store_true', help=_('use verbose messages'))
     parser.add_argument(

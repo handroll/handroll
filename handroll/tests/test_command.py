@@ -6,8 +6,7 @@ import tempfile
 
 import mock
 
-from handroll import logger
-from handroll import command
+from handroll import command, logger, scaffolder
 from handroll.tests import TestCase
 
 
@@ -106,6 +105,25 @@ class TestArguments(TestCase):
         argv.append('--force')
         args = command.parse_args(argv)
         self.assertTrue(args.force)
+
+    def test_scaffold_argument(self):
+        args = command.parse_args(self.arguments)
+        self.assertIsNone(args.scaffold)
+
+        argv = list(self.arguments)
+        argv.append('-s')
+        args = command.parse_args(argv)
+        self.assertEqual(scaffolder.LIST_SCAFFOLDS, args.scaffold)
+
+        argv = list(self.arguments)
+        argv.append('--scaffold')
+        args = command.parse_args(argv)
+        self.assertEqual(scaffolder.LIST_SCAFFOLDS, args.scaffold)
+
+        argv = list(self.arguments)
+        argv.extend(['--scaffold', 'default'])
+        args = command.parse_args(argv)
+        self.assertEqual('default', args.scaffold)
 
 
 class TestMain(TestCase):
