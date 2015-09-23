@@ -18,10 +18,10 @@ def make(scaffold, site):
 
 def list_scaffolds():
     """List out all available scaffolds."""
-    print _('Available scaffolds:\n')
+    print(_('Available scaffolds:\n'))
     for scaffold in sorted(BUILTIN_SCAFFOLDS.keys()):
-        print display_scaffold(scaffold, get_label(scaffold))
-    print ''
+        print(display_scaffold(scaffold, get_label(scaffold)))
+    print('')
 
 
 def display_scaffold(scaffold, label):
