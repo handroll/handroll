@@ -25,6 +25,10 @@ def main(argv=sys.argv):
     if args.debug:
         logger.setLevel(logging.DEBUG)
 
+    if args.scaffold:
+        scaffolder.make(args.scaffold, args.site)
+        finish()
+
     try:
         site = Site(args.site)
         valid, message = site.is_valid()
@@ -40,7 +44,7 @@ def main(argv=sys.argv):
         director.produce()
 
         if not args.watch:
-            print(_('Complete.'))
+            finish()
     except AbortError as abort:
         logger.error(str(abort))
         sys.exit(_('Incomplete.'))
@@ -84,3 +88,8 @@ def parse_args(argv):
         args.site = args.site.rstrip(os.sep)
 
     return args
+
+
+def finish():
+    print(_('Complete.'))
+    sys.exit()

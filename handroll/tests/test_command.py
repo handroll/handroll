@@ -149,13 +149,12 @@ class TestMain(TestCase):
         self.arguments.append(file_site)
         self.assertRaises(SystemExit, command.main, self.arguments)
 
-    def test_complete_site_generation(self):
+    @mock.patch('handroll.command.finish')
+    def test_complete_site_generation(self, finish):
         site = self.factory.make_site()
         self.arguments.append(site.path)
-        try:
-            command.main(self.arguments)
-        except SystemExit:
-            self.fail('Failed to completely generate site.')
+        command.main(self.arguments)
+        self.assertTrue(finish.called)
 
     @mock.patch('handroll.command.serve')
     def test_development_server_served(self, serve):
@@ -165,3 +164,14 @@ class TestMain(TestCase):
         command.main(self.arguments)
 
         self.assertTrue(serve.called)
+
+    @mock.patch('handroll.command.scaffolder')
+    def test_makes_from_scaffolder(self, mock_scaffolder):
+        self.arguments.extend(['-s', 'default', 'site'])
+
+        try:
+            command.main(self.arguments)
+            self.fail()
+        except SystemExit:
+            mock_scaffolder.make.assert_called_once_with(
+                'default', 'site')
