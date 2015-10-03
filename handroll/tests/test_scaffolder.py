@@ -3,6 +3,7 @@
 import mock
 
 from handroll import scaffolder
+from handroll.exceptions import AbortError
 from handroll.i18n import _
 from handroll.tests import TestCase
 
@@ -28,3 +29,10 @@ class TestScaffolder(TestCase):
     def test_makes_scaffold(self, make_scaffold):
         scaffolder.make('default', 'site')
         make_scaffold.assert_called_once_with('default', 'site')
+
+    def test_unknown_scaffold_aborts(self):
+        try:
+            scaffolder.make_scaffold('fake', 'dontcare')
+            self.fail()
+        except AbortError:
+            pass

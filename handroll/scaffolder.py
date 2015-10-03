@@ -1,5 +1,6 @@
 # Copyright (c) 2015, Matt Layman
 
+from handroll.exceptions import AbortError
 from handroll.i18n import _
 
 BUILTIN_SCAFFOLDS = {
@@ -36,7 +37,9 @@ def get_label(scaffold):
 
 def make_scaffold(scaffold, site):
     """Make a site from the scaffold."""
-    # TODO: check that the scaffold is available.
+    if scaffold not in BUILTIN_SCAFFOLDS:
+        raise AbortError(_('There is no {scaffold} scaffold.'.format(
+            scaffold=scaffold)))
     # TODO: check the site does not exist.
     # TODO: make the site directory.
     # TODO: populate the site with content from the scaffold.
