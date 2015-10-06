@@ -1,6 +1,7 @@
 # Copyright (c) 2015, Matt Layman
 
 import os
+import shutil
 
 from handroll.exceptions import AbortError
 from handroll.i18n import _
@@ -9,6 +10,7 @@ BUILTIN_SCAFFOLDS = {
     'default': _('A complete site to get you going'),
 }
 LIST_SCAFFOLDS = 1
+SCAFFOLDS_PATH = os.path.join(os.path.dirname(__file__), 'scaffolds')
 
 
 def make(scaffold, site):
@@ -45,4 +47,5 @@ def make_scaffold(scaffold, site):
     if os.path.exists(site):
         raise AbortError(_('{site} already exists.'.format(site=site)))
     os.makedirs(site)
-    # TODO: populate the site with content from the scaffold.
+    scaffold_path = os.path.join(SCAFFOLDS_PATH, scaffold)
+    shutil.copytree(scaffold_path, os.path.join(site, 'source'))

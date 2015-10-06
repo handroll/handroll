@@ -4,4 +4,5 @@ include README.md
 include requirements.txt
 recursive-include docs *
 recursive-include handroll/locale *
+recursive-include handroll/scaffolds *
 prune docs/_build

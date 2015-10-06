@@ -53,3 +53,10 @@ class TestScaffolder(TestCase):
         site = os.path.join(parent, 'site')
         scaffolder.make_scaffold('default', site)
         self.assertTrue(os.path.exists(site))
+
+    def test_copies_scaffold_to_source(self):
+        parent = tempfile.mkdtemp()
+        site = os.path.join(parent, 'site')
+        conf = os.path.join(site, 'source', 'handroll.conf')
+        scaffolder.make_scaffold('default', site)
+        self.assertTrue(os.path.exists(conf))
