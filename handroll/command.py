@@ -25,11 +25,11 @@ def main(argv=sys.argv):
     if args.debug:
         logger.setLevel(logging.DEBUG)
 
-    if args.scaffold:
-        scaffolder.make(args.scaffold, args.site)
-        finish()
-
     try:
+        if args.scaffold:
+            scaffolder.make(args.scaffold, args.site)
+            finish()
+
         site = Site(args.site)
         valid, message = site.is_valid()
         if not valid:
