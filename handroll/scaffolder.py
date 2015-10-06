@@ -1,5 +1,7 @@
 # Copyright (c) 2015, Matt Layman
 
+import os
+
 from handroll.exceptions import AbortError
 from handroll.i18n import _
 
@@ -40,6 +42,7 @@ def make_scaffold(scaffold, site):
     if scaffold not in BUILTIN_SCAFFOLDS:
         raise AbortError(_('There is no {scaffold} scaffold.'.format(
             scaffold=scaffold)))
-    # TODO: check the site does not exist.
+    if os.path.exists(site):
+        raise AbortError(_('{site} already exists.'.format(site=site)))
     # TODO: make the site directory.
     # TODO: populate the site with content from the scaffold.

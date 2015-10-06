@@ -1,5 +1,7 @@
 # Copyright (c) 2015, Matt Layman
 
+import tempfile
+
 import mock
 
 from handroll import scaffolder
@@ -33,6 +35,14 @@ class TestScaffolder(TestCase):
     def test_unknown_scaffold_aborts(self):
         try:
             scaffolder.make_scaffold('fake', 'dontcare')
+            self.fail()
+        except AbortError:
+            pass
+
+    def test_existing_site_directory_aborts(self):
+        site = tempfile.mkdtemp()
+        try:
+            scaffolder.make_scaffold('default', site)
             self.fail()
         except AbortError:
             pass
