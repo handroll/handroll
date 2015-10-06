@@ -1,5 +1,6 @@
 # Copyright (c) 2015, Matt Layman
 
+import os
 import tempfile
 
 import mock
@@ -46,3 +47,9 @@ class TestScaffolder(TestCase):
             self.fail()
         except AbortError:
             pass
+
+    def test_makes_site_root(self):
+        parent = tempfile.mkdtemp()
+        site = os.path.join(parent, 'site')
+        scaffolder.make_scaffold('default', site)
+        self.assertTrue(os.path.exists(site))

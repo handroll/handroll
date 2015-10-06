@@ -44,5 +44,5 @@ def make_scaffold(scaffold, site):
             scaffold=scaffold)))
     if os.path.exists(site):
         raise AbortError(_('{site} already exists.'.format(site=site)))
-    # TODO: make the site directory.
+    os.makedirs(site)
     # TODO: populate the site with content from the scaffold.
