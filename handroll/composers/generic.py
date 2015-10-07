@@ -2,16 +2,17 @@
 
 import io
 import os
-import re
 try:
     from html import escape
 except ImportError:
     from cgi import escape
 
 import yaml
+from yaml.scanner import ScannerError
 
 from handroll import logger, signals
 from handroll.composers import Composer
+from handroll.exceptions import AbortError
 from handroll.i18n import _
 
 
@@ -22,14 +23,7 @@ class GenericHTMLComposer(Composer):
     lines will be passed to a template method for further processing.
     """
     output_extension = '.html'
-
-    # A pattern to get source content from a file with YAML front matter.
-    yaml_scanner = re.compile(r""".*?    # YAML header
-                                  ---
-                                  .*?    # front matter
-                                  ---\n
-                                  (?P<markup>.*)""",
-                              re.DOTALL | re.VERBOSE)
+    document_marker = '---' + os.linesep
 
     def compose(self, catalog, source_file, out_dir):
         """Compose an HTML document by generating HTML from the source
@@ -74,16 +68,9 @@ class GenericHTMLComposer(Composer):
             source = f.read()
 
             if self._has_frontmatter(first):
-                documents = yaml.load_all(source)
-                data = next(documents)
-                if 'title' in data:
-                    data['title'] = escape(data['title'])
+                data, source = self._split_content_with_frontmatter(
+                    first, source, source_file)
                 signals.frontmatter_loaded.send(source_file, frontmatter=data)
-
-                # Don't pass all file content to the composer. Find the markup.
-                match = re.search(self.yaml_scanner, source)
-                if match:
-                    source = match.group('markup')
             else:
                 # This is a plain file so pull title from the first line.
                 data['title'] = escape(first)
@@ -94,6 +81,31 @@ class GenericHTMLComposer(Composer):
         """Check if the document has any front matter. handroll only supports
         front matter from YAML documents."""
         return first_line.startswith(('%YAML', '---'))
+
+    def _split_content_with_frontmatter(self, first, source, source_file):
+        """Separate frontmatter from source material."""
+        max_splits = 1
+        # With a directive present, there must be two document markers.
+        if first.startswith('%YAML'):
+            max_splits = 2
+        content = source.split(self.document_marker, max_splits)
+
+        try:
+            data = yaml.load(content[max_splits - 1])
+        except ScannerError as ex:
+            raise AbortError(_(
+                'There is invalid YAML in the frontmatter: {details}').format(
+                    details=str(ex)))
+        try:
+            source = content[max_splits]
+        except IndexError:
+            raise AbortError(_('A YAML marker was missing in {source}').format(
+                source=source_file))
+
+        if 'title' in data:
+            data['title'] = escape(data['title'])
+
+        return data, source
 
     def _needs_update(self, template, source_file, output_file):
         """Check if the output file needs to be updated by looking at the

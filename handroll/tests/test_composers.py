@@ -2,7 +2,6 @@
 
 import inspect
 import os
-import re
 import stat
 import tempfile
 
@@ -232,6 +231,48 @@ class TestGenericHTMLComposer(TestCase):
         self.assertEqual('A Fake Title', data['title'])
         self.assertEqual('The Content', source)
 
+    def test_gets_frontmatter_no_directive(self):
+        source = inspect.cleandoc("""---
+        title: A Fake Title
+        ---
+        The Content
+        """)
+        with tempfile.NamedTemporaryFile(delete=False) as f:
+            f.write(source.encode('utf-8'))
+        composer = self._make_one()
+        data, source = composer._get_data(f.name)
+        self.assertEqual('A Fake Title', data['title'])
+        self.assertEqual('The Content', source)
+
+    def test_malformed_document_with_frontmatter(self):
+        source = inspect.cleandoc("""%YAML 1.1
+        ---
+        title: A Fake Title
+        """)
+        with tempfile.NamedTemporaryFile(delete=False) as f:
+            f.write(source.encode('utf-8'))
+        composer = self._make_one()
+        try:
+            composer._get_data(f.name)
+            self.fail()
+        except AbortError:
+            pass
+
+    def test_malformed_yaml(self):
+        source = inspect.cleandoc("""%YAML 1.1
+        ---
+        title: A Fake Title
+        The Content
+        """)
+        with tempfile.NamedTemporaryFile(delete=False) as f:
+            f.write(source.encode('utf-8'))
+        composer = self._make_one()
+        try:
+            composer._get_data(f.name)
+            self.fail()
+        except AbortError:
+            pass
+
     @mock.patch('handroll.composers.generic.signals')
     def test_fires_frontmatter_loaded(self, signals):
         source = inspect.cleandoc("""%YAML 1.1
@@ -251,12 +292,6 @@ class TestGenericHTMLComposer(TestCase):
         composer = self._make_one()
         self.assertTrue(composer._has_frontmatter('%YAML 1.1'))
         self.assertTrue(composer._has_frontmatter('---'))
-
-    def test_frontmatter_pattern_captures_markup(self):
-        minimal = '---\n---\nabc'
-        composer = self._make_one()
-        match = re.search(composer.yaml_scanner, minimal)
-        self.assertEqual('abc', match.group('markup'))
 
     def test_needs_update(self):
         site = tempfile.mkdtemp()
