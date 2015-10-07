@@ -4,6 +4,8 @@ Releases
 Version 2.1, In Development
 ---------------------------
 
+* Create a site quickly with the new scaffold command
+  (e.g., ``handroll -s default new_site``)
 * Use the SmartyPants library to generate better quotation
   marks for Markdown.
 * Composers can be forced to compose with the ``--force`` flag.
