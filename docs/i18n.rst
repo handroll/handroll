@@ -44,7 +44,7 @@ Deployment
 Download the ``po`` files. The ``mo`` files are automatically generated with
 the ``sdist`` command.
 
-.. code-block:: bash
+.. code-block:: console
 
     $ python transifex.py
     $ python setup.py sdist
