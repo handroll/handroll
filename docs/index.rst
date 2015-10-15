@@ -22,7 +22,7 @@ It is also available for legacy Python
 2.7,
 and even 2.6.
 
-.. code-block:: bash
+.. code-block:: console
 
    $ pip install handroll
 
@@ -33,7 +33,7 @@ When inside a website's source directory, the following command will generate
 results and store them in ``output``. Use ``handroll -h`` to see all the
 options.
 
-.. code-block:: bash
+.. code-block:: console
 
     $ handroll
     Complete.
@@ -46,17 +46,21 @@ websites. One goal is to support a wide range of tools to cater to many diverse
 interests. The list below isn't exhaustive, but it provides a good idea of
 what handroll is capable of doing.
 
-* Copy static assets like CSS or JavaScript.
+* Start a new site
+  with a single command
+  using :ref:`scaffold`
+  for immediate results.
 * Convert `Markdown <http://daringfireball.net/projects/markdown/>`_ to HTML.
 * Convert `reStructuredText <http://docutils.sourceforge.net/rst.html>`_ to
   HTML.
 * Convert `Textile <http://en.wikipedia.org/wiki/Textile>`_ to HTML.
 * Convert `Sass <http://sass-lang.com/>`_ to CSS.
+* Copy static assets like CSS or JavaScript.
+* Track blog entries and automatically generate a feed
+  (see :ref:`blogextension`).
 * Generate a proper `Atom XML
   <http://en.wikipedia.org/wiki/Atom_%28standard%29>`_ feed from metadata
   stored in JSON.
-* Track blog entries and automatically generate a feed
-  (see :ref:`blogextension`).
 * Run a development server with the ``watch`` flag to monitor your site and
   update the output immediately as you make changes (see :ref:`devserver`).
 * Find the site source root so you don't have to. If you're anywhere in your
@@ -86,6 +90,7 @@ Documentation
     :maxdepth: 2
 
     configuration
+    scaffolds
     server
     composers
     extensions

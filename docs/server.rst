@@ -13,7 +13,7 @@ server will make your site accessible on ``http://localhost:8000``.
 
 Here is an example:
 
-.. code-block:: bash
+.. code-block:: console
 
     matt@eden:~/handroll/sample$ handroll -w
     Serving /home/matt/handroll/sample/output at http://localhost:8000/.
