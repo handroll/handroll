@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll 2.1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-09-15 21:01-0400\n"
+"POT-Creation-Date: 2015-10-15 17:55-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,55 +17,59 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
 
-#: handroll/command.py:32
+#: handroll/command.py:36
 msgid "Invalid site source: {0}"
 msgstr ""
 
-#: handroll/command.py:43
-msgid "Complete."
-msgstr ""
-
-#: handroll/command.py:46
+#: handroll/command.py:50
 msgid "Incomplete."
 msgstr ""
 
-#: handroll/command.py:53
+#: handroll/command.py:57
 msgid "A website generator for software artisans"
 msgstr ""
 
-#: handroll/command.py:55
+#: handroll/command.py:59
 msgid "the path to your website"
 msgstr ""
 
-#: handroll/command.py:57
+#: handroll/command.py:61
 msgid "an optional output directory to create or update if it already exists"
 msgstr ""
 
-#: handroll/command.py:60
+#: handroll/command.py:65
+msgid "watch the site for changes and run a web server in the output directory"
+msgstr ""
+
+#: handroll/command.py:70
+msgid "make a new handroll site from a scaffold or list the available scaffolds"
+msgstr ""
+
+#: handroll/command.py:73
 msgid "use verbose messages"
 msgstr ""
 
-#: handroll/command.py:62
-msgid "time the execution"
-msgstr ""
-
-#: handroll/command.py:65
-msgid "force composers to write output"
-msgstr ""
-
-#: handroll/command.py:68
+#: handroll/command.py:76
 msgid "show debug level messages"
 msgstr ""
 
-#: handroll/command.py:71
-msgid "watch the site for changes and run a web server in the output directory"
+#: handroll/command.py:78
+msgid "time the execution"
+msgstr ""
+
+#: handroll/command.py:81
+msgid "force composers to write output"
+msgstr ""
+
+#: handroll/command.py:94
+msgid "Complete."
 msgstr ""
 
 #: handroll/configuration.py:33
 msgid "You are missing a domain setting in the site section."
 msgstr ""
 
-#: handroll/configuration.py:71
+#: handroll/configuration.py:76
 msgid "Cannot determine if {extension} is enabled."
 msgstr ""
 
@@ -91,6 +95,22 @@ msgstr ""
 
 #: handroll/director.py:198
 msgid "Skipping special file {filename} ..."
+msgstr ""
+
+#: handroll/scaffolder.py:10 handroll/tests/test_scaffolder.py:18
+msgid "A complete site to get you going"
+msgstr ""
+
+#: handroll/scaffolder.py:26
+msgid "Available scaffolds:\n"
+msgstr ""
+
+#: handroll/scaffolder.py:45
+msgid "There is no {scaffold} scaffold."
+msgstr ""
+
+#: handroll/scaffolder.py:48
+msgid "{site} already exists."
 msgstr ""
 
 #: handroll/server.py:48
@@ -131,7 +151,7 @@ msgstr ""
 msgid "Generating Atom XML for {source_file} ..."
 msgstr ""
 
-#: handroll/composers/atom.py:48 handroll/composers/generic.py:53
+#: handroll/composers/atom.py:48 handroll/composers/generic.py:47
 msgid "Skipping {filename} ... It is up to date."
 msgstr ""
 
@@ -143,8 +163,16 @@ msgstr ""
 msgid "Invalid feed {source_file}: {error}"
 msgstr ""
 
-#: handroll/composers/generic.py:48
+#: handroll/composers/generic.py:42
 msgid "Generating HTML for {source_file} ..."
+msgstr ""
+
+#: handroll/composers/generic.py:96
+msgid "There is invalid YAML in the frontmatter: {details}"
+msgstr ""
+
+#: handroll/composers/generic.py:102
+msgid "A YAML marker was missing in {source}"
 msgstr ""
 
 #: handroll/composers/sass.py:29
