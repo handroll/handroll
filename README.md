@@ -5,7 +5,7 @@ handroll
 [![BSD license][license]](https://raw.githubusercontent.com/handroll/handroll/master/LICENSE)
 [![Downloads][shield]](https://pypi.python.org/pypi/handroll)
 [![Build Status][travis]](https://travis-ci.org/handroll/handroll)
-[![Coverage Status][coveralls]](https://coveralls.io/r/handroll/handroll)
+[![Coverage Status][coverage]](https://codecov.io/github/handroll/handroll)
 
 Website development is a finely crafted art.
 
@@ -75,4 +75,4 @@ documentation](http://handroll.readthedocs.org/en/latest/i18n.html).
 [license]: https://img.shields.io/pypi/l/handroll.svg
 [shield]: https://img.shields.io/pypi/dm/handroll.svg
 [travis]: https://travis-ci.org/handroll/handroll.png?branch=master
-[coveralls]: https://coveralls.io/repos/handroll/handroll/badge.png
+[coverage]: https://img.shields.io/codecov/c/github/handroll/handroll.svg
