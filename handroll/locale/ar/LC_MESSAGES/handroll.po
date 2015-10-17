@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-21 11:36-0400\n"
-"PO-Revision-Date: 2015-09-16 02:08+0000\n"
+"POT-Creation-Date: 2015-10-15 17:55-0400\n"
+"PO-Revision-Date: 2015-10-17 13:48+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/handroll/handroll/language/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -19,78 +19,103 @@ msgstr ""
 "Language: ar\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
 
-#: handroll/command.py:32
+#: handroll/command.py:36
 msgid "Invalid site source: {0}"
 msgstr "المصدر موقع غير صالح: {0}"
 
-#: handroll/command.py:43
-msgid "Complete."
-msgstr "كاملة."
-
-#: handroll/command.py:46
+#: handroll/command.py:50
 msgid "Incomplete."
 msgstr "غير مكتملة."
 
-#: handroll/command.py:53
+#: handroll/command.py:57
 msgid "A website generator for software artisans"
 msgstr "مولد موقع للحرفيين البرمجيات"
 
-#: handroll/command.py:55
+#: handroll/command.py:59
 msgid "the path to your website"
 msgstr "الطريق إلى موقع الويب الخاص بك"
 
-#: handroll/command.py:57
+#: handroll/command.py:61
 msgid "an optional output directory to create or update if it already exists"
 msgstr "دليل الانتاج اختياري لإنشاء أو تحديث إذا كان موجودا بالفعل"
 
-#: handroll/command.py:60
-msgid "use verbose messages"
-msgstr "استخدام الرسائل مطول"
-
-#: handroll/command.py:62
-msgid "time the execution"
-msgstr "وقت التنفيذ"
-
 #: handroll/command.py:65
-msgid "show debug level messages"
-msgstr "عرض رسائل مستوى التصحيح"
-
-#: handroll/command.py:68
 msgid ""
 "watch the site for changes and run a web server in the output directory"
 msgstr "مشاهدة الموقع لإجراء تغييرات وتشغيل خادم الويب في الدليل الإخراج"
 
-#: handroll/configuration.py:32
+#: handroll/command.py:70
+msgid ""
+"make a new handroll site from a scaffold or list the available scaffolds"
+msgstr "جعل موقع handroll جديد من سقالة أو قائمة السقالات المتاحة"
+
+#: handroll/command.py:73
+msgid "use verbose messages"
+msgstr "استخدام الرسائل مطول"
+
+#: handroll/command.py:76
+msgid "show debug level messages"
+msgstr "عرض رسائل مستوى التصحيح"
+
+#: handroll/command.py:78
+msgid "time the execution"
+msgstr "وقت التنفيذ"
+
+#: handroll/command.py:81
+msgid "force composers to write output"
+msgstr "إجبار الملحنين لكتابة الانتاج"
+
+#: handroll/command.py:94
+msgid "Complete."
+msgstr "كاملة."
+
+#: handroll/configuration.py:33
 msgid "You are missing a domain setting in the site section."
 msgstr "كنت في عداد المفقودين مجال إعداد في المقطع الموقع."
 
-#: handroll/configuration.py:67
+#: handroll/configuration.py:76
 msgid "Cannot determine if {extension} is enabled."
 msgstr "لا يمكن تحديد ما إذا تم تمكين {extension}."
 
-#: handroll/director.py:124
+#: handroll/director.py:125
 msgid "Updating {outdir} ..."
 msgstr "تحديث {outdir} ..."
 
-#: handroll/director.py:126
+#: handroll/director.py:127
 msgid "Creating {outdir} ..."
 msgstr "خلق {outdir} ..."
 
-#: handroll/director.py:143
+#: handroll/director.py:144
 msgid "Populating {dirpath} ..."
 msgstr "ملء {dirpath} ..."
 
-#: handroll/director.py:151
+#: handroll/director.py:152
 msgid "Creating directory {out_dir} ..."
 msgstr "إنشاء الدليل {out_dir} ..."
 
-#: handroll/director.py:192
+#: handroll/director.py:193
 msgid "Skipping {filename} with skipped file type ..."
 msgstr "تخطي {filename} مع تخطي نوع الملف ..."
 
-#: handroll/director.py:197
+#: handroll/director.py:198
 msgid "Skipping special file {filename} ..."
 msgstr "تخطي ملف خاص {filename} ..."
+
+#: handroll/scaffolder.py:10 handroll/tests/test_scaffolder.py:18
+msgid "A complete site to get you going"
+msgstr "موقع كامل لتحصل على الذهاب"
+
+#: handroll/scaffolder.py:26
+msgid "Available scaffolds:\n"
+msgstr "السقالات المتاحة:\n"
+
+#: handroll/scaffolder.py:45
+msgid "There is no {scaffold} scaffold."
+msgstr "لا يوجد {scaffold} سقالة."
+
+#: handroll/scaffolder.py:48
+msgid "{site} already exists."
+msgstr "{site} موجود مسبقا."
 
 #: handroll/server.py:48
 msgid ""
@@ -113,15 +138,15 @@ msgid ""
 "A handroll site was not found in {current_directory} or any of its parents."
 msgstr "لم يتم العثور على موقع handroll في {current_directory} أو أي من والديه."
 
-#: handroll/composers/__init__.py:92
+#: handroll/composers/__init__.py:101
 msgid "Skipping {filename} ... It is the same as {destination}."
 msgstr "تخطي {filename} ... ومن نفس {destination}."
 
-#: handroll/composers/__init__.py:98
+#: handroll/composers/__init__.py:107
 msgid "{filename} differs from {destination} ..."
 msgstr "{filename} يختلف من {destination} ..."
 
-#: handroll/composers/__init__.py:101
+#: handroll/composers/__init__.py:110
 msgid "Copying {filename} to {out_dir} ..."
 msgstr "النسخ {filename} إلى {out_dir} ..."
 
@@ -129,21 +154,29 @@ msgstr "النسخ {filename} إلى {out_dir} ..."
 msgid "Generating Atom XML for {source_file} ..."
 msgstr "توليد Atom XML ل{source_file} ..."
 
-#: handroll/composers/atom.py:48 handroll/composers/generic.py:53
+#: handroll/composers/atom.py:48 handroll/composers/generic.py:47
 msgid "Skipping {filename} ... It is up to date."
 msgstr "تخطي {filename} ... والأمر متروك الآن."
 
-#: handroll/composers/atom.py:66
+#: handroll/composers/atom.py:69
 msgid "Missing entries list."
 msgstr "المفقودين قائمة إدخالات."
 
-#: handroll/composers/atom.py:76
+#: handroll/composers/atom.py:79
 msgid "Invalid feed {source_file}: {error}"
 msgstr "تغذية غير صالحة {source_file}: {error}"
 
-#: handroll/composers/generic.py:48
+#: handroll/composers/generic.py:42
 msgid "Generating HTML for {source_file} ..."
 msgstr "توليد HTML ل{source_file} ..."
+
+#: handroll/composers/generic.py:96
+msgid "There is invalid YAML in the frontmatter: {details}"
+msgstr "هناك YAML صالح في frontmatter: {details}"
+
+#: handroll/composers/generic.py:102
+msgid "A YAML marker was missing in {source}"
+msgstr "علامة YAML كان في عداد المفقودين في {source}"
 
 #: handroll/composers/sass.py:29
 msgid "Sass is not installed."

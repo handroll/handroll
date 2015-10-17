@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-21 11:36-0400\n"
-"PO-Revision-Date: 2015-07-22 15:16+0000\n"
+"POT-Creation-Date: 2015-10-15 17:55-0400\n"
+"PO-Revision-Date: 2015-10-17 13:44+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/handroll/handroll/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -19,78 +19,103 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: handroll/command.py:32
+#: handroll/command.py:36
 msgid "Invalid site source: {0}"
 msgstr "Fuente de sitio no válido: {0}"
 
-#: handroll/command.py:43
-msgid "Complete."
-msgstr "Completa."
-
-#: handroll/command.py:46
+#: handroll/command.py:50
 msgid "Incomplete."
 msgstr "Incompleta."
 
-#: handroll/command.py:53
+#: handroll/command.py:57
 msgid "A website generator for software artisans"
 msgstr "Un generador de sitio web para los artesanos de software"
 
-#: handroll/command.py:55
+#: handroll/command.py:59
 msgid "the path to your website"
 msgstr "el camino a su sitio web"
 
-#: handroll/command.py:57
+#: handroll/command.py:61
 msgid "an optional output directory to create or update if it already exists"
 msgstr "un directorio de salida opcional para crear o actualizar si ya existe"
 
-#: handroll/command.py:60
-msgid "use verbose messages"
-msgstr "utilizar mensajes detallados"
-
-#: handroll/command.py:62
-msgid "time the execution"
-msgstr "medir el tiempo de la ejecución"
-
 #: handroll/command.py:65
-msgid "show debug level messages"
-msgstr "mostrar mensajes de nivel de depuración"
-
-#: handroll/command.py:68
 msgid ""
 "watch the site for changes and run a web server in the output directory"
 msgstr "ver el sitio para los cambios y ejecutar un servidor web en el directorio de salida"
 
-#: handroll/configuration.py:32
+#: handroll/command.py:70
+msgid ""
+"make a new handroll site from a scaffold or list the available scaffolds"
+msgstr "hacer un nuevo sitio handroll desde un andamio o una lista de los andamios disponibles"
+
+#: handroll/command.py:73
+msgid "use verbose messages"
+msgstr "utilizar mensajes detallados"
+
+#: handroll/command.py:76
+msgid "show debug level messages"
+msgstr "mostrar mensajes de nivel de depuración"
+
+#: handroll/command.py:78
+msgid "time the execution"
+msgstr "medir el tiempo de la ejecución"
+
+#: handroll/command.py:81
+msgid "force composers to write output"
+msgstr "obligar a los compositores a escribir la salida"
+
+#: handroll/command.py:94
+msgid "Complete."
+msgstr "Completa."
+
+#: handroll/configuration.py:33
 msgid "You are missing a domain setting in the site section."
 msgstr "Se echa en falta un dominio de establecer en la sección del sitio."
 
-#: handroll/configuration.py:67
+#: handroll/configuration.py:76
 msgid "Cannot determine if {extension} is enabled."
 msgstr "No se puede determinar si {extension} está habilitada."
 
-#: handroll/director.py:124
+#: handroll/director.py:125
 msgid "Updating {outdir} ..."
 msgstr "Actualización de {outdir} ..."
 
-#: handroll/director.py:126
+#: handroll/director.py:127
 msgid "Creating {outdir} ..."
 msgstr "Creación de {outdir} ..."
 
-#: handroll/director.py:143
+#: handroll/director.py:144
 msgid "Populating {dirpath} ..."
 msgstr "Poblar {dirpath} ..."
 
-#: handroll/director.py:151
+#: handroll/director.py:152
 msgid "Creating directory {out_dir} ..."
 msgstr "Crear directorio {out_dir} ..."
 
-#: handroll/director.py:192
+#: handroll/director.py:193
 msgid "Skipping {filename} with skipped file type ..."
 msgstr "Saltarse {filename} con el tipo de archivo omitido ..."
 
-#: handroll/director.py:197
+#: handroll/director.py:198
 msgid "Skipping special file {filename} ..."
 msgstr "Saltarse el archivo especial {filename} ..."
+
+#: handroll/scaffolder.py:10 handroll/tests/test_scaffolder.py:18
+msgid "A complete site to get you going"
+msgstr "Un sitio completo para que te va"
+
+#: handroll/scaffolder.py:26
+msgid "Available scaffolds:\n"
+msgstr "Andamios disponibles:\n"
+
+#: handroll/scaffolder.py:45
+msgid "There is no {scaffold} scaffold."
+msgstr "No hay {scaffold} andamio."
+
+#: handroll/scaffolder.py:48
+msgid "{site} already exists."
+msgstr "{site} ya existe."
 
 #: handroll/server.py:48
 msgid ""
@@ -113,15 +138,15 @@ msgid ""
 "A handroll site was not found in {current_directory} or any of its parents."
 msgstr "Un sitio de handroll no se encontró en {current_directory} o cualquiera de sus padres."
 
-#: handroll/composers/__init__.py:92
+#: handroll/composers/__init__.py:101
 msgid "Skipping {filename} ... It is the same as {destination}."
 msgstr "Saltarse {filename} ... Es lo mismo que {destination}."
 
-#: handroll/composers/__init__.py:98
+#: handroll/composers/__init__.py:107
 msgid "{filename} differs from {destination} ..."
 msgstr "{filename} difiere de {destination} ..."
 
-#: handroll/composers/__init__.py:101
+#: handroll/composers/__init__.py:110
 msgid "Copying {filename} to {out_dir} ..."
 msgstr "Copiado {filename} a {out_dir} ..."
 
@@ -129,21 +154,29 @@ msgstr "Copiado {filename} a {out_dir} ..."
 msgid "Generating Atom XML for {source_file} ..."
 msgstr "La generación de Atom XML para {source_file} ..."
 
-#: handroll/composers/atom.py:48 handroll/composers/generic.py:53
+#: handroll/composers/atom.py:48 handroll/composers/generic.py:47
 msgid "Skipping {filename} ... It is up to date."
 msgstr "Saltarse {filename} ... Es hasta la fecha."
 
-#: handroll/composers/atom.py:66
+#: handroll/composers/atom.py:69
 msgid "Missing entries list."
 msgstr "Falta de lista entradas."
 
-#: handroll/composers/atom.py:76
+#: handroll/composers/atom.py:79
 msgid "Invalid feed {source_file}: {error}"
 msgstr "Inválido feed {source_file}: {error}"
 
-#: handroll/composers/generic.py:48
+#: handroll/composers/generic.py:42
 msgid "Generating HTML for {source_file} ..."
 msgstr "Generar HTML para {source_file} ..."
+
+#: handroll/composers/generic.py:96
+msgid "There is invalid YAML in the frontmatter: {details}"
+msgstr "Hay YAML no válido en el frontmatter: {details}"
+
+#: handroll/composers/generic.py:102
+msgid "A YAML marker was missing in {source}"
+msgstr "Un marcador YAML faltaba en {source}"
 
 #: handroll/composers/sass.py:29
 msgid "Sass is not installed."

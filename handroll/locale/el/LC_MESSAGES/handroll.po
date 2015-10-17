@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-07-21 11:36-0400\n"
-"PO-Revision-Date: 2015-07-22 15:15+0000\n"
+"POT-Creation-Date: 2015-10-15 17:55-0400\n"
+"PO-Revision-Date: 2015-10-17 13:46+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/handroll/handroll/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -19,78 +19,103 @@ msgstr ""
 "Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: handroll/command.py:32
+#: handroll/command.py:36
 msgid "Invalid site source: {0}"
 msgstr "Μη έγκυρη πηγή ιστοσελίδα: {0}"
 
-#: handroll/command.py:43
-msgid "Complete."
-msgstr "Πλήρης."
-
-#: handroll/command.py:46
+#: handroll/command.py:50
 msgid "Incomplete."
 msgstr "Ελλιπής."
 
-#: handroll/command.py:53
+#: handroll/command.py:57
 msgid "A website generator for software artisans"
 msgstr "Μια γεννήτρια ιστοσελίδα για τεχνίτες λογισμικού"
 
-#: handroll/command.py:55
+#: handroll/command.py:59
 msgid "the path to your website"
 msgstr "ο δρόμος προς την ιστοσελίδα σας"
 
-#: handroll/command.py:57
+#: handroll/command.py:61
 msgid "an optional output directory to create or update if it already exists"
 msgstr "ένα προαιρετικό κατάλογο εξόδου για να δημιουργήσετε ή να ενημερώσετε εάν υπάρχει ήδη"
 
-#: handroll/command.py:60
-msgid "use verbose messages"
-msgstr "Χρησιμοποιήστε τη λεπτομερή μηνύματα"
-
-#: handroll/command.py:62
-msgid "time the execution"
-msgstr "φορά η εκτέλεση"
-
 #: handroll/command.py:65
-msgid "show debug level messages"
-msgstr "εμφανίζουν μηνύματα σφαλμάτων επίπεδο"
-
-#: handroll/command.py:68
 msgid ""
 "watch the site for changes and run a web server in the output directory"
 msgstr "να παρακολουθήσετε το site για αλλαγές και να τρέξει ένα web server στον κατάλογο εξόδου"
 
-#: handroll/configuration.py:32
+#: handroll/command.py:70
+msgid ""
+"make a new handroll site from a scaffold or list the available scaffolds"
+msgstr "κάνει ένα νέο site handroll από μια σκαλωσιά ή λίστα των διαθέσιμων ικριώματα"
+
+#: handroll/command.py:73
+msgid "use verbose messages"
+msgstr "Χρησιμοποιήστε τη λεπτομερή μηνύματα"
+
+#: handroll/command.py:76
+msgid "show debug level messages"
+msgstr "εμφανίζουν μηνύματα σφαλμάτων επίπεδο"
+
+#: handroll/command.py:78
+msgid "time the execution"
+msgstr "φορά η εκτέλεση"
+
+#: handroll/command.py:81
+msgid "force composers to write output"
+msgstr "αναγκάσει συνθέτες να γράψουν εξόδου"
+
+#: handroll/command.py:94
+msgid "Complete."
+msgstr "Πλήρης."
+
+#: handroll/configuration.py:33
 msgid "You are missing a domain setting in the site section."
 msgstr "Σας λείπει μια περιοχή ρύθμισης στην ενότητα ιστοσελίδα."
 
-#: handroll/configuration.py:67
+#: handroll/configuration.py:76
 msgid "Cannot determine if {extension} is enabled."
 msgstr "Δεν μπορεί να καθορίσει αν {extension} είναι ενεργοποιημένη."
 
-#: handroll/director.py:124
+#: handroll/director.py:125
 msgid "Updating {outdir} ..."
 msgstr "Ενημέρωση {outdir} ..."
 
-#: handroll/director.py:126
+#: handroll/director.py:127
 msgid "Creating {outdir} ..."
 msgstr "Δημιουργία {outdir} ..."
 
-#: handroll/director.py:143
+#: handroll/director.py:144
 msgid "Populating {dirpath} ..."
 msgstr "Εποίκηση {dirpath} ..."
 
-#: handroll/director.py:151
+#: handroll/director.py:152
 msgid "Creating directory {out_dir} ..."
 msgstr "Δημιουργία καταλόγου {out_dir} ..."
 
-#: handroll/director.py:192
+#: handroll/director.py:193
 msgid "Skipping {filename} with skipped file type ..."
 msgstr "Παράκαμψη {filename} με παραλείφθηκε τύπο αρχείου ..."
 
-#: handroll/director.py:197
+#: handroll/director.py:198
 msgid "Skipping special file {filename} ..."
 msgstr "Παράκαμψη ειδικό αρχείο {filename} ..."
+
+#: handroll/scaffolder.py:10 handroll/tests/test_scaffolder.py:18
+msgid "A complete site to get you going"
+msgstr "Μια πλήρης ιστοσελίδα για να πας"
+
+#: handroll/scaffolder.py:26
+msgid "Available scaffolds:\n"
+msgstr "Διαθέσιμο ικριώματα:\n"
+
+#: handroll/scaffolder.py:45
+msgid "There is no {scaffold} scaffold."
+msgstr "Δεν υπάρχει {scaffold} ικρίωμα."
+
+#: handroll/scaffolder.py:48
+msgid "{site} already exists."
+msgstr "{site} υπάρχει ήδη."
 
 #: handroll/server.py:48
 msgid ""
@@ -113,15 +138,15 @@ msgid ""
 "A handroll site was not found in {current_directory} or any of its parents."
 msgstr "Ένα site handroll δεν βρέθηκε σε {current_directory} ή κάποιος από τους γονείς του."
 
-#: handroll/composers/__init__.py:92
+#: handroll/composers/__init__.py:101
 msgid "Skipping {filename} ... It is the same as {destination}."
 msgstr "Παράκαμψη {filename} ... Είναι το ίδιο όπως {destination}."
 
-#: handroll/composers/__init__.py:98
+#: handroll/composers/__init__.py:107
 msgid "{filename} differs from {destination} ..."
 msgstr "{filename} διαφέρει από τον {destination} ..."
 
-#: handroll/composers/__init__.py:101
+#: handroll/composers/__init__.py:110
 msgid "Copying {filename} to {out_dir} ..."
 msgstr "Αντιγραφή {filename} σε {out_dir} ..."
 
@@ -129,21 +154,29 @@ msgstr "Αντιγραφή {filename} σε {out_dir} ..."
 msgid "Generating Atom XML for {source_file} ..."
 msgstr "Δημιουργία Atom XML για {source_file} ..."
 
-#: handroll/composers/atom.py:48 handroll/composers/generic.py:53
+#: handroll/composers/atom.py:48 handroll/composers/generic.py:47
 msgid "Skipping {filename} ... It is up to date."
 msgstr "Παράκαμψη {filename} ... Είναι μέχρι σήμερα."
 
-#: handroll/composers/atom.py:66
+#: handroll/composers/atom.py:69
 msgid "Missing entries list."
 msgstr "Λείπει λίστα καταχωρήσεων."
 
-#: handroll/composers/atom.py:76
+#: handroll/composers/atom.py:79
 msgid "Invalid feed {source_file}: {error}"
 msgstr "Άκυρη ζωοτροφών {source_file}: {error}"
 
-#: handroll/composers/generic.py:48
+#: handroll/composers/generic.py:42
 msgid "Generating HTML for {source_file} ..."
 msgstr "Δημιουργία HTML για {source_file} ..."
+
+#: handroll/composers/generic.py:96
+msgid "There is invalid YAML in the frontmatter: {details}"
+msgstr "Υπάρχει άκυρο YAML στην frontmatter: {details}"
+
+#: handroll/composers/generic.py:102
+msgid "A YAML marker was missing in {source}"
+msgstr "Ένας δείκτης YAML έλειπε σε {source}"
 
 #: handroll/composers/sass.py:29
 msgid "Sass is not installed."
