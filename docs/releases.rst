@@ -1,8 +1,8 @@
 Releases
 ========
 
-Version 2.1, In Development
----------------------------
+Version 2.1, Released October 18, 2015
+--------------------------------------
 
 * Create a site quickly with the new scaffold command
   (e.g., ``handroll -s default new_site``)
