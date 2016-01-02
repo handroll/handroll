@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Matt Layman
+# Copyright (c) 2016, Matt Layman
 """Signals fired during execution"""
 
 from blinker import signal
