@@ -43,14 +43,13 @@ def main(argv=sys.argv):
         director = Director(config, site, extensions)
         director.produce()
 
-        if not args.watch:
+        if args.watch:
+            serve(site, director)
+        else:
             finish()
     except AbortError as abort:
         logger.error(str(abort))
         sys.exit(_('Incomplete.'))
-
-    if args.watch:
-        serve(site, director)
 
 
 def parse_args(argv):
