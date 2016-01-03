@@ -22,6 +22,15 @@ class Site(object):
         if os.path.isdir(self.path):
             self.path = os.path.abspath(self.path)
 
+    @classmethod
+    def build(cls, args):
+        """Build a validated site."""
+        site = cls(args.site)
+        valid, message = site.is_valid()
+        if not valid:
+            raise AbortError(_('Invalid site source: {0}').format(message))
+        return site
+
     @property
     def config_file(self):
         return os.path.join(self.path, self.CONFIG)

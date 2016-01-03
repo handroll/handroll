@@ -30,17 +30,8 @@ def main(argv=sys.argv):
             scaffolder.make(args.scaffold, args.site)
             finish()
 
-        site = Site(args.site)
-        valid, message = site.is_valid()
-        if not valid:
-            raise AbortError(_('Invalid site source: {0}').format(message))
-
-        loader = ExtensionLoader()
-        loader.load()
-
-        config = build_config(site.config_file, args)
-        extensions = loader.get_active_extensions(config)
-        director = Director(config, site, extensions)
+        site = Site.build(args)
+        director = prepare_director(args, site)
         director.produce()
 
         if args.watch:
@@ -87,6 +78,15 @@ def parse_args(argv):
         args.site = args.site.rstrip(os.sep)
 
     return args
+
+
+def prepare_director(args, site):
+    """Prepare the director to produce a site."""
+    loader = ExtensionLoader()
+    loader.load()
+    config = build_config(site.config_file, args)
+    extensions = loader.get_active_extensions(config)
+    return Director(config, site, extensions)
 
 
 def finish():
