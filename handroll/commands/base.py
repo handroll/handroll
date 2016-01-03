@@ -11,3 +11,7 @@ class Command(object):
         The provided parser is a subparser from ``subparsers.add_parser``.
         """
         raise NotImplementedError()
+
+    def run(self, args):
+        """Run whatever action the command intends."""
+        raise NotImplementedError()
