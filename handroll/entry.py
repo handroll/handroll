@@ -17,7 +17,7 @@ from handroll.site import Site
 
 
 def main(argv=sys.argv):
-    args = parse_args(argv)
+    args = parse(argv)
 
     if args.verbose:
         logger.setLevel(logging.INFO)
@@ -43,7 +43,22 @@ def main(argv=sys.argv):
         sys.exit(_('Incomplete.'))
 
 
-def parse_args(argv):
+def parse(argv):
+    """Parse the user arguments."""
+    parser = build_parser()
+
+    # argparse expects the executable to be removed from argv.
+    args = parser.parse_args(argv[1:])
+
+    # Normalize the site path so that all sites are handled consistently.
+    if args.site:
+        args.site = args.site.rstrip(os.sep)
+
+    return args
+
+
+def build_parser():
+    """Build the parser that will have all available commands and options."""
     description = _('A website generator for software artisans')
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('site', nargs='?', help=_('the path to your website'))
@@ -69,15 +84,7 @@ def parse_args(argv):
     parser.add_argument(
         '-f', '--force', action='store_true',
         help=_('force composers to write output'))
-
-    # argparse expects the executable to be removed from argv.
-    args = parser.parse_args(argv[1:])
-
-    # Normalize the site path so that all sites are handled consistently.
-    if args.site:
-        args.site = args.site.rstrip(os.sep)
-
-    return args
+    return parser
 
 
 def prepare_director(args, site):

@@ -17,65 +17,65 @@ class TestArguments(TestCase):
         self.arguments = ['/fake/bin/handroll']
 
     def test_verbose_argument(self):
-        args = entry.parse_args(self.arguments)
+        args = entry.parse(self.arguments)
         self.assertFalse(args.verbose)
 
         argv = list(self.arguments)
         argv.append('-v')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertTrue(args.verbose)
 
         argv = list(self.arguments)
         argv.append('--verbose')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertTrue(args.verbose)
 
     def test_debug_argument(self):
-        args = entry.parse_args(self.arguments)
+        args = entry.parse(self.arguments)
         self.assertFalse(args.debug)
 
         argv = list(self.arguments)
         argv.append('-d')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertTrue(args.debug)
 
         argv = list(self.arguments)
         argv.append('--debug')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertTrue(args.debug)
 
     def test_timing_argument(self):
-        args = entry.parse_args(self.arguments)
+        args = entry.parse(self.arguments)
         self.assertFalse(args.timing)
 
         argv = list(self.arguments)
         argv.append('-t')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertTrue(args.timing)
 
         argv = list(self.arguments)
         argv.append('--timing')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertTrue(args.timing)
 
     def test_watch_argument(self):
-        args = entry.parse_args(self.arguments)
+        args = entry.parse(self.arguments)
         self.assertFalse(args.watch)
 
         argv = list(self.arguments)
         argv.append('-w')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertTrue(args.watch)
 
         argv = list(self.arguments)
         argv.append('--watch')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertTrue(args.watch)
 
     def test_site_argument(self):
         site = 'fake_site'
         self.arguments.append(site)
-        args = entry.parse_args(self.arguments)
+        args = entry.parse(self.arguments)
         self.assertEqual(site, args.site)
 
     def test_site_argument_is_normalized(self):
@@ -83,46 +83,46 @@ class TestArguments(TestCase):
         consistently handled."""
         site = 'fake_site' + os.sep
         self.arguments.append(site)
-        args = entry.parse_args(self.arguments)
+        args = entry.parse(self.arguments)
         self.assertEqual('fake_site', args.site)
 
     def test_outdir_argument(self):
         outdir = 'fake_outdir'
         self.arguments.extend(['fake_site', outdir])
-        args = entry.parse_args(self.arguments)
+        args = entry.parse(self.arguments)
         self.assertEqual(outdir, args.outdir)
 
     def test_force_argument(self):
-        args = entry.parse_args(self.arguments)
+        args = entry.parse(self.arguments)
         self.assertFalse(args.force)
 
         argv = list(self.arguments)
         argv.append('-f')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertTrue(args.force)
 
         argv = list(self.arguments)
         argv.append('--force')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertTrue(args.force)
 
     def test_scaffold_argument(self):
-        args = entry.parse_args(self.arguments)
+        args = entry.parse(self.arguments)
         self.assertIsNone(args.scaffold)
 
         argv = list(self.arguments)
         argv.append('-s')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertEqual(scaffolder.LIST_SCAFFOLDS, args.scaffold)
 
         argv = list(self.arguments)
         argv.append('--scaffold')
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertEqual(scaffolder.LIST_SCAFFOLDS, args.scaffold)
 
         argv = list(self.arguments)
         argv.extend(['--scaffold', 'default'])
-        args = entry.parse_args(argv)
+        args = entry.parse(argv)
         self.assertEqual('default', args.scaffold)
 
 
