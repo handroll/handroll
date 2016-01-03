@@ -81,7 +81,7 @@ if __name__ == '__main__':
         long_description=long_description,
         packages=find_packages(),
         entry_points={
-            'console_scripts': ['handroll = handroll.command:main'],
+            'console_scripts': ['handroll = handroll.entry:main'],
             'handroll.composers': [
                 '.atom = handroll.composers.atom:AtomComposer',
                 '.md = handroll.composers.md:MarkdownComposer',
