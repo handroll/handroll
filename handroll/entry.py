@@ -7,6 +7,7 @@ import os
 import sys
 
 from handroll import logger, scaffolder
+from handroll.commands.base import finish
 from handroll.configuration import build_config
 from handroll.director import Director
 from handroll.exceptions import AbortError
@@ -94,8 +95,3 @@ def prepare_director(args, site):
     config = build_config(site.config_file, args)
     extensions = loader.get_active_extensions(config)
     return Director(config, site, extensions)
-
-
-def finish():
-    print(_('Complete.'))
-    sys.exit()

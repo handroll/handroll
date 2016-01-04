@@ -1,5 +1,14 @@
 # Copyright (c) 2016, Matt Layman
 
+import sys
+
+from handroll.i18n import _
+
+
+def finish():
+    print(_('Complete.'))
+    sys.exit()
+
 
 class Command(object):
     """A command class with the minimal interface required for each command."""
