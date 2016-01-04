@@ -2,7 +2,19 @@
 
 import sys
 
+from handroll.configuration import build_config
+from handroll.director import Director
+from handroll.extensions.loader import ExtensionLoader
 from handroll.i18n import _
+
+
+def prepare_director(args, site):
+    """Prepare the director to produce a site."""
+    loader = ExtensionLoader()
+    loader.load()
+    config = build_config(site.config_file, args)
+    extensions = loader.get_active_extensions(config)
+    return Director(config, site, extensions)
 
 
 def finish():

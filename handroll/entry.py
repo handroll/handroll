@@ -7,11 +7,8 @@ import os
 import sys
 
 from handroll import logger, scaffolder
-from handroll.commands.base import finish
-from handroll.configuration import build_config
-from handroll.director import Director
+from handroll.commands.base import finish, prepare_director
 from handroll.exceptions import AbortError
-from handroll.extensions.loader import ExtensionLoader
 from handroll.i18n import _
 from handroll.server import serve
 from handroll.site import Site
@@ -86,12 +83,3 @@ def build_parser():
         '-f', '--force', action='store_true',
         help=_('force composers to write output'))
     return parser
-
-
-def prepare_director(args, site):
-    """Prepare the director to produce a site."""
-    loader = ExtensionLoader()
-    loader.load()
-    config = build_config(site.config_file, args)
-    extensions = loader.get_active_extensions(config)
-    return Director(config, site, extensions)
