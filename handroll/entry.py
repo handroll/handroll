@@ -7,6 +7,7 @@ import os
 import sys
 
 from handroll import logger, scaffolder
+from handroll.commands.builtins import COMMANDS
 from handroll.commands.base import finish, prepare_director
 from handroll.exceptions import AbortError
 from handroll.i18n import _
@@ -24,18 +25,21 @@ def main(argv=sys.argv):
         logger.setLevel(logging.DEBUG)
 
     try:
-        if args.scaffold:
-            scaffolder.make(args.scaffold, args.site)
-            finish()
+        args.func(args)
+        # FIXME: There's not really a graceful way to break this and let the
+        # old method continue to work.
+        # if args.scaffold:
+        #     scaffolder.make(args.scaffold, args.site)
+        #     finish()
 
-        site = Site.build(args)
-        director = prepare_director(args, site)
-        director.produce()
+        # site = Site.build(args)
+        # director = prepare_director(args, site)
+        # director.produce()
 
-        if args.watch:
-            serve(site, director)
-        else:
-            finish()
+        # if args.watch:
+        #     serve(site, director)
+        # else:
+        #     finish()
     except AbortError as abort:
         logger.error(str(abort))
         sys.exit(_('Incomplete.'))
@@ -82,4 +86,7 @@ def build_parser():
     parser.add_argument(
         '-f', '--force', action='store_true',
         help=_('force composers to write output'))
+
+    subparsers = parser.add_subparsers(title=_('available commands'))
+    [command.register(subparsers) for command in COMMANDS]
     return parser
