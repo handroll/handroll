@@ -16,51 +16,49 @@ class TestArguments(TestCase):
         # argv will always start with the command.
         self.arguments = ['/fake/bin/handroll']
 
+    def _make_argv_with(self, argument=None):
+        # A subcommand is required.
+        if argument is None:
+            return ['/fake/bin/handroll', 'build']
+        else:
+            return ['/fake/bin/handroll', argument, 'build']
+
     def test_verbose_argument(self):
-        # FIXME: I promise I'm coming right back to this.
-        return
-        args = entry.parse(self.arguments)
+        argv = self._make_argv_with()
+        args = entry.parse(argv)
         self.assertFalse(args.verbose)
 
-        argv = list(self.arguments)
-        argv.append('-v')
+        argv = self._make_argv_with('-v')
         args = entry.parse(argv)
         self.assertTrue(args.verbose)
 
-        argv = list(self.arguments)
-        argv.append('--verbose')
+        argv = self._make_argv_with('--verbose')
         args = entry.parse(argv)
         self.assertTrue(args.verbose)
 
     def test_debug_argument(self):
-        # FIXME: I promise I'm coming right back to this.
-        return
-        args = entry.parse(self.arguments)
+        argv = self._make_argv_with()
+        args = entry.parse(argv)
         self.assertFalse(args.debug)
 
-        argv = list(self.arguments)
-        argv.append('-d')
+        argv = self._make_argv_with('-d')
         args = entry.parse(argv)
         self.assertTrue(args.debug)
 
-        argv = list(self.arguments)
-        argv.append('--debug')
+        argv = self._make_argv_with('--debug')
         args = entry.parse(argv)
         self.assertTrue(args.debug)
 
     def test_timing_argument(self):
-        # FIXME: I promise I'm coming right back to this.
-        return
-        args = entry.parse(self.arguments)
+        argv = self._make_argv_with()
+        args = entry.parse(argv)
         self.assertFalse(args.timing)
 
-        argv = list(self.arguments)
-        argv.append('-t')
+        argv = self._make_argv_with('-t')
         args = entry.parse(argv)
         self.assertTrue(args.timing)
 
-        argv = list(self.arguments)
-        argv.append('--timing')
+        argv = self._make_argv_with('--timing')
         args = entry.parse(argv)
         self.assertTrue(args.timing)
 
@@ -107,18 +105,15 @@ class TestArguments(TestCase):
         self.assertEqual(outdir, args.outdir)
 
     def test_force_argument(self):
-        # FIXME: I promise I'm coming right back to this.
-        return
-        args = entry.parse(self.arguments)
+        argv = self._make_argv_with()
+        args = entry.parse(argv)
         self.assertFalse(args.force)
 
-        argv = list(self.arguments)
-        argv.append('-f')
+        argv = self._make_argv_with('-f')
         args = entry.parse(argv)
         self.assertTrue(args.force)
 
-        argv = list(self.arguments)
-        argv.append('--force')
+        argv = self._make_argv_with('--force')
         args = entry.parse(argv)
         self.assertTrue(args.force)
 
