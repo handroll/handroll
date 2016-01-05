@@ -9,9 +9,27 @@ from handroll.tests import TestCase
 
 class TestCommand(TestCase):
 
-    def test_register_not_implemented(self):
-        parser = mock.Mock()
-        self.assertRaises(NotImplementedError, Command.register, parser)
+    def test_register_returns_parser(self):
+        subparsers = mock.Mock()
+        expected_parser = mock.Mock()
+        subparsers.add_parser.return_value = expected_parser
+        command = Command()
+        parser = command.register(subparsers)
+        self.assertEqual(expected_parser, parser)
+
+    def test_register_command_attributes(self):
+        subparsers = mock.Mock()
+        command = Command()
+        command.register(subparsers)
+        subparsers.add_parser.assert_called_once_with(
+            'command', description='the command description',
+            help='the command help')
+
+    def test_register_run_as_func(self):
+        subparsers = mock.Mock()
+        command = Command()
+        parser = command.register(subparsers)
+        parser.set_defaults.assert_called_once_with(func=command.run)
 
     def test_run_not_implemented(self):
         args = mock.Mock()

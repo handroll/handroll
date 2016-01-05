@@ -25,13 +25,20 @@ def finish():
 class Command(object):
     """A command class with the minimal interface required for each command."""
 
-    @classmethod
-    def register(cls, parser):
+    name = 'command'
+    description = 'the command description'
+    help = 'the command help'
+
+    def register(self, subparsers):
         """Register required options.
 
-        The provided parser is a subparser from ``subparsers.add_parser``.
+        Commands should invoke this method and use the returned parser to
+        add command specific options.
         """
-        raise NotImplementedError()
+        parser = subparsers.add_parser(
+            self.name, description=self.description, help=self.help)
+        parser.set_defaults(func=self.run)
+        return parser
 
     def run(self, args):
         """Run whatever action the command intends."""
