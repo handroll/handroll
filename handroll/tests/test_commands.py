@@ -39,6 +39,24 @@ class TestCommand(TestCase):
 
 class TestBuildCommand(TestCase):
 
+    def test_register_site(self):
+        parser = mock.Mock()
+        subparsers = mock.Mock()
+        subparsers.add_parser.return_value = parser
+        command = BuildCommand()
+        command.register(subparsers)
+        site_call = (('site',), {'nargs': '?', 'help': mock.ANY})
+        self.assertIn(site_call, parser.add_argument.call_args_list)
+
+    def test_register_outdir(self):
+        parser = mock.Mock()
+        subparsers = mock.Mock()
+        subparsers.add_parser.return_value = parser
+        command = BuildCommand()
+        command.register(subparsers)
+        outdir_call = (('outdir',), {'nargs': '?', 'help': mock.ANY})
+        self.assertIn(outdir_call, parser.add_argument.call_args_list)
+
     @mock.patch('handroll.commands.build.finish')
     def test_complete_build(self, finish):
         site = self.factory.make_site()

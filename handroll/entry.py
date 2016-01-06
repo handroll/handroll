@@ -53,7 +53,9 @@ def parse(argv):
     args = parser.parse_args(argv[1:])
 
     # Normalize the site path so that all sites are handled consistently.
-    if args.site:
+    # Not every command will have the site argument, but the normalization
+    # occurs here to keep the check in one place.
+    if 'site' in vars(args) and args.site:
         args.site = args.site.rstrip(os.sep)
 
     return args
@@ -63,10 +65,6 @@ def build_parser():
     """Build the parser that will have all available commands and options."""
     description = _('A website generator for software artisans')
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument('site', nargs='?', help=_('the path to your website'))
-    parser.add_argument(
-        'outdir', nargs='?', help=_('an optional output directory to create or'
-                                    ' update if it already exists'))
     parser.add_argument(
         '-w', '--watch', action='store_true',
         help=_('watch the site for changes and'

@@ -17,7 +17,7 @@ class TestArguments(TestCase):
         self.arguments = ['/fake/bin/handroll']
 
     def _make_argv_with(self, argument=None):
-        # A subcommand is required.
+        # A command is required.
         if argument is None:
             return ['/fake/bin/handroll', 'build']
         else:
@@ -79,29 +79,26 @@ class TestArguments(TestCase):
         self.assertTrue(args.watch)
 
     def test_site_argument(self):
-        # FIXME: I promise I'm coming right back to this.
-        return
         site = 'fake_site'
-        self.arguments.append(site)
-        args = entry.parse(self.arguments)
+        argv = self._make_argv_with()
+        argv.append(site)
+        args = entry.parse(argv)
         self.assertEqual(site, args.site)
 
     def test_site_argument_is_normalized(self):
         """Test that trailing path separator is removed so that a site is
         consistently handled."""
-        # FIXME: I promise I'm coming right back to this.
-        return
         site = 'fake_site' + os.sep
-        self.arguments.append(site)
-        args = entry.parse(self.arguments)
+        argv = self._make_argv_with()
+        argv.append(site)
+        args = entry.parse(argv)
         self.assertEqual('fake_site', args.site)
 
     def test_outdir_argument(self):
-        # FIXME: I promise I'm coming right back to this.
-        return
         outdir = 'fake_outdir'
-        self.arguments.extend(['fake_site', outdir])
-        args = entry.parse(self.arguments)
+        argv = self._make_argv_with()
+        argv.extend(['fake_site', outdir])
+        args = entry.parse(argv)
         self.assertEqual(outdir, args.outdir)
 
     def test_force_argument(self):
@@ -144,33 +141,38 @@ class TestMain(TestCase):
     def setUp(self):
         self.arguments = ['/fake/bin/handroll']
 
+    def _make_argv_with(self, argument=None):
+        # A command is required.
+        if argument is None:
+            return ['/fake/bin/handroll', 'build']
+        else:
+            return ['/fake/bin/handroll', argument, 'build']
+
     def test_verbose_sets_logging(self):
         logger.setLevel(logging.CRITICAL)
-        self.arguments.extend(['-v', 'build'])
-        self.assertRaises(SystemExit, entry.main, self.arguments)
+        argv = self._make_argv_with('-v')
+        self.assertRaises(SystemExit, entry.main, argv)
         self.assertEqual(logging.INFO, logger.getEffectiveLevel())
 
     def test_debug_sets_logging(self):
         logger.setLevel(logging.CRITICAL)
-        self.arguments.extend(['-d', 'build'])
-        self.assertRaises(SystemExit, entry.main, self.arguments)
+        argv = self._make_argv_with('-d')
+        self.assertRaises(SystemExit, entry.main, argv)
         self.assertEqual(logging.DEBUG, logger.getEffectiveLevel())
 
     def test_site_directory_is_file(self):
-        # FIXME: I promise I'm coming right back to this.
-        return
         site = tempfile.mkdtemp()
         file_site = os.path.join(site, 'fake')
-        self.arguments.append(file_site)
-        self.assertRaises(SystemExit, entry.main, self.arguments)
+        argv = self._make_argv_with()
+        argv.append(file_site)
+        self.assertRaises(SystemExit, entry.main, argv)
 
-    @mock.patch('handroll.entry.finish')
+    @mock.patch('handroll.commands.build.finish')
     def test_complete_site_generation(self, finish):
-        # FIXME: I promise I'm coming right back to this.
-        return
         site = self.factory.make_site()
-        self.arguments.append(site.path)
-        entry.main(self.arguments)
+        argv = self._make_argv_with()
+        argv.append(site.path)
+        entry.main(argv)
         self.assertTrue(finish.called)
 
     @mock.patch('handroll.entry.serve')

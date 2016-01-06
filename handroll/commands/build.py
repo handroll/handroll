@@ -11,6 +11,14 @@ class BuildCommand(Command):
     description = _('Build a site in an output directory.')
     help = _('build a site')
 
+    def register(self, subparsers):
+        parser = super(BuildCommand, self).register(subparsers)
+        parser.add_argument(
+            'site', nargs='?', help=_('the path to your website'))
+        parser.add_argument('outdir', nargs='?', help=_(
+            'an optional output directory to create or'
+            ' update if it already exists'))
+
     def run(self, args):
         site = Site.build(args)
         director = prepare_director(args, site)
