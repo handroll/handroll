@@ -8,11 +8,11 @@ import sys
 
 from handroll import logger, scaffolder
 from handroll.commands.builtins import COMMANDS
-from handroll.commands.base import finish, prepare_director
+# from handroll.commands.base import finish, prepare_director
 from handroll.exceptions import AbortError
 from handroll.i18n import _
-from handroll.server import serve
-from handroll.site import Site
+# from handroll.server import serve
+# from handroll.site import Site
 
 
 def main(argv=sys.argv):
