@@ -62,22 +62,6 @@ class TestArguments(TestCase):
         args = entry.parse(argv)
         self.assertTrue(args.timing)
 
-    def test_watch_argument(self):
-        # FIXME: I promise I'm coming right back to this.
-        return
-        args = entry.parse(self.arguments)
-        self.assertFalse(args.watch)
-
-        argv = list(self.arguments)
-        argv.append('-w')
-        args = entry.parse(argv)
-        self.assertTrue(args.watch)
-
-        argv = list(self.arguments)
-        argv.append('--watch')
-        args = entry.parse(argv)
-        self.assertTrue(args.watch)
-
     def test_site_argument(self):
         site = 'fake_site'
         argv = self._make_argv_with()
@@ -141,12 +125,12 @@ class TestMain(TestCase):
     def setUp(self):
         self.arguments = ['/fake/bin/handroll']
 
-    def _make_argv_with(self, argument=None):
+    def _make_argv_with(self, argument=None, command='build'):
         # A command is required.
         if argument is None:
-            return ['/fake/bin/handroll', 'build']
+            return ['/fake/bin/handroll', command]
         else:
-            return ['/fake/bin/handroll', argument, 'build']
+            return ['/fake/bin/handroll', argument, command]
 
     def test_verbose_sets_logging(self):
         logger.setLevel(logging.CRITICAL)
@@ -175,17 +159,15 @@ class TestMain(TestCase):
         entry.main(argv)
         self.assertTrue(finish.called)
 
-    # @mock.patch('handroll.entry.serve')
-    # def test_development_server_served(self, serve):
-    def test_development_server_served(self):
-        # FIXME: I promise I'm coming right back to this.
-        return
+    @mock.patch('handroll.commands.watch.serve')
+    def test_development_server_served(self, serve):
         site = self.factory.make_site()
-        self.arguments.extend(['-w', site.path])
+        argv = self._make_argv_with(command='watch')
+        argv.append(site.path)
 
-        entry.main(self.arguments)
+        entry.main(argv)
 
-        # self.assertTrue(serve.called)
+        self.assertTrue(serve.called)
 
     @mock.patch('handroll.entry.scaffolder')
     def test_makes_from_scaffolder(self, mock_scaffolder):
