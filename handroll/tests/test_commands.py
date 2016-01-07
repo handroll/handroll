@@ -4,6 +4,7 @@ import mock
 
 from handroll.commands import Command
 from handroll.commands.build import BuildCommand
+from handroll.commands.watch import WatchCommand
 from handroll.tests import TestCase
 
 
@@ -64,3 +65,32 @@ class TestBuildCommand(TestCase):
         command = BuildCommand()
         command.run(args)
         self.assertTrue(finish.called)
+
+
+class TestWatchCommand(TestCase):
+
+    def test_register_site(self):
+        parser = mock.Mock()
+        subparsers = mock.Mock()
+        subparsers.add_parser.return_value = parser
+        command = WatchCommand()
+        command.register(subparsers)
+        site_call = (('site',), {'nargs': '?', 'help': mock.ANY})
+        self.assertIn(site_call, parser.add_argument.call_args_list)
+
+    def test_register_outdir(self):
+        parser = mock.Mock()
+        subparsers = mock.Mock()
+        subparsers.add_parser.return_value = parser
+        command = WatchCommand()
+        command.register(subparsers)
+        outdir_call = (('outdir',), {'nargs': '?', 'help': mock.ANY})
+        self.assertIn(outdir_call, parser.add_argument.call_args_list)
+
+    @mock.patch('handroll.commands.watch.serve')
+    def test_complete_watch(self, serve):
+        site = self.factory.make_site()
+        args = mock.Mock(site=site.path, outdir='.')
+        command = WatchCommand()
+        command.run(args)
+        self.assertTrue(serve.called)

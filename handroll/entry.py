@@ -11,7 +11,6 @@ from handroll.commands.builtins import COMMANDS
 # from handroll.commands.base import finish, prepare_director
 from handroll.exceptions import AbortError
 from handroll.i18n import _
-# from handroll.server import serve
 # from handroll.site import Site
 
 
@@ -30,15 +29,6 @@ def main(argv=sys.argv):
         # old method continue to work.
         # if args.scaffold:
         #     scaffolder.make(args.scaffold, args.site)
-        #     finish()
-
-        # site = Site.build(args)
-        # director = prepare_director(args, site)
-        # director.produce()
-
-        # if args.watch:
-        #     serve(site, director)
-        # else:
         #     finish()
     except AbortError as abort:
         logger.error(str(abort))
@@ -65,10 +55,6 @@ def build_parser():
     """Build the parser that will have all available commands and options."""
     description = _('A website generator for software artisans')
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument(
-        '-w', '--watch', action='store_true',
-        help=_('watch the site for changes and'
-               ' run a web server in the output directory'))
     parser.add_argument(
         '-s', '--scaffold', action='store',
         nargs='?', const=scaffolder.LIST_SCAFFOLDS, metavar='scaffold',
