@@ -6,12 +6,10 @@ import logging
 import os
 import sys
 
-from handroll import logger, scaffolder
+from handroll import logger
 from handroll.commands.builtins import COMMANDS
-# from handroll.commands.base import finish, prepare_director
 from handroll.exceptions import AbortError
 from handroll.i18n import _
-# from handroll.site import Site
 
 
 def main(argv=sys.argv):
@@ -25,11 +23,6 @@ def main(argv=sys.argv):
 
     try:
         args.func(args)
-        # FIXME: There's not really a graceful way to break this and let the
-        # old method continue to work.
-        # if args.scaffold:
-        #     scaffolder.make(args.scaffold, args.site)
-        #     finish()
     except AbortError as abort:
         logger.error(str(abort))
         sys.exit(_('Incomplete.'))
@@ -55,11 +48,6 @@ def build_parser():
     """Build the parser that will have all available commands and options."""
     description = _('A website generator for software artisans')
     parser = argparse.ArgumentParser(description=description)
-    parser.add_argument(
-        '-s', '--scaffold', action='store',
-        nargs='?', const=scaffolder.LIST_SCAFFOLDS, metavar='scaffold',
-        help=_('make a new handroll site from a scaffold '
-               'or list the available scaffolds'))
     parser.add_argument(
         '-v', '--verbose', action='store_true', help=_('use verbose messages'))
     parser.add_argument(

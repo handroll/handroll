@@ -4,6 +4,7 @@ import mock
 
 from handroll.commands import Command
 from handroll.commands.build import BuildCommand
+from handroll.commands.scaffold import ScaffoldCommand
 from handroll.commands.watch import WatchCommand
 from handroll.tests import TestCase
 
@@ -94,3 +95,15 @@ class TestWatchCommand(TestCase):
         command = WatchCommand()
         command.run(args)
         self.assertTrue(serve.called)
+
+
+class TestScaffoldCommand(TestCase):
+
+    def test_register_site(self):
+        parser = mock.Mock()
+        subparsers = mock.Mock()
+        subparsers.add_parser.return_value = parser
+        command = ScaffoldCommand()
+        command.register(subparsers)
+        site_call = (('site',), {'nargs': '?', 'help': mock.ANY})
+        self.assertIn(site_call, parser.add_argument.call_args_list)
