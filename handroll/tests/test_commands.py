@@ -99,6 +99,15 @@ class TestWatchCommand(TestCase):
 
 class TestScaffoldCommand(TestCase):
 
+    def test_register_scaffold(self):
+        parser = mock.Mock()
+        subparsers = mock.Mock()
+        subparsers.add_parser.return_value = parser
+        command = ScaffoldCommand()
+        command.register(subparsers)
+        scaffold_call = (('scaffold',), {'nargs': '?', 'help': mock.ANY})
+        self.assertIn(scaffold_call, parser.add_argument.call_args_list)
+
     def test_register_site(self):
         parser = mock.Mock()
         subparsers = mock.Mock()
@@ -107,3 +116,10 @@ class TestScaffoldCommand(TestCase):
         command.register(subparsers)
         site_call = (('site',), {'nargs': '?', 'help': mock.ANY})
         self.assertIn(site_call, parser.add_argument.call_args_list)
+
+    @mock.patch('handroll.commands.scaffold.scaffolder.list_scaffolds')
+    def test_lists_scaffolds(self, list_scaffolds):
+        args = mock.Mock(scaffold=None)
+        command = ScaffoldCommand()
+        command.run(args)
+        self.assertTrue(list_scaffolds.called)
