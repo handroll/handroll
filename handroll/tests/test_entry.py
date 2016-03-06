@@ -6,7 +6,7 @@ import tempfile
 
 import mock
 
-from handroll import entry, logger, scaffolder
+from handroll import entry, logger
 from handroll.tests import TestCase
 
 
@@ -97,27 +97,6 @@ class TestArguments(TestCase):
         argv = self._make_argv_with('--force')
         args = entry.parse(argv)
         self.assertTrue(args.force)
-
-    def test_scaffold_argument(self):
-        # FIXME: I promise I'm coming right back to this.
-        return
-        args = entry.parse(self.arguments)
-        self.assertIsNone(args.scaffold)
-
-        argv = list(self.arguments)
-        argv.append('-s')
-        args = entry.parse(argv)
-        self.assertEqual(scaffolder.LIST_SCAFFOLDS, args.scaffold)
-
-        argv = list(self.arguments)
-        argv.append('--scaffold')
-        args = entry.parse(argv)
-        self.assertEqual(scaffolder.LIST_SCAFFOLDS, args.scaffold)
-
-        argv = list(self.arguments)
-        argv.extend(['--scaffold', 'default'])
-        args = entry.parse(argv)
-        self.assertEqual('default', args.scaffold)
 
 
 class TestMain(TestCase):

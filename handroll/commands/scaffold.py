@@ -22,9 +22,7 @@ class ScaffoldCommand(Command):
 
     def run(self, args):
         if args.scaffold:
+            # scaffolder.make(args.scaffold, args.site)
             finish()
         else:
             scaffolder.list_scaffolds()
-        # TODO: remove LIST_SCAFFOLDS constant
-        # TODO: Make `make` simpler by putting switching logic in command.
-        # scaffolder.make(args.scaffold, args.site)
