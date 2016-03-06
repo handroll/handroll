@@ -18,11 +18,12 @@ class ScaffoldCommand(Command):
         parser.add_argument(
             'scaffold', nargs='?', help=_('the scaffold to generate'))
         parser.add_argument(
-            'site', nargs='?', help=_('the path to your website'))
+            'site', nargs='?', default='site',
+            help=_('the path to your website'))
 
     def run(self, args):
         if args.scaffold:
-            # scaffolder.make(args.scaffold, args.site)
+            scaffolder.make(args.scaffold, args.site)
             finish()
         else:
             scaffolder.list_scaffolds()

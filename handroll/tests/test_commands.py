@@ -3,6 +3,7 @@
 import mock
 
 from handroll.commands import Command
+from handroll.commands.base import finish
 from handroll.commands.build import BuildCommand
 from handroll.commands.scaffold import ScaffoldCommand
 from handroll.commands.watch import WatchCommand
@@ -37,6 +38,13 @@ class TestCommand(TestCase):
         args = mock.Mock()
         command = Command()
         self.assertRaises(NotImplementedError, command.run, args)
+
+    def test_finish(self):
+        try:
+            finish()
+            self.fail()
+        except SystemExit:
+            pass
 
 
 class TestBuildCommand(TestCase):
@@ -114,7 +122,8 @@ class TestScaffoldCommand(TestCase):
         subparsers.add_parser.return_value = parser
         command = ScaffoldCommand()
         command.register(subparsers)
-        site_call = (('site',), {'nargs': '?', 'help': mock.ANY})
+        site_call = (('site',), {
+            'nargs': '?', 'help': mock.ANY, 'default': 'site'})
         self.assertIn(site_call, parser.add_argument.call_args_list)
 
     @mock.patch('handroll.commands.scaffold.scaffolder.list_scaffolds')
@@ -123,3 +132,11 @@ class TestScaffoldCommand(TestCase):
         command = ScaffoldCommand()
         command.run(args)
         self.assertTrue(list_scaffolds.called)
+
+    @mock.patch('handroll.commands.scaffold.finish')
+    @mock.patch('handroll.commands.scaffold.scaffolder.make')
+    def test_complete_scaffold(self, make, finish):
+        args = mock.Mock(scaffold='default', site='site')
+        command = ScaffoldCommand()
+        command.run(args)
+        make.assert_called_once_with('default', 'site')
