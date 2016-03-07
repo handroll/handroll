@@ -1,6 +1,13 @@
 Releases
 ========
 
+Version 3.0, Released March 7, 2016
+-----------------------------------
+
+* Replaced all flag based commands with sub-commands.
+  This change means all interaction now happens through
+  ``handroll build``, ``handroll watch``, and ``handroll scaffold``.
+
 Version 2.1, Released October 18, 2015
 --------------------------------------
 
