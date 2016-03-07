@@ -1,15 +1,15 @@
 # Translations template for handroll.
-# Copyright (C) 2015 Matt Layman
+# Copyright (C) 2016 Matt Layman
 # This file is distributed under the same license as the handroll project.
 # 
 # Translators:
-# Matt Layman <matthewlayman@gmail.com>, 2015
+# Matt Layman <matthewlayman@gmail.com>, 2015-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-10-15 17:55-0400\n"
-"PO-Revision-Date: 2015-10-17 13:47+0000\n"
+"POT-Creation-Date: 2016-03-06 08:10-0500\n"
+"PO-Revision-Date: 2016-03-07 04:44+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/handroll/handroll/language/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -18,56 +18,6 @@ msgstr ""
 "Generated-By: Babel 1.3\n"
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: handroll/command.py:36
-msgid "Invalid site source: {0}"
-msgstr "Ongeldige website bron: {0}"
-
-#: handroll/command.py:50
-msgid "Incomplete."
-msgstr "Onvolledige."
-
-#: handroll/command.py:57
-msgid "A website generator for software artisans"
-msgstr "Een website generator voor software ambachtslieden"
-
-#: handroll/command.py:59
-msgid "the path to your website"
-msgstr "het pad naar uw website"
-
-#: handroll/command.py:61
-msgid "an optional output directory to create or update if it already exists"
-msgstr "een optionele output directory te maken of bij te werken als het al bestaat"
-
-#: handroll/command.py:65
-msgid ""
-"watch the site for changes and run a web server in the output directory"
-msgstr "kijken naar de site voor wijzigingen en uitvoeren van een webserver in de output directory"
-
-#: handroll/command.py:70
-msgid ""
-"make a new handroll site from a scaffold or list the available scaffolds"
-msgstr "maak een nieuwe handroll site van een steiger of een lijst van de beschikbare steigers"
-
-#: handroll/command.py:73
-msgid "use verbose messages"
-msgstr "Gebruik uitgebreide berichten"
-
-#: handroll/command.py:76
-msgid "show debug level messages"
-msgstr "tonen debug level berichten"
-
-#: handroll/command.py:78
-msgid "time the execution"
-msgstr "tijd de uitvoering"
-
-#: handroll/command.py:81
-msgid "force composers to write output"
-msgstr "componisten dwingen om de uitgang te schrijven"
-
-#: handroll/command.py:94
-msgid "Complete."
-msgstr "Compleet."
 
 #: handroll/configuration.py:33
 msgid "You are missing a domain setting in the site section."
@@ -101,21 +51,49 @@ msgstr "Overslaan {filename} met overgeslagen bestandstype ..."
 msgid "Skipping special file {filename} ..."
 msgstr "Overslaan speciaal bestand {filename} ..."
 
+#: handroll/entry.py:28
+msgid "Incomplete."
+msgstr "Onvolledige."
+
+#: handroll/entry.py:49
+msgid "A website generator for software artisans"
+msgstr "Een website generator voor software ambachtslieden"
+
+#: handroll/entry.py:52
+msgid "use verbose messages"
+msgstr "Gebruik uitgebreide berichten"
+
+#: handroll/entry.py:55
+msgid "show debug level messages"
+msgstr "tonen debug level berichten"
+
+#: handroll/entry.py:57
+msgid "time the execution"
+msgstr "tijd de uitvoering"
+
+#: handroll/entry.py:60
+msgid "force composers to write output"
+msgstr "componisten dwingen om de uitgang te schrijven"
+
+#: handroll/entry.py:62
+msgid "available commands"
+msgstr "beschikbare opdrachten"
+
 #: handroll/scaffolder.py:10 handroll/tests/test_scaffolder.py:18
 msgid "A complete site to get you going"
 msgstr "Een complete site om je heen te krijgen"
 
-#: handroll/scaffolder.py:26
-msgid "Available scaffolds:\n"
-msgstr "Beschikbaar steigers:\n"
-
-#: handroll/scaffolder.py:45
+#: handroll/scaffolder.py:18
 msgid "There is no {scaffold} scaffold."
 msgstr "Er is geen {scaffold} schavot."
 
-#: handroll/scaffolder.py:48
+#: handroll/scaffolder.py:21
 msgid "{site} already exists."
 msgstr "{site} bestaat al."
+
+#: handroll/scaffolder.py:29
+msgid "Available scaffolds:\n"
+msgstr "Beschikbaar steigers:\n"
 
 #: handroll/server.py:48
 msgid ""
@@ -129,14 +107,61 @@ msgid ""
 "Bye."
 msgstr "\nTot ziens."
 
-#: handroll/site.py:36
+#: handroll/site.py:31
+msgid "Invalid site source: {0}"
+msgstr "Ongeldige website bron: {0}"
+
+#: handroll/site.py:45
 msgid "{path} is not a directory."
 msgstr "{path} is geen map."
 
-#: handroll/site.py:59
+#: handroll/site.py:68
 msgid ""
 "A handroll site was not found in {current_directory} or any of its parents."
 msgstr "Een handroll site is niet gevonden in {current_directory} of een van haar ouders."
+
+#: handroll/commands/base.py:21
+msgid "Complete."
+msgstr "Compleet."
+
+#: handroll/commands/build.py:11
+msgid "Build a site in an output directory."
+msgstr "Bouw een site in een output directory."
+
+#: handroll/commands/build.py:12
+msgid "build a site"
+msgstr "het bouwen van een website"
+
+#: handroll/commands/build.py:17 handroll/commands/scaffold.py:22
+#: handroll/commands/watch.py:20
+msgid "the path to your website"
+msgstr "het pad naar uw website"
+
+#: handroll/commands/build.py:18 handroll/commands/watch.py:21
+msgid "an optional output directory to create or update if it already exists"
+msgstr "een optionele output directory te maken of bij te werken als het al bestaat"
+
+#: handroll/commands/scaffold.py:11
+msgid ""
+"Make a new handroll site from a scaffold or list the available scaffolds"
+msgstr "Maak een nieuw handroll site van een steiger of een lijst van de beschikbare steigers"
+
+#: handroll/commands/scaffold.py:14
+msgid "make a new handroll site"
+msgstr "maak een nieuwe handroll website"
+
+#: handroll/commands/scaffold.py:19
+msgid "the scaffold to generate"
+msgstr "het schavot genereren"
+
+#: handroll/commands/watch.py:12
+msgid ""
+"watch the site for changes and run a web server in the output directory"
+msgstr "kijken naar de site voor wijzigingen en uitvoeren van een webserver in de output directory"
+
+#: handroll/commands/watch.py:15
+msgid "watch a site and run a web server"
+msgstr "kijken naar een site en uitvoeren van een webserver"
 
 #: handroll/composers/__init__.py:101
 msgid "Skipping {filename} ... It is the same as {destination}."

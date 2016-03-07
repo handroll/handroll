@@ -1,15 +1,15 @@
 # Translations template for handroll.
-# Copyright (C) 2015 Matt Layman
+# Copyright (C) 2016 Matt Layman
 # This file is distributed under the same license as the handroll project.
 # 
 # Translators:
-# Matt Layman <matthewlayman@gmail.com>, 2014-2015
+# Matt Layman <matthewlayman@gmail.com>, 2014-2016
 msgid ""
 msgstr ""
 "Project-Id-Version: handroll\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-10-15 17:55-0400\n"
-"PO-Revision-Date: 2015-10-17 13:46+0000\n"
+"POT-Creation-Date: 2016-03-06 08:10-0500\n"
+"PO-Revision-Date: 2016-03-07 04:44+0000\n"
 "Last-Translator: Matt Layman <matthewlayman@gmail.com>\n"
 "Language-Team: German (http://www.transifex.com/handroll/handroll/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -18,56 +18,6 @@ msgstr ""
 "Generated-By: Babel 1.3\n"
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: handroll/command.py:36
-msgid "Invalid site source: {0}"
-msgstr "Ungültige Website Quelle: {0}"
-
-#: handroll/command.py:50
-msgid "Incomplete."
-msgstr "Unvollständig."
-
-#: handroll/command.py:57
-msgid "A website generator for software artisans"
-msgstr "Eine Website-Generator für Software-Handwerker"
-
-#: handroll/command.py:59
-msgid "the path to your website"
-msgstr "der Weg, um Ihre Website"
-
-#: handroll/command.py:61
-msgid "an optional output directory to create or update if it already exists"
-msgstr "ein optionales Ausgabeverzeichnis zu erstellen oder zu aktualisieren, wenn es bereits vorhanden ist"
-
-#: handroll/command.py:65
-msgid ""
-"watch the site for changes and run a web server in the output directory"
-msgstr "beobachten Sie die Website für Änderungen und starten Sie einen Web-Server im Ausgabeverzeichnis"
-
-#: handroll/command.py:70
-msgid ""
-"make a new handroll site from a scaffold or list the available scaffolds"
-msgstr "einen neuen handroll Website von einem Gerüst oder die verfügbaren Gerüste"
-
-#: handroll/command.py:73
-msgid "use verbose messages"
-msgstr "verwenden ausführliche Meldungen"
-
-#: handroll/command.py:76
-msgid "show debug level messages"
-msgstr "zeigen Debug-Level-Nachrichten"
-
-#: handroll/command.py:78
-msgid "time the execution"
-msgstr "Zeit der Ausführung"
-
-#: handroll/command.py:81
-msgid "force composers to write output"
-msgstr "zwingen Komponisten, die Ausgabe zu schreiben"
-
-#: handroll/command.py:94
-msgid "Complete."
-msgstr "Abgeschlossen."
 
 #: handroll/configuration.py:33
 msgid "You are missing a domain setting in the site section."
@@ -101,21 +51,49 @@ msgstr "Überspringen {filename} mit übersprungenen Dateityp ..."
 msgid "Skipping special file {filename} ..."
 msgstr "Überspringen speziellen Datei {filename} ..."
 
+#: handroll/entry.py:28
+msgid "Incomplete."
+msgstr "Unvollständig."
+
+#: handroll/entry.py:49
+msgid "A website generator for software artisans"
+msgstr "Eine Website-Generator für Software-Handwerker"
+
+#: handroll/entry.py:52
+msgid "use verbose messages"
+msgstr "verwenden ausführliche Meldungen"
+
+#: handroll/entry.py:55
+msgid "show debug level messages"
+msgstr "zeigen Debug-Level-Nachrichten"
+
+#: handroll/entry.py:57
+msgid "time the execution"
+msgstr "Zeit der Ausführung"
+
+#: handroll/entry.py:60
+msgid "force composers to write output"
+msgstr "zwingen Komponisten, die Ausgabe zu schreiben"
+
+#: handroll/entry.py:62
+msgid "available commands"
+msgstr "zur Verfügung stehenden Befehle"
+
 #: handroll/scaffolder.py:10 handroll/tests/test_scaffolder.py:18
 msgid "A complete site to get you going"
 msgstr "Eine komplette Website, um Sie gehen"
 
-#: handroll/scaffolder.py:26
-msgid "Available scaffolds:\n"
-msgstr "Erhältlich Gerüste:\n"
-
-#: handroll/scaffolder.py:45
+#: handroll/scaffolder.py:18
 msgid "There is no {scaffold} scaffold."
 msgstr "Es gibt keine {scaffold} Gerüst."
 
-#: handroll/scaffolder.py:48
+#: handroll/scaffolder.py:21
 msgid "{site} already exists."
 msgstr "{site} ist bereits vorhanden."
+
+#: handroll/scaffolder.py:29
+msgid "Available scaffolds:\n"
+msgstr "Erhältlich Gerüste:\n"
 
 #: handroll/server.py:48
 msgid ""
@@ -129,14 +107,61 @@ msgid ""
 "Bye."
 msgstr "\nAuf Wiedersehen."
 
-#: handroll/site.py:36
+#: handroll/site.py:31
+msgid "Invalid site source: {0}"
+msgstr "Ungültige Website Quelle: {0}"
+
+#: handroll/site.py:45
 msgid "{path} is not a directory."
 msgstr "{path} ist kein Verzeichnis."
 
-#: handroll/site.py:59
+#: handroll/site.py:68
 msgid ""
 "A handroll site was not found in {current_directory} or any of its parents."
 msgstr "Eine handroll Seite nicht in {current_directory} oder einem seiner Eltern gefunden."
+
+#: handroll/commands/base.py:21
+msgid "Complete."
+msgstr "Abgeschlossen."
+
+#: handroll/commands/build.py:11
+msgid "Build a site in an output directory."
+msgstr "Erstellen Sie eine Website in einem Ausgabeverzeichnis."
+
+#: handroll/commands/build.py:12
+msgid "build a site"
+msgstr "Aufbau einer Website"
+
+#: handroll/commands/build.py:17 handroll/commands/scaffold.py:22
+#: handroll/commands/watch.py:20
+msgid "the path to your website"
+msgstr "der Weg, um Ihre Website"
+
+#: handroll/commands/build.py:18 handroll/commands/watch.py:21
+msgid "an optional output directory to create or update if it already exists"
+msgstr "ein optionales Ausgabeverzeichnis zu erstellen oder zu aktualisieren, wenn es bereits vorhanden ist"
+
+#: handroll/commands/scaffold.py:11
+msgid ""
+"Make a new handroll site from a scaffold or list the available scaffolds"
+msgstr "Machen Sie einen neuen Handroll Website von einem Gerüst oder sind die verfügbaren Gerüste"
+
+#: handroll/commands/scaffold.py:14
+msgid "make a new handroll site"
+msgstr "Machen Sie einen neuen Standort handroll "
+
+#: handroll/commands/scaffold.py:19
+msgid "the scaffold to generate"
+msgstr "das Gerüst zu erzeugen"
+
+#: handroll/commands/watch.py:12
+msgid ""
+"watch the site for changes and run a web server in the output directory"
+msgstr "beobachten Sie die Website für Änderungen und starten Sie einen Web-Server im Ausgabeverzeichnis"
+
+#: handroll/commands/watch.py:15
+msgid "watch a site and run a web server"
+msgstr "eine Website beobachten und einen Web-Server laufen"
 
 #: handroll/composers/__init__.py:101
 msgid "Skipping {filename} ... It is the same as {destination}."
