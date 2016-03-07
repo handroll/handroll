@@ -18,7 +18,7 @@ theme and content into one precise result.
 $ pip install handroll
 ...
 Successfully installed handroll
-$ handroll site
+$ handroll build site
 Complete.
 ```
 

@@ -14,7 +14,7 @@ to get a functioning website.
 
 .. code-block:: console
 
-    $ handroll -s default mysite
+    $ handroll scaffold default mysite
 
 Scaffolds can include any content.
 The default scaffold includes
@@ -27,4 +27,4 @@ To list the available scaffolds,
 
 .. code-block:: console
 
-    $ handroll -s
+    $ handroll scaffold

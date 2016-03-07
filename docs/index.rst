@@ -35,7 +35,7 @@ options.
 
 .. code-block:: console
 
-    $ handroll
+    $ handroll build
     Complete.
 
 Features
