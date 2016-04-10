@@ -14,7 +14,7 @@ from setuptools.command.build_py import build_py
 from setuptools.command.sdist import sdist
 import sys
 
-__version__ = '3.0'
+import handroll
 
 
 class BuildPy(build_py):
@@ -35,6 +35,7 @@ class Sdist(sdist):
         self.run_command('compile_catalog')
         # sdist is an old style class so super cannot be used.
         sdist.run(self)
+
 
 if __name__ == '__main__':
     with open('docs/releases.rst', 'r') as f:
@@ -58,7 +59,7 @@ if __name__ == '__main__':
 
     setup(
         name='handroll',
-        version=__version__,
+        version=handroll.__version__,
         url='http://handroll.github.io',
         license='BSD',
         author='Matt Layman',
