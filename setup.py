@@ -56,20 +56,6 @@ if __name__ == '__main__':
         'werkzeug',
     ]
 
-    # Add some developer tools.
-    if 'develop' in sys.argv:
-        install_requires.extend([
-            'Babel',
-            'coverage',
-            'flake8',
-            'nose',
-            'requests',
-            'Sphinx',
-            'tox',
-            'twine',
-            'wheel',
-        ])
-
     setup(
         name='handroll',
         version=__version__,

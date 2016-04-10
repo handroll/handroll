@@ -1,0 +1,9 @@
+Babel
+coverage
+flake8
+nose
+requests
+Sphinx
+tox
+twine
+wheel

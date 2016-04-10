@@ -71,6 +71,19 @@ Translators can join the fun by translating at the
 Additional translation details are in the[translation
 documentation](http://handroll.readthedocs.org/en/latest/i18n.html).
 
+Want to write some code?
+Running these commands should set up your environment
+with all the tools you need to contribute.
+
+```bash
+$ # Start from the root of a handroll clone.
+$ virtualenv venv                            # Create your virtual environment.
+$ source venv/bin/activate                   # Activate it.
+(venv)$ pip install -r requirements-dev.txt  # Install developer tools.
+(venv)$ pip install -e .                     # Install handroll in editable mode.
+(venv)$ nosetests                            # Run the test suite.
+```
+
 [pypishield]: https://img.shields.io/pypi/v/handroll.svg
 [license]: https://img.shields.io/pypi/l/handroll.svg
 [shield]: https://img.shields.io/pypi/dm/handroll.svg
