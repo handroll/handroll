@@ -20,5 +20,5 @@ env:
   - TOX_ENV=language_nl
   - TOX_ENV=language_pt_BR
 install:
-  - pip install tox
+  - pip install Babel tox
 script: tox -e $TOX_ENV
