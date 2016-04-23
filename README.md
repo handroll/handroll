@@ -54,7 +54,8 @@ If you want to share some ideas or find announcements,
 check out the [Google Group](https://groups.google.com/forum/#!forum/handroll).
 
 handroll is
-[BSD licensed](https://github.com/handroll/handroll/blob/master/LICENSE).
+[BSD licensed](https://github.com/handroll/handroll/blob/master/LICENSE)
+and tested on Linux and OS X.
 
 Get Involved
 ------------
