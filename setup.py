@@ -52,6 +52,7 @@ if __name__ == '__main__':
         'mock<1.1.0',  # 1.1 dropped support for Python 2.6.
         'Pygments',
         'PyYAML',
+        'smartypants',
         'textile',
         'watchdog',
         'werkzeug',
