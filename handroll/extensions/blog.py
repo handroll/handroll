@@ -7,6 +7,7 @@ try:
 except ImportError:  # pragma: no cover
     import configparser
 
+import smartypants
 from werkzeug.contrib.atom import AtomFeed, FeedEntry
 
 from handroll import logger
@@ -210,9 +211,10 @@ class ListPageBuilder(BlogBuilder):
         """Add the posts and generate a blog list."""
         li_html = []
         for post in posts:
+            title = smartypants.smartypants(post.title)
             li_html.append(
                 u'<li><a href="{route}">{title}</a></li>'.format(
-                    route=post.route, title=post.title))
+                    route=post.route, title=title))
         self._blog_list = u'\n'.join(li_html)
 
     def _generate_output(self):

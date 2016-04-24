@@ -431,3 +431,12 @@ class TestListPageBuilder(TestCase):
             '<li><a href="/a_source_file.html">A Blog Post</a></li>\n'
             '<li><a href="/a_source_file.html">Another Blog Post</a></li>',
             builder._blog_list)
+
+    def test_smartypants_conversion_on_title(self):
+        post = self.factory.make_blog_post()
+        post.title = 'An Emdash -- Post'
+        builder = ListPageBuilder(None)
+        builder.add([post])
+        self.assertEqual(
+            '<li><a href="/a_source_file.html">An Emdash &#8212; Post</a></li>',
+            builder._blog_list)
