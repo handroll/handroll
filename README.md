@@ -42,13 +42,13 @@ Everything else
 ---------------
 
 Check out
-[the feature list](http://handroll.readthedocs.org/en/latest/#features)
+[the feature list](http://handroll.readthedocs.io/en/latest/#features)
 to see if handroll meets your needs.
 If not, please tell us with a GitHub issue or on the mailing list.
 
 All the other stuff you may be interested in regarding `handroll`
 (e.g., writing a plugin for your favorite markup language)
-is found at [Read the Docs](http://handroll.readthedocs.org/en/latest/).
+is found at [Read the Docs](http://handroll.readthedocs.io/en/latest/).
 
 If you want to share some ideas or find announcements,
 check out the [Google Group](https://groups.google.com/forum/#!forum/handroll).
@@ -70,7 +70,7 @@ designer, please consider helping with a
 Translators can join the fun by translating at the
 [Transifex project](https://www.transifex.com/projects/p/handroll/).
 Additional translation details are in the[translation
-documentation](http://handroll.readthedocs.org/en/latest/i18n.html).
+documentation](http://handroll.readthedocs.io/en/latest/i18n.html).
 
 Want to write some code?
 Running these commands should set up your environment
