@@ -7,6 +7,8 @@ Version 3.1, In Development
 * Move version information into the ``handroll`` package
   so it is available at runtime.
 * Perform continuous integration testing on OS X.
+* Include ``posts`` in the blog feed list
+  to permit more complex list rendering.
 
 Version 3.0, Released March 7, 2016
 -----------------------------------

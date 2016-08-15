@@ -115,6 +115,11 @@ And here is some possible output.
     </body>
     </html>
 
+For more complex formatting,
+the actual blog posts are provided
+in the context
+as ``posts``.
+
 Blog post frontmatter
 ~~~~~~~~~~~~~~~~~~~~~
 

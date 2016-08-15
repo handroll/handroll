@@ -440,3 +440,18 @@ class TestListPageBuilder(TestCase):
         self.assertEqual(
             '<li><a href="/a_source_file.html">Emdash &#8212; Post</a></li>',
             builder._blog_list)
+
+    def test_holds_posts(self):
+        post = self.factory.make_blog_post()
+        posts = [post]
+        builder = ListPageBuilder(None)
+        builder.add(posts)
+        self.assertEqual(posts, builder._posts)
+
+    def test_posts_in_context(self):
+        mock_template = mock.Mock()
+        builder = ListPageBuilder(mock_template)
+        builder._posts = ['fake post']
+        builder._generate_output()
+        context = mock_template.render.call_args[0][0]
+        self.assertEqual(['fake post'], context['posts'])

@@ -206,19 +206,23 @@ class ListPageBuilder(BlogBuilder):
     def __init__(self, template):
         self._template = template
         self._blog_list = ''
+        self._posts = None
 
     def add(self, posts):
         """Add the posts and generate a blog list."""
         li_html = []
         for post in posts:
-            title = smartypants.smartypants(post.title)
+            # Put the smartified title back into the post.
+            post.title = title = smartypants.smartypants(post.title)
             li_html.append(
                 u'<li><a href="{route}">{title}</a></li>'.format(
                     route=post.route, title=title))
         self._blog_list = u'\n'.join(li_html)
+        self._posts = posts
 
     def _generate_output(self):
         context = {
             'blog_list': self._blog_list,
+            'posts': self._posts,
         }
         return self._template.render(context)
