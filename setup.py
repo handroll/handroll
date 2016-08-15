@@ -53,7 +53,7 @@ if __name__ == '__main__':
         'Pygments',
         'PyYAML',
         'smartypants',
-        'textile',
+        'textile==2.2.2',  # Newer versions don't work with Python 2.6.
         'watchdog',
         'werkzeug',
     ]
