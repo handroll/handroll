@@ -15,6 +15,10 @@ class TestCase(unittest.TestCase):
         """Backport for Python 2.6."""
         self.assertTrue(a in b)
 
+    def assertNotIn(self, a, b):
+        """Backport for Python 2.6."""
+        self.assertTrue(a not in b)
+
     def assertIsNone(self, x):
         """Backport for Python 2.6."""
         self.assertTrue(x is None)

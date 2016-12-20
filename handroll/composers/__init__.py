@@ -113,7 +113,10 @@ class CopyComposer(Composer):
 
     @property
     def output_extension(self):
-        raise AttributeError(
-            'The output extension of the CopyComposer is dependent '
-            'on the source file extension. This property should not '
-            'be invoked for this composer.')
+        """No-op for copied files.
+
+        The output extension of the CopyComposer is dependent on the source
+        file extension. To avoid breaking the interface, the most meaningful
+        'extension' to report is nothing. But let's not propagate None.
+        """
+        return ''

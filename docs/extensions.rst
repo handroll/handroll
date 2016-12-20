@@ -137,3 +137,18 @@ Required fields:
 Optional fields:
 
 * ``summary`` - A summary of the post.
+
+.. _sitemapextension:
+
+Sitemap extension
+-----------------
+
+The sitemap extension generates a sitemap
+of your site's HTML content.
+The generated file will be stored
+in the root
+of the output directory
+as ``sitemap.txt``.
+
+Enable the sitemap extension by adding ``with_sitemap = True`` to
+the ``site`` section of your configuration file.

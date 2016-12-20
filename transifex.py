@@ -54,6 +54,7 @@ def get_auth_from_conf(here):
 
     return username, password
 
+
 if __name__ == '__main__':
     here = os.path.abspath(os.path.dirname(__file__))
     username, password = get_auth_from_conf(here)
