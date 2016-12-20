@@ -42,6 +42,7 @@ def serve(site, director):
     outdir = director.outdir
     os.chdir(outdir)
 
+    socketserver.TCPServer.allow_reuse_address = True
     httpd = socketserver.TCPServer(('', PORT), SimpleHTTPRequestHandler)
 
     logger.info(
