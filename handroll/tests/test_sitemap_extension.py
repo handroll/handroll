@@ -39,7 +39,8 @@ class TestSitemapExtention(TestCase):
         extension = self._make_one(director)
         path = os.path.join(director.site.path, 'path/to/sample.md')
         extension.on_frontmatter_loaded(path, {})
-        self.assertIn('http://www.example.com/path/to/sample.html', extension.urls)
+        self.assertIn(
+            'http://www.example.com/path/to/sample.html', extension.urls)
 
     def test_ignores_non_html_url(self):
         director = self.factory.make_director()
