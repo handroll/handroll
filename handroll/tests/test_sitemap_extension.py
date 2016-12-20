@@ -37,10 +37,12 @@ class TestSitemapExtention(TestCase):
     def test_records_html_url(self):
         director = self.factory.make_director()
         extension = self._make_one(director)
+        extension._dirty = False
         path = os.path.join(director.site.path, 'path/to/sample.md')
         extension.on_frontmatter_loaded(path, {})
         self.assertIn(
             'http://www.example.com/path/to/sample.html', extension.urls)
+        self.assertTrue(extension._dirty)
 
     def test_ignores_non_html_url(self):
         director = self.factory.make_director()
@@ -63,3 +65,22 @@ class TestSitemapExtention(TestCase):
             'http://www.example.com/path/to/a.html\n'
             'http://www.example.com/path/to/b.html\n',
             content)
+        self.assertFalse(extension._dirty)
+
+    def test_not_dirty_when_url_already_recorded(self):
+        director = self.factory.make_director()
+        extension = self._make_one(director)
+        path_a = os.path.join(director.site.path, 'path/to/a.md')
+        extension.on_frontmatter_loaded(path_a, {})
+        extension._dirty = False
+        extension.on_frontmatter_loaded(path_a, {})
+        self.assertFalse(extension._dirty)
+
+    def test_no_sitemap_when_not_dirty(self):
+        director = self.factory.make_director()
+        os.mkdir(director.outdir)
+        extension = self._make_one(director)
+        extension._dirty = False
+        extension.on_post_composition(director)
+        self.assertFalse(
+            os.path.exists(os.path.join(director.outdir, 'sitemap.txt')))
