@@ -4,6 +4,7 @@ Releases
 Version 3.1, In Development
 ---------------------------
 
+* Add ``SitemapExtension`` to generate sitemaps.
 * Move version information into the ``handroll`` package
   so it is available at runtime.
 * Perform continuous integration testing on OS X.
