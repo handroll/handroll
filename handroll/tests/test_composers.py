@@ -170,7 +170,7 @@ class TestCopyComposer(TestCase):
         never rely on this composer's output extension.
         """
         composer = self._make_one()
-        self.assertRaises(AttributeError, lambda: composer.output_extension)
+        self.assertEqual('', composer.output_extension)
 
     @mock.patch('handroll.composers.shutil')
     def test_copies_when_forced(self, shutil):

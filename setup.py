@@ -80,6 +80,7 @@ if __name__ == '__main__':
             ],
             'handroll.extensions': [
                 'blog = handroll.extensions.blog:BlogExtension',
+                'sitemap = handroll.extensions.sitemap:SitemapExtension',
             ]
         },
         include_package_data=True,
