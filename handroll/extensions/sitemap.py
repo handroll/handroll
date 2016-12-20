@@ -23,8 +23,8 @@ class SitemapExtension(Extension):
         self._dirty = True
 
     def on_pre_composition(self, director):
-        self._resolver = director.resolver
         self._composers = director.composers
+        self._resolver = director.resolver
 
     def on_frontmatter_loaded(self, source_file, frontmatter):
         composer = self._composers.select_composer_for(source_file)
