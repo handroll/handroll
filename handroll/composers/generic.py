@@ -1,35 +1,26 @@
 # Copyright (c) 2016, Matt Layman
 
-import io
 import os
-try:
-    from html import escape
-except ImportError:
-    from cgi import escape
 
-import yaml
-from yaml.scanner import ScannerError
-
-from handroll import logger, signals
+from handroll import logger
 from handroll.composers import Composer
-from handroll.exceptions import AbortError
+from handroll.composers.mixins import FrontmatterComposerMixin
 from handroll.i18n import _
 
 
-class GenericHTMLComposer(Composer):
+class GenericHTMLComposer(FrontmatterComposerMixin, Composer):
     """A template class that performs basic handling on a source file
 
     The title will be extracted from the first line and the remaining source
     lines will be passed to a template method for further processing.
     """
     output_extension = '.html'
-    document_marker = '---' + os.linesep
 
     def compose(self, catalog, source_file, out_dir):
         """Compose an HTML document by generating HTML from the source
         file, merging it with a template, and write the result to output
         directory."""
-        data, source = self._get_data(source_file)
+        data, source = self.get_data(source_file)
 
         template = self.select_template(catalog, data)
 
@@ -58,54 +49,6 @@ class GenericHTMLComposer(Composer):
     def _generate_content(self, source):
         """Generate the content from the provided source data."""
         raise NotImplementedError
-
-    def _get_data(self, source_file):
-        """Get data and source from the source file to pass to the template."""
-        data = {}
-        with io.open(source_file, 'r', encoding='utf-8') as f:
-            # The first line determines whether to look for front matter.
-            first = f.readline().strip()
-            source = f.read()
-
-            if self._has_frontmatter(first):
-                data, source = self._split_content_with_frontmatter(
-                    first, source, source_file)
-                signals.frontmatter_loaded.send(source_file, frontmatter=data)
-            else:
-                # This is a plain file so pull title from the first line.
-                data['title'] = escape(first)
-
-        return data, source
-
-    def _has_frontmatter(self, first_line):
-        """Check if the document has any front matter. handroll only supports
-        front matter from YAML documents."""
-        return first_line.startswith(('%YAML', '---'))
-
-    def _split_content_with_frontmatter(self, first, source, source_file):
-        """Separate frontmatter from source material."""
-        max_splits = 1
-        # With a directive present, there must be two document markers.
-        if first.startswith('%YAML'):
-            max_splits = 2
-        content = source.split(self.document_marker, max_splits)
-
-        try:
-            data = yaml.load(content[max_splits - 1])
-        except ScannerError as ex:
-            raise AbortError(_(
-                'There is invalid YAML in the frontmatter: {details}').format(
-                    details=str(ex)))
-        try:
-            source = content[max_splits]
-        except IndexError:
-            raise AbortError(_('A YAML marker was missing in {source}').format(
-                source=source_file))
-
-        if 'title' in data:
-            data['title'] = escape(data['title'])
-
-        return data, source
 
     def _needs_update(self, template, source_file, output_file):
         """Check if the output file needs to be updated by looking at the
