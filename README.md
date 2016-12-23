@@ -3,7 +3,6 @@ handroll
 
 [![PyPI version][pypishield]](https://pypi.python.org/pypi/handroll)
 [![BSD license][license]](https://raw.githubusercontent.com/handroll/handroll/master/LICENSE)
-[![Downloads][shield]](https://pypi.python.org/pypi/handroll)
 [![Build Status][travis]](https://travis-ci.org/handroll/handroll)
 [![Coverage Status][coverage]](https://codecov.io/github/handroll/handroll)
 
@@ -87,6 +86,5 @@ $ source venv/bin/activate                   # Activate it.
 
 [pypishield]: https://img.shields.io/pypi/v/handroll.svg
 [license]: https://img.shields.io/pypi/l/handroll.svg
-[shield]: https://img.shields.io/pypi/dm/handroll.svg
 [travis]: https://travis-ci.org/handroll/handroll.png?branch=master
 [coverage]: https://img.shields.io/codecov/c/github/handroll/handroll.svg
