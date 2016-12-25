@@ -28,7 +28,7 @@ class SitemapExtension(Extension):
 
     def on_frontmatter_loaded(self, source_file, frontmatter):
         composer = self._composers.select_composer_for(source_file)
-        if composer.output_extension == '.html':
+        if composer.get_output_extension(source_file) == '.html':
             url = self._resolver.as_url(source_file)
             if url not in self.urls:
                 self.urls.add(url)

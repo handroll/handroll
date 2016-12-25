@@ -24,4 +24,4 @@ class FileResolver(object):
         """"Convert the path to a URL path by swapping the extension."""
         composer = self.composers.select_composer_for(path)
         root, ext = os.path.splitext(path)
-        return root + composer.output_extension
+        return root + composer.get_output_extension(path)

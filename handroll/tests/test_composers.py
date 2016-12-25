@@ -32,10 +32,10 @@ class TestComposer(TestCase):
         self.assertRaises(
             NotImplementedError, composer.compose, None, None, None)
 
-    def test_output_extension_not_implemented(self):
+    def test_get_output_extension_not_implemented(self):
         composer = self._make_one()
         self.assertRaises(
-            NotImplementedError, lambda: composer.output_extension)
+            NotImplementedError, composer.get_output_extension, 'file.txt')
 
     def test_has_config(self):
         config = self.factory.make_configuration()
@@ -58,6 +58,11 @@ class TestComposers(TestCase):
         config = self.factory.make_configuration()
         composers = Composers(config)
         self.assertEqual(config, composers._config)
+
+    def test_get_output_extension(self):
+        composers = self._make_one()
+        extension = composers.get_output_extension('sample.md')
+        self.assertEqual('.html', extension)
 
 
 class TestAtomComposer(TestCase):
@@ -111,7 +116,7 @@ class TestAtomComposer(TestCase):
 
     def test_output_extension(self):
         composer = self._make_one()
-        self.assertEqual('.xml', composer.output_extension)
+        self.assertEqual('.xml', composer.get_output_extension('source.atom'))
 
     @mock.patch('handroll.composers.atom.json')
     def test_forces_update(self, json):
@@ -165,13 +170,9 @@ class TestCopyComposer(TestCase):
         self.assertTrue(shutil.copy.called)
 
     def test_output_extension(self):
-        """The copy composer takes the extension of the source file.
-
-        This composer is the fallback composer and resolution should
-        never rely on this composer's output extension.
-        """
+        """The copy composer takes the extension of the source file."""
         composer = self._make_one()
-        self.assertEqual('', composer.output_extension)
+        self.assertEqual('.png', composer.get_output_extension('photo.png'))
 
     @mock.patch('handroll.composers.shutil')
     def test_copies_when_forced(self, shutil):
@@ -243,7 +244,7 @@ class TestGenericHTMLComposer(TestCase):
 
     def test_output_extension(self):
         composer = self._make_one()
-        self.assertEqual('.html', composer.output_extension)
+        self.assertEqual('.html', composer.get_output_extension('source.rst'))
 
     def test_forces_update(self):
         site = tempfile.mkdtemp()
@@ -361,7 +362,7 @@ class TestSassComposer(TestCase):
     def test_output_extension(self):
         fake_bin = self._make_fake_sass_bin()
         composer = SassComposer(fake_bin)
-        self.assertEqual('.css', composer.output_extension)
+        self.assertEqual('.css', composer.get_output_extension('source.sass'))
 
 
 class TestTextileComposer(TestCase):

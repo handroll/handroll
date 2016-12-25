@@ -38,6 +38,9 @@ class GenericHTMLComposer(FrontmatterComposerMixin, Composer):
             logger.debug(_('Skipping {filename} ... It is up to date.').format(
                 filename=filename))
 
+    def get_output_extension(self, filename):
+        return self.output_extension
+
     def select_template(self, catalog, data):
         """Select a template from the catalog based on the source file's data.
         """

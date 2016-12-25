@@ -48,6 +48,9 @@ class SassComposer(Composer):
             raise AbortError(_('Sass failed to generate CSS:\n{0}').format(
                 err))
 
+    def get_output_extension(self, filename):
+        return self.output_extension
+
     def build_command(self, source_file, output_file):
         command = [
             self.sass, '--style', 'compressed', source_file, output_file]
