@@ -475,8 +475,22 @@ class TestJinja2Composer(TestCase):
         composer.compose(None, f.name, composer._config.outdir)
         content = open(output_file, 'r').read()
         self.assertEqual(
-            'title: A Fake Title\ndomain: http://www.example.com',
+            'title: A Fake Title\ndomain: http://www.example.com\n',
             content)
+
+    def test_composes_no_frontmatter(self):
+        source = inspect.cleandoc("""First row
+        domain: {{ config.domain }}
+        """)
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.txt.j2') as f:
+            f.write(source.encode('utf-8'))
+        composer = self._make_one()
+        output_file = os.path.join(
+            composer._config.outdir, os.path.basename(f.name.rstrip('.j2')))
+        composer.compose(None, f.name, composer._config.outdir)
+        content = open(output_file, 'r').read()
+        self.assertEqual(
+            'First row\ndomain: http://www.example.com\n', content)
 
     def test_needs_update(self):
         site = tempfile.mkdtemp()

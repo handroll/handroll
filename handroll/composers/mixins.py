@@ -18,6 +18,7 @@ from handroll.i18n import _
 class FrontmatterComposerMixin(object):
     """Mixin the ability to extract frontmatter from a source file."""
     document_marker = '---' + os.linesep
+    guess_title = True
 
     def get_data(self, source_file):
         """Get data and source from the source file."""
@@ -31,9 +32,12 @@ class FrontmatterComposerMixin(object):
                 data, source = self._split_content_with_frontmatter(
                     first, source, source_file)
                 signals.frontmatter_loaded.send(source_file, frontmatter=data)
-            else:
+            elif self.guess_title:
                 # This is a plain file so pull title from the first line.
                 data['title'] = escape(first)
+            else:
+                f.seek(0)
+                source = f.read()
 
         return data, source
 

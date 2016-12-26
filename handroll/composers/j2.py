@@ -20,6 +20,7 @@ class Jinja2Composer(FrontmatterComposerMixin, Composer):
     The output file uses the same name as the source file with
     the ``.j2`` extension removed.
     """
+    guess_title = False
 
     def compose(self, catalog, source_file, out_dir):
         filename = os.path.basename(source_file.rstrip('.j2'))
@@ -32,6 +33,8 @@ class Jinja2Composer(FrontmatterComposerMixin, Composer):
             template = jinja2.Template(source)
             with open(output_file, 'wb') as out:
                 out.write(template.render(data).encode('utf-8'))
+                # Frontmatter loading seems to munch the final line separator.
+                out.write(os.linesep)
         else:
             logger.debug(_('Skipping {filename} ... It is up to date.').format(
                 filename=filename))
