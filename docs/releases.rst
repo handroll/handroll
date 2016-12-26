@@ -1,8 +1,8 @@
 Releases
 ========
 
-Version 3.1, In Development
----------------------------
+Version 3.1, Released December 26, 2016
+---------------------------------------
 
 * Processs Jinja 2 templates for any file with a ``.j2`` extension
   with the built-in ``Jinja2Composer``.
