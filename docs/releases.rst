@@ -4,6 +4,8 @@ Releases
 Version 3.1, In Development
 ---------------------------
 
+* Processs Jinja 2 templates for any file with a ``.j2`` extension
+  with the built-in ``Jinja2Composer``.
 * Add ``SitemapExtension`` to generate sitemaps.
 * Move version information into the ``handroll`` package
   so it is available at runtime.

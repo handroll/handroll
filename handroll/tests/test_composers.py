@@ -13,6 +13,7 @@ from handroll.composers import CopyComposer
 from handroll.composers.mixins import FrontmatterComposerMixin
 from handroll.composers.atom import AtomComposer
 from handroll.composers.generic import GenericHTMLComposer
+from handroll.composers.j2 import Jinja2Composer
 from handroll.composers.md import MarkdownComposer
 from handroll.composers.rst import ReStructuredTextComposer
 from handroll.composers.sass import SassComposer
@@ -444,3 +445,74 @@ class TestFrontmatterComposerMixin(TestCase):
             f.write(source.encode('utf-8'))
         mixin = FrontmatterComposerMixin()
         self.assertRaises(AbortError, mixin.get_data, f.name)
+
+
+class TestJinja2Composer(TestCase):
+
+    def _make_one(self):
+        config = self.factory.make_configuration()
+        config.outdir = tempfile.mkdtemp()
+        return Jinja2Composer(config)
+
+    def test_get_output_extension(self):
+        composer = self._make_one()
+        extension = composer.get_output_extension('source.xyz.j2')
+        self.assertEqual('.xyz', extension)
+
+    def test_composes(self):
+        source = inspect.cleandoc("""%YAML 1.1
+        ---
+        title: A Fake Title
+        ---
+        title: {{ title }}
+        domain: {{ config.domain }}
+        """)
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.txt.j2') as f:
+            f.write(source.encode('utf-8'))
+        composer = self._make_one()
+        output_file = os.path.join(
+            composer._config.outdir, os.path.basename(f.name.rstrip('.j2')))
+        composer.compose(None, f.name, composer._config.outdir)
+        content = open(output_file, 'r').read()
+        self.assertEqual(
+            'title: A Fake Title\ndomain: http://www.example.com',
+            content)
+
+    def test_needs_update(self):
+        site = tempfile.mkdtemp()
+        output_file = os.path.join(site, 'output.md')
+        open(output_file, 'w').close()
+        future = os.path.getmtime(output_file) + 1
+        source_file = os.path.join(site, 'test.md')
+        open(source_file, 'w').close()
+        os.utime(source_file, (future, future))
+
+        composer = self._make_one()
+        self.assertTrue(composer._needs_update(source_file, output_file))
+
+        past = future - 10
+        os.utime(source_file, (past, past))
+        self.assertFalse(composer._needs_update(source_file, output_file))
+
+    def test_forces_update(self):
+        site = tempfile.mkdtemp()
+        output_file = os.path.join(site, 'output.md')
+        open(output_file, 'w').close()
+        past = os.path.getmtime(output_file) - 10
+        source_file = os.path.join(site, 'test.md')
+        open(source_file, 'w').close()
+        os.utime(source_file, (past, past))
+        composer = self._make_one()
+        composer._config.force = True
+        self.assertTrue(composer._needs_update(source_file, output_file))
+
+    @mock.patch('handroll.composers.j2.jinja2.Template.render')
+    def test_skips_up_to_date(self, render):
+        site = tempfile.mkdtemp()
+        source_file = os.path.join(site, 'source.txt.j2')
+        open(source_file, 'w').close()
+        output_file = os.path.join(site, 'source.txt')
+        open(output_file, 'w').close()
+        composer = self._make_one()
+        composer.compose(None, source_file, site)
+        self.assertFalse(render.called)

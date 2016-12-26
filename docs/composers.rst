@@ -47,6 +47,8 @@ Built-in composers
 
 .. autoclass:: handroll.composers.atom.AtomComposer
 
+.. autoclass:: handroll.composers.j2.Jinja2Composer
+
 .. autoclass:: handroll.composers.CopyComposer
 
 .. autoclass:: handroll.composers.md.MarkdownComposer

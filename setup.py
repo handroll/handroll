@@ -72,6 +72,7 @@ if __name__ == '__main__':
             'console_scripts': ['handroll = handroll.entry:main'],
             'handroll.composers': [
                 '.atom = handroll.composers.atom:AtomComposer',
+                '.j2 = handroll.composers.j2:Jinja2Composer',
                 '.md = handroll.composers.md:MarkdownComposer',
                 '.rst = handroll.composers.rst:ReStructuredTextComposer',
                 '.sass = handroll.composers.sass:SassComposer',
