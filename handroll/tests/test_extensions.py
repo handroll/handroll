@@ -48,9 +48,8 @@ class TestExtension(TestCase):
             handle_frontmatter_loaded = True
         extension = FrontmatterLoader(None)
         self.assertTrue(extension.handle_frontmatter_loaded)
-        self.assertRaises(
-            NotImplementedError, signals.frontmatter_loaded.send,
-            'a_source_file', frontmatter={})
+        with self.assertRaises(NotImplementedError):
+            signals.frontmatter_loaded.send('a_source_file', frontmatter={})
         signals.frontmatter_loaded.receivers.clear()
 
     @mock.patch('handroll.extensions.base.signals.post_composition')
@@ -64,8 +63,8 @@ class TestExtension(TestCase):
         director = mock.Mock()
         extension = PostComposer(None)
         self.assertTrue(extension.handle_post_composition)
-        self.assertRaises(
-            NotImplementedError, signals.post_composition.send, director)
+        with self.assertRaises(NotImplementedError):
+            signals.post_composition.send(director)
         signals.post_composition.receivers.clear()
 
     @mock.patch('handroll.extensions.base.signals.pre_composition')
@@ -79,6 +78,6 @@ class TestExtension(TestCase):
         director = mock.Mock()
         extension = PreComposer(None)
         self.assertTrue(extension.handle_pre_composition)
-        self.assertRaises(
-            NotImplementedError, signals.pre_composition.send, director)
+        with self.assertRaises(NotImplementedError):
+            signals.pre_composition.send(director)
         signals.pre_composition.receivers.clear()

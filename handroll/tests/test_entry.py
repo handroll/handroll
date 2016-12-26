@@ -114,13 +114,15 @@ class TestMain(TestCase):
     def test_verbose_sets_logging(self):
         logger.setLevel(logging.CRITICAL)
         argv = self._make_argv_with('-v')
-        self.assertRaises(SystemExit, entry.main, argv)
+        with self.assertRaises(SystemExit):
+            entry.main(argv)
         self.assertEqual(logging.INFO, logger.getEffectiveLevel())
 
     def test_debug_sets_logging(self):
         logger.setLevel(logging.CRITICAL)
         argv = self._make_argv_with('-d')
-        self.assertRaises(SystemExit, entry.main, argv)
+        with self.assertRaises(SystemExit):
+            entry.main(argv)
         self.assertEqual(logging.DEBUG, logger.getEffectiveLevel())
 
     def test_site_directory_is_file(self):
@@ -128,7 +130,8 @@ class TestMain(TestCase):
         file_site = os.path.join(site, 'fake')
         argv = self._make_argv_with()
         argv.append(file_site)
-        self.assertRaises(SystemExit, entry.main, argv)
+        with self.assertRaises(SystemExit):
+            entry.main(argv)
 
     @mock.patch('handroll.commands.build.finish')
     def test_complete_site_generation(self, finish):
@@ -147,18 +150,3 @@ class TestMain(TestCase):
         entry.main(argv)
 
         self.assertTrue(serve.called)
-
-    # @mock.patch('handroll.entry.scaffolder')
-    # def test_makes_from_scaffolder(self, mock_scaffolder):
-    def test_makes_from_scaffolder(self):
-        # FIXME: I promise I'm coming right back to this.
-        return
-        self.arguments.extend(['-s', 'default', 'site'])
-
-        try:
-            entry.main(self.arguments)
-            self.fail()
-        except SystemExit:
-            pass
-            # mock_scaffolder.make.assert_called_once_with(
-            #     'default', 'site')

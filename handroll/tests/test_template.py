@@ -28,7 +28,8 @@ class TestJinjaTemplateBuilder(unittest.TestCase):
     def test_aborts_with_bad_template(self):
         with open(self.base_file, 'w') as f:
             f.write('{%')  # No closing template marker
-        self.assertRaises(AbortError, self.builder.build, self.base_file)
+        with self.assertRaises(AbortError):
+            self.builder.build(self.base_file)
 
     def test_last_modified_with_newer_parent(self):
         template_file = os.path.join(self.templates, 'derived.j2')
@@ -40,8 +41,8 @@ class TestJinjaTemplateBuilder(unittest.TestCase):
         os.utime(self.base_file, (future, future))
 
         template = self.builder.build(template_file)
-        self.assertEqual(os.path.getmtime(self.base_file),
-                         template.last_modified)
+        self.assertEqual(
+            os.path.getmtime(self.base_file), template.last_modified)
 
     def test_skips_nonetype_parent(self):
         with open(self.base_file, 'w') as f:
@@ -83,16 +84,14 @@ class TestTemplateCatalog(unittest.TestCase):
     def test_render_not_implemented(self):
         from handroll.template.catalog import Template
         template = Template()
-        self.assertRaises(NotImplementedError, template.render, {})
+        with self.assertRaises(NotImplementedError):
+            template.render({})
 
     def test_last_modified_not_implemented(self):
         from handroll.template.catalog import Template
         template = Template()
-        try:
+        with self.assertRaises(NotImplementedError):
             template.last_modified
-            self.fail('last_modified did not raise exception.')
-        except NotImplementedError:
-            pass
 
     def test_renders_default(self):
         """Test rendering a default template."""
@@ -107,14 +106,13 @@ class TestTemplateCatalog(unittest.TestCase):
 
     def test_aborts_missing_default(self):
         catalog = self._make_one()
-
-        def get_default():  # Function hack to test property exception
+        with self.assertRaises(AbortError):
             catalog.default
-        self.assertRaises(AbortError, get_default)
 
     def test_fails_to_get_template(self):
         catalog = self._make_one()
-        self.assertRaises(AbortError, catalog.get_template, 'sad.html')
+        with self.assertRaises(AbortError):
+            catalog.get_template('sad.html')
 
     def test_gets_template(self):
         catalog = self._make_one_with_template('happy.html')
@@ -129,7 +127,8 @@ class TestTemplateCatalog(unittest.TestCase):
 
     def test_fails_on_bad_template_type(self):
         catalog = self._make_one_with_template('confused.bogus')
-        self.assertRaises(AbortError, catalog.get_template, 'confused.bogus')
+        with self.assertRaises(AbortError):
+            catalog.get_template('confused.bogus')
 
     def test_is_default_template(self):
         catalog = self._make_one()

@@ -44,16 +44,15 @@ if __name__ == '__main__':
     long_description = __doc__ + '\n\n' + releases
 
     install_requires = [
-        'argparse',  # For Python 2.6 support
         'blinker',
         'docutils',
         'Jinja2',
-        'Markdown==2.4',  # 2.5 dropped support for Python 2.6.
-        'mock<1.1.0',  # 1.1 dropped support for Python 2.6.
+        'Markdown',
+        'mock',
         'Pygments',
         'PyYAML',
         'smartypants',
-        'textile==2.2.2',  # Newer versions don't work with Python 2.6.
+        'textile',
         'watchdog',
         'werkzeug',
     ]
@@ -96,7 +95,6 @@ if __name__ == '__main__':
             'Intended Audience :: Science/Research',
             'License :: OSI Approved :: BSD License',
             'Operating System :: OS Independent',
-            'Programming Language :: Python :: 2.6',
             'Programming Language :: Python :: 2.7',
             'Programming Language :: Python :: 3.3',
             'Programming Language :: Python :: 3.4',

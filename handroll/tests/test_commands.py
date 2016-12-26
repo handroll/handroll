@@ -37,14 +37,12 @@ class TestCommand(TestCase):
     def test_run_not_implemented(self):
         args = mock.Mock()
         command = Command()
-        self.assertRaises(NotImplementedError, command.run, args)
+        with self.assertRaises(NotImplementedError):
+            command.run(args)
 
     def test_finish(self):
-        try:
+        with self.assertRaises(SystemExit):
             finish()
-            self.fail()
-        except SystemExit:
-            pass
 
 
 class TestBuildCommand(TestCase):

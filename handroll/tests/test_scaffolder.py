@@ -29,19 +29,13 @@ class TestScaffolder(TestCase):
         self.assertTrue(display_scaffold.called)
 
     def test_unknown_scaffold_aborts(self):
-        try:
+        with self.assertRaises(AbortError):
             scaffolder.make('fake', 'dontcare')
-            self.fail()
-        except AbortError:
-            pass
 
     def test_existing_site_directory_aborts(self):
         site = tempfile.mkdtemp()
-        try:
+        with self.assertRaises(AbortError):
             scaffolder.make('default', site)
-            self.fail()
-        except AbortError:
-            pass
 
     def test_makes_site_root(self):
         parent = tempfile.mkdtemp()

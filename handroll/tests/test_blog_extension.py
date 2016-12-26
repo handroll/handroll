@@ -98,11 +98,9 @@ class TestBlogExtension(TestCase):
         director = self.factory.make_director()
         self._add_blog_section(director.config.parser, exclude='atom_title')
         extension = BlogExtension(director.config)
-        try:
+        with self.assertRaises(AbortError) as error:
             extension.on_pre_composition(director)
-            self.fail()
-        except AbortError as ae:
-            self.assertTrue('atom_title' in str(ae))
+        self.assertTrue('atom_title' in str(error.exception))
 
     def test_has_atom_title_in_metadata(self):
         director = self.factory.make_director()
@@ -115,11 +113,9 @@ class TestBlogExtension(TestCase):
         director = self.factory.make_director()
         self._add_blog_section(director.config.parser, exclude='atom_author')
         extension = BlogExtension(director.config)
-        try:
+        with self.assertRaises(AbortError) as error:
             extension.on_pre_composition(director)
-            self.fail()
-        except AbortError as ae:
-            self.assertTrue('atom_author' in str(ae))
+        self.assertTrue('atom_author' in str(error.exception))
 
     def test_has_atom_author_in_metadata(self):
         director = self.factory.make_director()
@@ -132,11 +128,9 @@ class TestBlogExtension(TestCase):
         director = self.factory.make_director()
         self._add_blog_section(director.config.parser, exclude='atom_id')
         extension = BlogExtension(director.config)
-        try:
+        with self.assertRaises(AbortError) as error:
             extension.on_pre_composition(director)
-            self.fail()
-        except AbortError as ae:
-            self.assertTrue('atom_id' in str(ae))
+        self.assertTrue('atom_id' in str(error.exception))
 
     def test_has_atom_id_in_metadata(self):
         director = self.factory.make_director()
@@ -150,11 +144,9 @@ class TestBlogExtension(TestCase):
         director = self.factory.make_director()
         self._add_blog_section(director.config.parser, exclude='atom_url')
         extension = BlogExtension(director.config)
-        try:
+        with self.assertRaises(AbortError) as error:
             extension.on_pre_composition(director)
-            self.fail()
-        except AbortError as ae:
-            self.assertTrue('atom_url' in str(ae))
+        self.assertTrue('atom_url' in str(error.exception))
 
     def test_has_atom_url_in_metadata(self):
         director = self.factory.make_director()
@@ -169,11 +161,9 @@ class TestBlogExtension(TestCase):
         director = self.factory.make_director()
         self._add_blog_section(director.config.parser, exclude='atom_output')
         extension = BlogExtension(director.config)
-        try:
+        with self.assertRaises(AbortError) as error:
             extension.on_pre_composition(director)
-            self.fail()
-        except AbortError as ae:
-            self.assertTrue('atom_output' in str(ae))
+        self.assertTrue('atom_output' in str(error.exception))
 
     def test_has_atom_output_in_metadata(self):
         director = self.factory.make_director()
@@ -258,11 +248,9 @@ class TestBlogExtension(TestCase):
         director = self.factory.make_director()
         self._add_blog_section(director.config.parser, exclude='list_output')
         extension = BlogExtension(director.config)
-        try:
+        with self.assertRaises(AbortError) as error:
             extension.on_pre_composition(director)
-            self.fail()
-        except AbortError as ae:
-            self.assertTrue('list_output' in str(ae))
+        self.assertTrue('list_output' in str(error.exception))
 
     @mock.patch.object(ListPageBuilder, 'write_to')
     def test_builds_list_page(self, write_to):
@@ -323,42 +311,33 @@ class TestBlogExtension(TestCase):
         extension = self._make_preprocessed_one()
         frontmatter = self._make_blog_post_frontmatter()
         del frontmatter['date']
-        try:
+        with self.assertRaises(AbortError) as error:
             extension.on_frontmatter_loaded('thundercats.md', frontmatter)
-            self.fail()
-        except AbortError as ae:
-            self.assertTrue('date' in str(ae))
+        self.assertTrue('date' in str(error.exception))
 
     def test_post_requires_title(self):
         extension = self._make_preprocessed_one()
         frontmatter = self._make_blog_post_frontmatter()
         del frontmatter['title']
-        try:
+        with self.assertRaises(AbortError) as error:
             extension.on_frontmatter_loaded('thundercats.md', frontmatter)
-            self.fail()
-        except AbortError as ae:
-            self.assertTrue('title' in str(ae))
+        self.assertTrue('title' in str(error.exception))
 
     def test_post_requires_error_includes_post_filename(self):
         extension = self._make_preprocessed_one()
         frontmatter = self._make_blog_post_frontmatter()
         del frontmatter['title']
-        try:
+        with self.assertRaises(AbortError) as error:
             extension.on_frontmatter_loaded('thundercats.md', frontmatter)
-            self.fail()
-        except AbortError as ae:
-            self.assertTrue('thundercats.md' in str(ae))
+        self.assertTrue('thundercats.md' in str(error.exception))
 
 
 class TestBlogBuilder(TestCase):
 
     def test_generate_output_not_implemented(self):
         builder = BlogBuilder()
-        try:
+        with self.assertRaises(NotImplementedError):
             builder.write_to('doesnotmatter.html')
-            self.fail()
-        except NotImplementedError:
-            pass
 
 
 class TestFeedBuilder(TestCase):

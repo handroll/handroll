@@ -70,12 +70,13 @@ class TestConfiguration(unittest.TestCase):
         args = FakeArgs()
         with tempfile.NamedTemporaryFile(delete=False) as f:
             f.write(conf_file.encode('utf-8'))
-
-        self.assertRaises(AbortError, configuration.build_config, f.name, args)
+        with self.assertRaises(AbortError):
+            configuration.build_config(f.name, args)
 
     def test_no_domain_aborts(self):
         config = configuration.Configuration()
-        self.assertRaises(AbortError, lambda: config.domain)
+        with self.assertRaises(AbortError):
+            config.domain
 
     def test_loads_domain_from_site(self):
         conf_file = inspect.cleandoc(

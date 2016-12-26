@@ -30,13 +30,13 @@ class TestComposer(TestCase):
 
     def test_compose_not_implemented(self):
         composer = self._make_one()
-        self.assertRaises(
-            NotImplementedError, composer.compose, None, None, None)
+        with self.assertRaises(NotImplementedError):
+            composer.compose(None, None, None)
 
     def test_get_output_extension_not_implemented(self):
         composer = self._make_one()
-        self.assertRaises(
-            NotImplementedError, composer.get_output_extension, 'file.txt')
+        with self.assertRaises(NotImplementedError):
+            composer.get_output_extension('file.txt')
 
     def test_has_config(self):
         config = self.factory.make_configuration()
@@ -105,8 +105,8 @@ class TestAtomComposer(TestCase):
         with open(self.source_file, 'w') as f:
             f.write(source)
         composer = self._make_one()
-        self.assertRaises(
-            AbortError, composer.compose, None, self.source_file, self.outdir)
+        with self.assertRaises(AbortError):
+            composer.compose(None, self.source_file, self.outdir)
 
     @mock.patch('handroll.composers.atom.json')
     def test_skips_up_to_date(self, json):
@@ -202,9 +202,8 @@ class TestGenericHTMLComposer(TestCase):
         open(source_file, 'w').close()
         outdir = ''
         composer = self._make_one()
-        self.assertRaises(
-            NotImplementedError,
-            composer.compose, catalog, source_file, outdir)
+        with self.assertRaises(NotImplementedError):
+            composer.compose(catalog, source_file, outdir)
 
     def test_selects_default_template(self):
         catalog = mock.MagicMock()
@@ -331,7 +330,8 @@ class TestSassComposer(TestCase):
         """Test that handroll aborts if ``sass`` is not installed."""
         # The fake bin directory has no sass executable.
         fake_bin = tempfile.mkdtemp()
-        self.assertRaises(AbortError, SassComposer, fake_bin)
+        with self.assertRaises(AbortError):
+            SassComposer(fake_bin)
 
     def test_create(self):
         fake_bin = self._make_fake_sass_bin()
@@ -357,8 +357,8 @@ class TestSassComposer(TestCase):
         output_dir = '/out'
         subprocess.Popen.return_value.communicate.return_value = ('boom', '')
         subprocess.Popen.return_value.returncode = 1
-        self.assertRaises(
-            AbortError, composer.compose, None, source_file, output_dir)
+        with self.assertRaises(AbortError):
+            composer.compose(None, source_file, output_dir)
 
     def test_output_extension(self):
         fake_bin = self._make_fake_sass_bin()
@@ -434,7 +434,8 @@ class TestFrontmatterComposerMixin(TestCase):
         with tempfile.NamedTemporaryFile(delete=False) as f:
             f.write(source.encode('utf-8'))
         mixin = FrontmatterComposerMixin()
-        self.assertRaises(AbortError, mixin.get_data, f.name)
+        with self.assertRaises(AbortError):
+            mixin.get_data(f.name)
 
     def test_malformed_document_with_frontmatter(self):
         source = inspect.cleandoc("""%YAML 1.1
@@ -444,7 +445,8 @@ class TestFrontmatterComposerMixin(TestCase):
         with tempfile.NamedTemporaryFile(delete=False) as f:
             f.write(source.encode('utf-8'))
         mixin = FrontmatterComposerMixin()
-        self.assertRaises(AbortError, mixin.get_data, f.name)
+        with self.assertRaises(AbortError):
+            mixin.get_data(f.name)
 
 
 class TestJinja2Composer(TestCase):

@@ -12,6 +12,7 @@ Version 3.1, In Development
 * Perform continuous integration testing on OS X.
 * Include ``posts`` in the blog feed list
   to permit more complex list rendering.
+* Remove support for Python 2.6
 
 Version 3.0, Released March 7, 2016
 -----------------------------------
