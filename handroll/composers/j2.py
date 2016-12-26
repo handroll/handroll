@@ -34,7 +34,7 @@ class Jinja2Composer(FrontmatterComposerMixin, Composer):
             with open(output_file, 'wb') as out:
                 out.write(template.render(data).encode('utf-8'))
                 # Frontmatter loading seems to munch the final line separator.
-                out.write(os.linesep)
+                out.write(os.linesep.encode('utf-8'))
         else:
             logger.debug(_('Skipping {filename} ... It is up to date.').format(
                 filename=filename))
