@@ -7,6 +7,7 @@ except ImportError:
     from cgi import escape
 import os
 
+import six
 import yaml
 from yaml.scanner import ScannerError
 
@@ -67,6 +68,8 @@ class FrontmatterComposerMixin(object):
                 source=source_file))
 
         if 'title' in data:
+            if isinstance(data['title'], six.binary_type):
+                data['title'] = data['title'].decode('utf-8')
             data['title'] = escape(data['title'])
 
         return data, source

@@ -51,6 +51,7 @@ if __name__ == '__main__':
         'mock',
         'Pygments',
         'PyYAML',
+        'six',
         'smartypants',
         'textile',
         'watchdog',
@@ -80,6 +81,7 @@ if __name__ == '__main__':
             ],
             'handroll.extensions': [
                 'blog = handroll.extensions.blog:BlogExtension',
+                'open_graph = handroll.extensions.og:OpenGraphExtension',
                 'sitemap = handroll.extensions.sitemap:SitemapExtension',
             ]
         },
