@@ -1,4 +1,4 @@
-# Copyright (c) 2016, Matt Layman
+# Copyright (c) 2017, Matt Layman
 """
 Learn more about handroll at the `project home page
 <http://handroll.github.io>`_. handroll development is done on `GitHub

@@ -1,4 +1,4 @@
-# Copyright (c) 2016, Matt Layman
+# Copyright (c) 2017, Matt Layman
 
 from handroll.commands.base import Command, prepare_director
 from handroll.i18n import _
