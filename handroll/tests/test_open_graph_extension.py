@@ -18,6 +18,9 @@ class TestOpenGraphExtension(TestCase):
 
     def _make_one(self, director):
         director.config.parser.add_section('open_graph')
+        director.config.parser.set(
+            'open_graph', 'default_image',
+            'http://www.example.com/images/og.png')
         extension = OpenGraphExtension(director.config)
         extension.on_pre_composition(director)
         return extension
@@ -50,7 +53,8 @@ class TestOpenGraphExtension(TestCase):
             '<meta property="og:type" content="article" />\n'
             '<meta property="og:url" '
             'content="http://www.example.com/post.html" />\n'
-            '<meta property="og:image" content="" />\n'
+            '<meta property="og:image" '
+            'content="http://www.example.com/images/og.png" />\n'
             '<meta property="og:title" content="A blog post" />\n'
             '<meta property="og:description" content="The summary" />',
             frontmatter['open_graph_metadata'])
@@ -83,6 +87,13 @@ class TestOpenGraphExtension(TestCase):
 
     def test_has_open_graph_section(self):
         director = self.factory.make_director()
+        extension = OpenGraphExtension(director.config)
+        with self.assertRaises(AbortError):
+            extension.on_pre_composition(director)
+
+    def test_default_image_required(self):
+        director = self.factory.make_director()
+        director.config.parser.add_section('open_graph')
         extension = OpenGraphExtension(director.config)
         with self.assertRaises(AbortError):
             extension.on_pre_composition(director)

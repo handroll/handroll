@@ -16,6 +16,10 @@ class OpenGraphExtension(Extension):
             raise AbortError(_(
                 'An open_graph section is missing in the configuration file.'))
 
+        if not self._config.parser.has_option('open_graph', 'default_image'):
+            raise AbortError(_(
+                'A default image URL is missing in the configuration file.'))
+
         self._resolver = director.resolver
 
     def on_frontmatter_loaded(self, source_file, frontmatter):
@@ -29,16 +33,22 @@ class OpenGraphExtension(Extension):
         metadata = [
             '<meta property="og:type" content="article" />',
             '<meta property="og:url" content="{}" />'.format(url),
-            '<meta property="og:image" content="" />',
         ]
+
+        image = self._config.parser.get('open_graph', 'default_image')
+        metadata.append(
+            u'<meta property="og:image" content="{}" />'.format(image))
+
         title = frontmatter.get('title', '')
         title = title.replace('"', '\'')
         metadata.append(
             u'<meta property="og:title" content="{}" />'.format(title))
+
         if frontmatter.get('summary'):
             summary = frontmatter.get('summary', '')
             summary = summary.replace('"', '\'')
             metadata.append(
                 u'<meta property="og:description" content="{}" />'.format(
                     summary))
+
         frontmatter['open_graph_metadata'] = '\n'.join(metadata)
