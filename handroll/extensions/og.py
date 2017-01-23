@@ -1,6 +1,8 @@
 # Copyright (c) 2017, Matt Layman
 
+from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
+from handroll.i18n import _
 
 
 class OpenGraphExtension(Extension):
@@ -10,6 +12,10 @@ class OpenGraphExtension(Extension):
     handle_pre_composition = True
 
     def on_pre_composition(self, director):
+        if not self._config.parser.has_section('open_graph'):
+            raise AbortError(_(
+                'An open_graph section is missing in the configuration file.'))
+
         self._resolver = director.resolver
 
     def on_frontmatter_loaded(self, source_file, frontmatter):

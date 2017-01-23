@@ -3,6 +3,7 @@
 import os
 
 from handroll import signals
+from handroll.exceptions import AbortError
 from handroll.extensions.og import OpenGraphExtension
 from handroll.tests import TestCase
 
@@ -16,6 +17,7 @@ class TestOpenGraphExtension(TestCase):
         signals.pre_composition.receivers.clear()
 
     def _make_one(self, director):
+        director.config.parser.add_section('open_graph')
         extension = OpenGraphExtension(director.config)
         extension.on_pre_composition(director)
         return extension
@@ -78,3 +80,9 @@ class TestOpenGraphExtension(TestCase):
         self.assertIn(
             '<meta property="og:description" content="The \'summary\'" />',
             frontmatter['open_graph_metadata'])
+
+    def test_has_open_graph_section(self):
+        director = self.factory.make_director()
+        extension = OpenGraphExtension(director.config)
+        with self.assertRaises(AbortError):
+            extension.on_pre_composition(director)
