@@ -22,7 +22,7 @@ class BlogPost(object):
         self.date = kwargs['date']
         self.source_file = kwargs['source_file']
         self.summary = kwargs['summary']
-        self.title = kwargs['title']
+        self.title = smartypants.smartypants(kwargs['title'])
         self.route = kwargs['route']
         self.url = kwargs['url']
 
@@ -212,11 +212,9 @@ class ListPageBuilder(BlogBuilder):
         """Add the posts and generate a blog list."""
         li_html = []
         for post in posts:
-            # Put the smartified title back into the post.
-            post.title = title = smartypants.smartypants(post.title)
             li_html.append(
                 u'<li><a href="{route}">{title}</a></li>'.format(
-                    route=post.route, title=title))
+                    route=post.route, title=post.title))
         self._blog_list = u'\n'.join(li_html)
         self._posts = posts
 

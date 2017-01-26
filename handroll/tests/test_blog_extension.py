@@ -412,8 +412,7 @@ class TestListPageBuilder(TestCase):
             builder._blog_list)
 
     def test_smartypants_conversion_on_title(self):
-        post = self.factory.make_blog_post()
-        post.title = 'Emdash -- Post'
+        post = self.factory.make_blog_post(title='Emdash -- Post')
         builder = ListPageBuilder(None)
         builder.add([post])
         self.assertEqual(

@@ -13,8 +13,8 @@ from handroll.site import Site
 class Factory(object):
     """A factory to produce commonly needed objects"""
 
-    def make_blog_post(self):
-        kwargs = {
+    def make_blog_post(self, **kwargs):
+        parameters = {
             'date': datetime.datetime.today(),
             'source_file': 'a_source_file.md',
             'summary': 'The post summary',
@@ -22,7 +22,8 @@ class Factory(object):
             'route': '/a_source_file.html',
             'url': 'http://www.example.com/a_source_file.html',
         }
-        return BlogPost(**kwargs)
+        parameters.update(kwargs)
+        return BlogPost(**parameters)
 
     def make_configuration(self):
         config = Configuration()
