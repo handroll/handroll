@@ -97,3 +97,31 @@ class TestOpenGraphExtension(TestCase):
         extension = OpenGraphExtension(director.config)
         with self.assertRaises(AbortError):
             extension.on_pre_composition(director)
+
+    def test_use_relative_image(self):
+        director = self.factory.make_director()
+        extension = self._make_one(director)
+        frontmatter = {
+            'blog': True,
+            'image': 'python.png',
+        }
+        path = os.path.join(director.site.path, 'post.md')
+        extension.on_frontmatter_loaded(path, frontmatter)
+        self.assertIn(
+            '<meta property="og:image" '
+            'content="http://www.example.com/python.png" />',
+            frontmatter['open_graph_metadata'])
+
+    def test_use_absolute_image(self):
+        director = self.factory.make_director()
+        extension = self._make_one(director)
+        frontmatter = {
+            'blog': True,
+            'image': '/images/javascript.png',
+        }
+        path = os.path.join(director.site.path, 'post.md')
+        extension.on_frontmatter_loaded(path, frontmatter)
+        self.assertIn(
+            '<meta property="og:image" '
+            'content="http://www.example.com/images/javascript.png" />',
+            frontmatter['open_graph_metadata'])

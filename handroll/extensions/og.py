@@ -35,7 +35,7 @@ class OpenGraphExtension(Extension):
             '<meta property="og:url" content="{}" />'.format(url),
         ]
 
-        image = self._config.parser.get('open_graph', 'default_image')
+        image = self.get_image_path(url, frontmatter)
         metadata.append(
             u'<meta property="og:image" content="{}" />'.format(image))
 
@@ -52,3 +52,14 @@ class OpenGraphExtension(Extension):
                     summary))
 
         frontmatter['open_graph_metadata'] = '\n'.join(metadata)
+
+    def get_image_path(self, url, frontmatter):
+        image_path = frontmatter.get('image')
+        if image_path:
+            if image_path.startswith('/'):
+                return self._config.domain + image_path
+            else:
+                url_parts = url.split('/')
+                url_parts[-1] = image_path
+                return '/'.join(url_parts)
+        return self._config.parser.get('open_graph', 'default_image')
