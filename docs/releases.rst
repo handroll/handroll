@@ -1,6 +1,12 @@
 Releases
 ========
 
+Version 3.2, In Development
+---------------------------
+
+* Include an Open Graph extension
+  to add metadata to blog posts.
+
 Version 3.1, Released December 26, 2016
 ---------------------------------------
 

@@ -152,3 +152,60 @@ as ``sitemap.txt``.
 
 Enable the sitemap extension by adding ``with_sitemap = True`` to
 the ``site`` section of your configuration file.
+
+.. _opengrapheextension:
+
+Open Graph extension
+--------------------
+
+The Open Graph extension reads blog post frontmatter
+and adds ``open_graph_metadata`` to the template context.
+The data can be added to the ``head`` section of the HTML output.
+
+Enable the Open Graph extension by adding ``with_open_graph = True``
+to the ``site`` section of your configuration file.
+
+The extension produces the metadata for an Open Graph ``article``.
+As the ``article`` type requires an image,
+additional configuration is required so that an image is always available.
+
+You must include an ``open_graph`` section
+with a ``default_image``.
+The ``default_image`` is a full URL
+to an image file.
+This default image will be used
+whenever an ``image`` is not specified
+in a blog post's frontmatter.
+
+.. code-block:: ini
+
+    [open_graph]
+    default_image = http://www.example.com/images/og.jpg
+
+When ``image`` is provided
+in the frontmatter,
+the value produces a URL that is related to the source file.
+For example,
+if you have a post in your site at a path of ``posts/my-topic.md``
+and the frontmatter includes ``image: butterfly.jpg``,
+then the included image URL would become
+``http://www.example.com/posts/butterfly.jpg``.
+
+``image`` can also use an absolute path.
+If the frontmatter sets ``image: /images/ladybug.jpg``,
+the final URL would be ``http://www.example.com/images/ladybug.jpg``
+regardless of where the blog post is
+in your site structure.
+
+To include the metadata,
+add it to your template:
+
+.. code-block:: jinja
+
+    <html>
+     <head>
+       {{ open_graph_metadata }}
+     </head>
+     <body>
+     </body>
+    </html>
