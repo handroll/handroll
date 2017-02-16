@@ -25,3 +25,25 @@ class FileResolver(object):
         composer = self.composers.select_composer_for(path)
         root, ext = os.path.splitext(path)
         return root + composer.get_output_extension(path)
+
+
+class URLResolver(object):
+    """Resolve a URL in relation to another URL."""
+
+    def __init__(self, config, default_url):
+        self._config = config
+        self._default_url = default_url
+
+    def resolve(self, base_url, path):
+        """Resolve a path relative to a base URL.
+
+        Use the default if the path is empty.
+        """
+        if path:
+            if path.startswith('/'):
+                return self._config.domain + path
+            else:
+                url_parts = base_url.split('/')
+                url_parts[-1] = path
+                return '/'.join(url_parts)
+        return self._default_url

@@ -3,6 +3,7 @@
 from handroll.exceptions import AbortError
 from handroll.extensions.base import Extension
 from handroll.i18n import _
+from handroll.resolver import URLResolver
 
 
 class OpenGraphExtension(Extension):
@@ -21,6 +22,9 @@ class OpenGraphExtension(Extension):
                 'A default image URL is missing in the configuration file.'))
 
         self._resolver = director.resolver
+        self._url_resolver = URLResolver(
+            self._config,
+            self._config.parser.get('open_graph', 'default_image'))
 
     def on_frontmatter_loaded(self, source_file, frontmatter):
         if frontmatter.get('blog'):
@@ -35,7 +39,7 @@ class OpenGraphExtension(Extension):
             '<meta property="og:url" content="{}" />'.format(url),
         ]
 
-        image = self.get_image_path(url, frontmatter)
+        image = self._url_resolver.resolve(url, frontmatter.get('image'))
         metadata.append(
             u'<meta property="og:image" content="{}" />'.format(image))
 
@@ -52,14 +56,3 @@ class OpenGraphExtension(Extension):
                     summary))
 
         frontmatter['open_graph_metadata'] = '\n'.join(metadata)
-
-    def get_image_path(self, url, frontmatter):
-        image_path = frontmatter.get('image')
-        if image_path:
-            if image_path.startswith('/'):
-                return self._config.domain + image_path
-            else:
-                url_parts = url.split('/')
-                url_parts[-1] = image_path
-                return '/'.join(url_parts)
-        return self._config.parser.get('open_graph', 'default_image')

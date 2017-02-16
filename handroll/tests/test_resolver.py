@@ -3,7 +3,7 @@
 import os
 
 from handroll.composers import Composers
-from handroll.resolver import FileResolver
+from handroll.resolver import FileResolver, URLResolver
 from handroll.tests import TestCase
 
 
@@ -26,3 +26,26 @@ class TestFileResolver(TestCase):
         md_file = os.path.join(site.path, 'a_dir', 'test.md')
         route = resolver.as_route(md_file)
         self.assertEqual('/a_dir/test.html', route)
+
+
+class TestURLResolver(TestCase):
+
+    def test_use_relative_image(self):
+        config = self.factory.make_configuration()
+        base_url = 'https://www.example.com/route/default.png'
+        resolver = URLResolver(config, '')
+        url = resolver.resolve(base_url, 'python.png')
+        self.assertEqual('https://www.example.com/route/python.png', url)
+
+    def test_use_absolute_image(self):
+        config = self.factory.make_configuration()
+        base_url = 'https://www.example.com/route/default.png'
+        resolver = URLResolver(config, '')
+        url = resolver.resolve(base_url, '/images/javascript.png')
+        self.assertEqual('http://www.example.com/images/javascript.png', url)
+
+    def test_use_default(self):
+        config = self.factory.make_configuration()
+        resolver = URLResolver(config, 'https://www.example.com/default.png')
+        url = resolver.resolve('', '')
+        self.assertEqual('https://www.example.com/default.png', url)

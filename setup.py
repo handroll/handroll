@@ -83,6 +83,7 @@ if __name__ == '__main__':
                 'blog = handroll.extensions.blog:BlogExtension',
                 'open_graph = handroll.extensions.og:OpenGraphExtension',
                 'sitemap = handroll.extensions.sitemap:SitemapExtension',
+                'twitter = handroll.extensions.twitter:TwitterExtension',
             ]
         },
         include_package_data=True,
