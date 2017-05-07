@@ -51,7 +51,6 @@ if __name__ == '__main__':
         'mock',
         'Pygments',
         'PyYAML',
-        'six',
         'smartypants',
         'textile',
         'watchdog',
