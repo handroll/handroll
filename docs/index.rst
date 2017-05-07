@@ -14,10 +14,10 @@ Installation
 handroll is available for download from `PyPI
 <https://pypi.python.org/pypi/handroll>`_.  You can install it with ``pip``.
 handroll is currently supported on Python
+3.6,
 3.5,
 3.4,
 3.3,
-2.7,
 and PyPy.
 
 .. code-block:: console

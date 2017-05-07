@@ -2,7 +2,7 @@
 
 import logging
 
-__version__ = '3.1'
+__version__ = '4.0'
 
 logging.basicConfig(level=logging.WARNING, format='%(message)s')
 logger = logging.getLogger(__name__)

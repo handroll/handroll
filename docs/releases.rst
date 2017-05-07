@@ -1,13 +1,15 @@
 Releases
 ========
 
-Version 3.2, In Development
+Version 4.0, In Development
 ---------------------------
 
+* Add support for Python 3.6.
 * Include an ``OpenGraphExtension``
   to add metadata to blog posts.
 * Include a ``TwitterExtension``
   to add metadata to blog posts.
+* Remove support for Python 2.7.
 
 Version 3.1, Released December 26, 2016
 ---------------------------------------
