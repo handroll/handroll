@@ -209,3 +209,52 @@ add it to your template:
      <body>
      </body>
     </html>
+
+.. _twitterextension:
+
+Twitter extension
+-----------------
+
+The Twitter extension reads blog post frontmatter
+and adds ``twitter_metadata`` to the template context.
+The data can be added to the ``head`` section of the HTML output.
+
+Enable the Twitter extension by adding ``with_twitter = True``
+to the ``site`` section of your configuration file.
+
+The extension produces the metadata for an Twitter ``summary`` card.
+As the ``summary`` type requires an image,
+additional configuration is required so that an image is always available.
+
+You must include an ``twitter`` section
+with a ``default_image``.
+The ``default_image`` is a full URL
+to an image file.
+This default image will be used
+whenever an ``image`` is not specified
+in a blog post's frontmatter.
+
+``image`` follows the same rules
+as described for the Open Graph extension.
+
+The Twitter extension also expects a ``site_username``
+to connect with the relevant Twitter account.
+
+.. code-block:: ini
+
+    [twitter]
+    default_image = http://www.example.com/images/og.jpg
+    site_username = @mblayman
+
+To include the metadata,
+add it to your template:
+
+.. code-block:: jinja
+
+    <html>
+     <head>
+       {{ twitter_metadata }}
+     </head>
+     <body>
+     </body>
+    </html>

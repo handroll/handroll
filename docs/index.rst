@@ -59,6 +59,7 @@ what handroll is capable of doing.
 * Generate a proper `Atom XML
   <http://en.wikipedia.org/wiki/Atom_%28standard%29>`_ feed from metadata
   stored in JSON.
+* Produce metadata for popular social media site like Facebook and Twitter.
 * Run a development server with the ``watch`` flag to monitor your site and
   update the output immediately as you make changes (see :ref:`devserver`).
 * Find the site source root so you don't have to. If you're anywhere in your
