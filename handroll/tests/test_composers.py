@@ -386,7 +386,7 @@ class TestFrontmatterComposerMixin(TestCase):
     def test_gets_frontmatter(self):
         source = inspect.cleandoc("""%YAML 1.1
         ---
-        title: A Fake Title
+        title: "ØMQ: A dynamic book with surprises"
         ---
         The Content
         """)
@@ -394,7 +394,7 @@ class TestFrontmatterComposerMixin(TestCase):
             f.write(source.encode('utf-8'))
         mixin = FrontmatterComposerMixin()
         data, source = mixin.get_data(f.name)
-        self.assertEqual('A Fake Title', data['title'])
+        self.assertEqual('ØMQ: A dynamic book with surprises', data['title'])
         self.assertEqual('The Content', source)
 
     def test_gets_frontmatter_no_directive(self):
