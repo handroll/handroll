@@ -64,8 +64,6 @@ class FrontmatterComposerMixin(object):
                 source=source_file))
 
         if 'title' in data:
-            if isinstance(data['title'], bytes):
-                data['title'] = data['title'].decode('utf-8')
             data['title'] = escape(data['title'])
 
         return data, source
