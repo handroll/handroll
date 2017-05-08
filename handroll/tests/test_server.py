@@ -41,8 +41,6 @@ class TestServer(TestCase):
         observer = mock.MagicMock()
         observer_cls.return_value = observer
 
-        try:
-            serve(self.site, self.director)
-        except KeyboardInterrupt:
-            self.fail('Server did not quit gracefully.')
+        serve(self.site, self.director)
+
         self.assertTrue(observer.stop.called)
