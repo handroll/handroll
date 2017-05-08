@@ -81,7 +81,7 @@ $ virtualenv venv                            # Create your virtual environment.
 $ source venv/bin/activate                   # Activate it.
 (venv)$ pip install -r requirements-dev.txt  # Install developer tools.
 (venv)$ pip install -e .                     # Install handroll in editable mode.
-(venv)$ nosetests                            # Run the test suite.
+(venv)$ pytest                              # Run the test suite.
 ```
 
 [pypishield]: https://img.shields.io/pypi/v/handroll.svg
