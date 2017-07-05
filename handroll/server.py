@@ -1,17 +1,9 @@
 # Copyright (c) 2017, Matt Layman
 
+from http.server import SimpleHTTPRequestHandler
 import logging
 import os
-try:
-    from SimpleHTTPServer import SimpleHTTPRequestHandler
-except ImportError:  # pragma: no cover
-    # Python 3 moved the server.
-    from http.server import SimpleHTTPRequestHandler
-try:
-    import SocketServer as socketserver
-except ImportError:  # pragma: no cover
-    # Python 3 renamed the SocketServer module.
-    import socketserver
+import socketserver
 
 from watchdog.observers import Observer
 

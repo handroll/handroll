@@ -9,6 +9,11 @@ from handroll.i18n import _
 
 
 class Site(object):
+    """A Site represents a handroll site source.
+
+    This class contains validation logic to confirm that a directory
+    is a valid handroll site.
+    """
 
     CONFIG = 'handroll.conf'
     OUTPUT = 'output'

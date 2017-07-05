@@ -1,9 +1,6 @@
 # Copyright (c) 2017, Matt Layman
 
-try:
-    from ConfigParser import ConfigParser
-except ImportError:  # pragma: no cover
-    from configparser import ConfigParser
+from configparser import ConfigParser
 import os
 
 from handroll.exceptions import AbortError

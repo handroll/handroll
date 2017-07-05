@@ -1,11 +1,7 @@
 # Copyright (c) 2017, Matt Layman
 
+import configparser
 import os
-
-try:
-    import ConfigParser as configparser
-except ImportError:  # pragma: no cover
-    import configparser
 
 import smartypants
 from werkzeug.contrib.atom import AtomFeed, FeedEntry
