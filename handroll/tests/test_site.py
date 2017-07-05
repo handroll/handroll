@@ -42,3 +42,13 @@ class TestSite(TestCase):
 
         self.assertEqual(site_path, site.path)
         os.chdir(original)
+
+    def test_skips_directory(self):
+        dirnames = ['keep', '.sass-cache', 'another_keeper']
+        site = self.factory.make_site()
+
+        site._prune_skip_directories(dirnames)
+
+        self.assertEqual(2, len(dirnames))
+        self.assertEqual('keep', dirnames[0])
+        self.assertEqual('another_keeper', dirnames[1])

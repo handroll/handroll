@@ -13,6 +13,10 @@ class Site(object):
     CONFIG = 'handroll.conf'
     OUTPUT = 'output'
 
+    SKIP_DIRECTORIES = set([
+        '.sass-cache',
+    ])
+
     def __init__(self, path=None):
         self.path = path
         if self.path is None:
@@ -46,6 +50,31 @@ class Site(object):
                 path=self.path)
 
         return True, ''
+
+    def walk(self):
+        """Walk the site source, skipping items that should be skipped."""
+        for dirpath, dirnames, filenames in os.walk(self.path):
+            # Prevent work on the output or templates directory.
+            # Skip the template.
+            if dirpath == self.path:
+                if self.OUTPUT in dirnames:
+                    dirnames.remove(self.OUTPUT)
+                if template.TEMPLATES_DIR in dirnames:
+                    dirnames.remove(template.TEMPLATES_DIR)
+                if template.DEFAULT_TEMPLATE in filenames:
+                    filenames.remove(template.DEFAULT_TEMPLATE)
+
+            self._prune_skip_directories(dirnames)
+
+            yield dirpath, dirnames, filenames
+
+    def _prune_skip_directories(self, dirnames):
+        """Prune out any directories that should be skipped from the provided
+        list of directories.
+        """
+        for directory in dirnames:
+            if directory in self.SKIP_DIRECTORIES:
+                dirnames.remove(directory)
 
     def _find_site_root_from(self, cwd):
         """Ascend through the current working directory provided to find

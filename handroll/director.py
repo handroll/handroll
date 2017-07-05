@@ -24,9 +24,6 @@ class Director(object):
         '.swx',
         '4913',  # Vim makes a '4913' file for file system checking. Seriously.
     )
-    SKIP_DIRECTORIES = set([
-        '.sass-cache',
-    ])
     SKIP_FILES = (
         Site.CONFIG,
     )
@@ -69,7 +66,7 @@ class Director(object):
         signals.pre_composition.send(self)
         dirname = os.path.dirname(filepath)
         output_dirpath = self._get_output_dirpath(dirname, self.outdir)
-        self._process_file(filepath, output_dirpath, self.config.timing)
+        self._process_file(filepath, output_dirpath)
         signals.post_composition.send(self)
 
     def process_directory(self, directory):
@@ -109,24 +106,29 @@ class Director(object):
     def produce(self):
         """Walk the site tree and generate the output."""
         signals.pre_composition.send(self)
-        self._generate_output(self.outdir, self.config.timing)
+        self._generate_output(self.outdir)
         signals.post_composition.send(self)
 
-    def prune_skip_directories(self, dirnames):
-        """Prune out any directories that should be skipped from the provided
-        list of directories.
-        """
-        for directory in dirnames:
-            if directory in self.SKIP_DIRECTORIES:
-                dirnames.remove(directory)
-
-    def _generate_output(self, outdir, timing):
+    def _generate_output(self, outdir):
         if os.path.exists(outdir):
             logger.info(_('Updating {outdir} ...').format(outdir=outdir))
         else:
             logger.info(_('Creating {outdir} ...').format(outdir=outdir))
             os.mkdir(outdir)
 
+        for dirpath, dirnames, filenames in self.site.walk():
+            output_dirpath = self._get_output_dirpath(dirpath, outdir)
+            logger.info(_('Populating {dirpath} ...').format(
+                dirpath=output_dirpath))
+
+            self._create_output_directories(dirnames, output_dirpath)
+
+            for filename in filenames:
+                filepath = os.path.join(dirpath, filename)
+                self._process_file(filepath, output_dirpath)
+
+    def _walk_site(self):
+        """Walk the site source, skipping items that should be skipped."""
         for dirpath, dirnames, filenames in os.walk(self.site.path):
             # Prevent work on the output or templates directory.
             # Skip the template.
@@ -140,22 +142,7 @@ class Director(object):
 
             self.prune_skip_directories(dirnames)
 
-            output_dirpath = self._get_output_dirpath(dirpath, outdir)
-            logger.info(_('Populating {dirpath} ...').format(
-                dirpath=output_dirpath))
-
-            # Create new directories in output.
-            for dirname in dirnames:
-                out_dir = os.path.join(output_dirpath, dirname)
-                # The directory may already exist for updates.
-                if not os.path.exists(out_dir):
-                    logger.info(_('Creating directory {out_dir} ...').format(
-                        out_dir=out_dir))
-                    os.mkdir(out_dir)
-
-            for filename in filenames:
-                filepath = os.path.join(dirpath, filename)
-                self._process_file(filepath, output_dirpath, timing)
+            yield dirpath, dirnames, filenames
 
     def _get_output_dirpath(self, dirpath, outdir):
         """Convert an input directory path rooted at the site path into the
@@ -169,19 +156,28 @@ class Director(object):
         else:
             return outdir
 
-    def _process_file(self, filepath, output_dirpath, timing):
+    def _create_output_directories(self, dirnames, output_dirpath):
+        """Create new directories in output."""
+        for dirname in dirnames:
+            out = os.path.join(output_dirpath, dirname)
+            # The directory may already exist for updates.
+            if not os.path.exists(out):
+                logger.info(_('Creating directory {out} ...').format(out=out))
+                os.mkdir(out)
+
+    def _process_file(self, filepath, output_dirpath):
         """Process the file according to its type."""
         filename = os.path.basename(filepath)
         if self._should_skip(filename):
             return
 
-        if timing:
+        if self.config.timing:
             start = time.time()
 
         composer = self.composers.select_composer_for(filename)
         composer.compose(self.catalog, filepath, output_dirpath)
 
-        if timing:
+        if self.config.timing:
             end = time.time()
             # Put at warn level to be independent of the verbose option.
             logger.warn('[{0:.3f}s]'.format(end - start))

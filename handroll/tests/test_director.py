@@ -89,18 +89,6 @@ class TestDirector(TestCase):
         another_out = os.path.join(site.output_root, 'another')
         self.assertTrue(os.path.isdir(another_out))
 
-    def test_skips_directory(self):
-        dirnames = ['keep', '.sass-cache', 'another_keeper']
-        site = self.factory.make_site()
-        config = Configuration()
-        director = Director(config, site, [])
-
-        director.prune_skip_directories(dirnames)
-
-        self.assertEqual(2, len(dirnames))
-        self.assertEqual('keep', dirnames[0])
-        self.assertEqual('another_keeper', dirnames[1])
-
     def test_process_file_ignores_files_already_in_output(self):
         # This condition is checked because the output directory can be within
         # the source (e.g., the default of storing results in 'output'). If
