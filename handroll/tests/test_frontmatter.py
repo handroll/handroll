@@ -18,4 +18,5 @@ class TestFrontmatterExtractor(TestCase):
             f.write(source.encode('utf-8'))
         extractor = FrontmatterExtractor()
         frontmatter = extractor.extract(f.name)
-        self.assertEqual('ØMQ: A dynamic book with surprises', frontmatter['title'])
+        self.assertEqual(
+            'ØMQ: A dynamic book with surprises', frontmatter['title'])
