@@ -5,6 +5,7 @@ import time
 
 from handroll import logger, signals
 from handroll.composers import Composers
+from handroll.frontmatter import FrontmatterExtractor
 from handroll.i18n import _
 from handroll.resolver import FileResolver
 from handroll.site import Site
@@ -34,6 +35,7 @@ class Director(object):
         self.extensions = extensions
         self.catalog = catalog.TemplateCatalog(site.path)
         self.composers = Composers(config)
+        self.extractor = FrontmatterExtractor()
         self.resolver = FileResolver(site.path, self.composers, config)
 
     @property
@@ -132,18 +134,18 @@ class Director(object):
     def _collect_frontmatter(self):
         """Collect all the frontmatter.
 
-        Including a single pass to collect frontmatter gives extensions
-        the opportunity to do work considering the entire site of files.
+        Including a single walk to collect frontmatter gives extensions
+        the opportunity to do work considering the entire set of files.
 
         Extensions can use this information to factor in relationships
-        between files.
+        between files *before* output rendering occurs.
         """
         for dirpath, dirnames, filenames in self.site.walk():
             for filename in filenames:
                 composer = self.composers.select_composer_for(filename)
                 if composer.permit_frontmatter:
-                    # TODO: load the frontmatter for the file.
-                    pass
+                    filepath = os.path.join(dirpath, filename)
+                    self.extractor.extract(filepath)
 
     def _get_output_dirpath(self, dirpath, outdir):
         """Convert an input directory path rooted at the site path into the
