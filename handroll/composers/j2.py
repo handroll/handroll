@@ -61,3 +61,7 @@ class Jinja2Composer(FrontmatterComposerMixin, Composer):
         """
         root, ext = os.path.splitext(filename.rstrip('.j2'))
         return ext
+
+    @property
+    def permit_frontmatter(self):
+        return True

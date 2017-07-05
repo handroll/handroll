@@ -3,7 +3,7 @@
 import os
 import time
 
-from handroll import logger, signals, template
+from handroll import logger, signals
 from handroll.composers import Composers
 from handroll.i18n import _
 from handroll.resolver import FileResolver
@@ -116,6 +116,8 @@ class Director(object):
             logger.info(_('Creating {outdir} ...').format(outdir=outdir))
             os.mkdir(outdir)
 
+        self._collect_frontmatter()
+
         for dirpath, dirnames, filenames in self.site.walk():
             output_dirpath = self._get_output_dirpath(dirpath, outdir)
             logger.info(_('Populating {dirpath} ...').format(
@@ -127,22 +129,21 @@ class Director(object):
                 filepath = os.path.join(dirpath, filename)
                 self._process_file(filepath, output_dirpath)
 
-    def _walk_site(self):
-        """Walk the site source, skipping items that should be skipped."""
-        for dirpath, dirnames, filenames in os.walk(self.site.path):
-            # Prevent work on the output or templates directory.
-            # Skip the template.
-            if dirpath == self.site.path:
-                if self.site.OUTPUT in dirnames:
-                    dirnames.remove(self.site.OUTPUT)
-                if template.TEMPLATES_DIR in dirnames:
-                    dirnames.remove(template.TEMPLATES_DIR)
-                if template.DEFAULT_TEMPLATE in filenames:
-                    filenames.remove(template.DEFAULT_TEMPLATE)
+    def _collect_frontmatter(self):
+        """Collect all the frontmatter.
 
-            self.prune_skip_directories(dirnames)
+        Including a single pass to collect frontmatter gives extensions
+        the opportunity to do work considering the entire site of files.
 
-            yield dirpath, dirnames, filenames
+        Extensions can use this information to factor in relationships
+        between files.
+        """
+        for dirpath, dirnames, filenames in self.site.walk():
+            for filename in filenames:
+                composer = self.composers.select_composer_for(filename)
+                if composer.permit_frontmatter:
+                    # TODO: load the frontmatter for the file.
+                    pass
 
     def _get_output_dirpath(self, dirpath, outdir):
         """Convert an input directory path rooted at the site path into the

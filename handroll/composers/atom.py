@@ -51,6 +51,10 @@ class AtomComposer(Composer):
     def get_output_extension(self, filename):
         return self.output_extension
 
+    @property
+    def permit_frontmatter(self):
+        return False
+
     def _needs_update(self, source_file, out_file):
         """Check if the output file needs to be updated by looking at the
         modified times of the source file and output file."""

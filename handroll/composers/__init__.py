@@ -35,6 +35,11 @@ class Composer(object):
         """
         raise NotImplementedError
 
+    @property
+    def permit_frontmatter(self):
+        """Check if frontmatter is permitted for the file type."""
+        raise NotImplementedError
+
 
 class Composers(object):
     """A collection of available composers"""
@@ -122,3 +127,8 @@ class CopyComposer(Composer):
     def get_output_extension(self, filename):
         _, ext = os.path.splitext(filename)
         return ext
+
+    @property
+    def permit_frontmatter(self):
+        """Copied resources do not need to handle frontmatter."""
+        return False

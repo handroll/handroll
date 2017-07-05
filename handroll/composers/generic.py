@@ -41,6 +41,10 @@ class GenericHTMLComposer(FrontmatterComposerMixin, Composer):
     def get_output_extension(self, filename):
         return self.output_extension
 
+    @property
+    def permit_frontmatter(self):
+        return True
+
     def select_template(self, catalog, data):
         """Select a template from the catalog based on the source file's data.
         """

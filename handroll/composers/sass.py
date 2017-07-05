@@ -51,6 +51,10 @@ class SassComposer(Composer):
     def get_output_extension(self, filename):
         return self.output_extension
 
+    @property
+    def permit_frontmatter(self):
+        return False
+
     def build_command(self, source_file, output_file):
         command = [
             self.sass, '--style', 'compressed', source_file, output_file]

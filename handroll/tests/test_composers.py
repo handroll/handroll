@@ -38,6 +38,11 @@ class TestComposer(TestCase):
         with self.assertRaises(NotImplementedError):
             composer.get_output_extension('file.txt')
 
+    def test_permit_frontmatter(self):
+        composer = self._make_one()
+        with self.assertRaises(NotImplementedError):
+            composer.permit_frontmatter
+
     def test_has_config(self):
         config = self.factory.make_configuration()
         composer = Composer(config)
@@ -119,6 +124,10 @@ class TestAtomComposer(TestCase):
         composer = self._make_one()
         self.assertEqual('.xml', composer.get_output_extension('source.atom'))
 
+    def test_permit_frontmatter(self):
+        composer = self._make_one()
+        self.assertFalse(composer.permit_frontmatter)
+
     @mock.patch('handroll.composers.atom.json')
     def test_forces_update(self, json):
         json.loads.return_value = {
@@ -174,6 +183,10 @@ class TestCopyComposer(TestCase):
         """The copy composer takes the extension of the source file."""
         composer = self._make_one()
         self.assertEqual('.png', composer.get_output_extension('photo.png'))
+
+    def test_permit_frontmatter(self):
+        composer = self._make_one()
+        self.assertFalse(composer.permit_frontmatter)
 
     @mock.patch('handroll.composers.shutil')
     def test_copies_when_forced(self, shutil):
@@ -259,6 +272,10 @@ class TestGenericHTMLComposer(TestCase):
         composer._config.force = True
         self.assertTrue(
             composer._needs_update(template, source_file, output_file))
+
+    def test_permit_frontmatter(self):
+        composer = self._make_one()
+        self.assertTrue(composer.permit_frontmatter)
 
 
 class TestMarkdownComposer(TestCase):
@@ -364,6 +381,11 @@ class TestSassComposer(TestCase):
         fake_bin = self._make_fake_sass_bin()
         composer = SassComposer(fake_bin)
         self.assertEqual('.css', composer.get_output_extension('source.sass'))
+
+    def test_permit_frontmatter(self):
+        fake_bin = self._make_fake_sass_bin()
+        composer = SassComposer(fake_bin)
+        self.assertFalse(composer.permit_frontmatter)
 
 
 class TestTextileComposer(TestCase):
@@ -532,3 +554,7 @@ class TestJinja2Composer(TestCase):
         composer = self._make_one()
         composer.compose(None, source_file, site)
         self.assertFalse(render.called)
+
+    def test_permit_frontmatter(self):
+        composer = self._make_one()
+        self.assertTrue(composer.permit_frontmatter)
