@@ -9,6 +9,9 @@ Version 4.0, In Development
   to add metadata to blog posts.
 * Include a ``TwitterExtension``
   to add metadata to blog posts.
+* Add ``post`` context to blog post rendering
+  which includes ``post.previous`` and ``post.next`` posts
+  to link between pages.
 * Remove support for Python 2.7.
 
 Version 3.1, Released December 26, 2016

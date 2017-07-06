@@ -73,6 +73,13 @@ class TestBlogExtension(TestCase):
         post = extension.posts['thundercats.md']
         self.assertEqual('thundercats.md', post.source_file)
 
+    def test_post_in_fronmatter(self):
+        extension = self._make_preprocessed_one()
+        frontmatter = self._make_blog_post_frontmatter()
+        extension.on_frontmatter_loaded('thundercats.md', frontmatter)
+        post = extension.posts['thundercats.md']
+        self.assertEqual(post, frontmatter['post'])
+
     def test_ignores_non_blog_post(self):
         extension = BlogExtension(None)
         extension.on_frontmatter_loaded('exosquad.md', {})

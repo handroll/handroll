@@ -119,6 +119,7 @@ class BlogExtension(Extension):
             url=self._resolver.as_url(source_file),
             posts=self.posts,
         )
+        frontmatter['post'] = post
         if post != self.posts.get(source_file):
             self.posts[source_file] = post
             self._should_generate = True

@@ -138,6 +138,12 @@ Optional fields:
 
 * ``summary`` - A summary of the post.
 
+When a blog post is rendered,
+``post`` is added to the context.
+This ``post`` data contains ``previous`` and ``next`` attributes
+which point to the previous and next chronological posts.
+This is useful to include links between blog post pages.
+
 .. _sitemapextension:
 
 Sitemap extension
