@@ -15,12 +15,13 @@ class Factory(object):
 
     def make_blog_post(self, **kwargs):
         parameters = {
-            'date': datetime.datetime.today(),
+            'date': datetime.datetime.now(),
             'source_file': 'a_source_file.md',
             'summary': 'The post summary',
             'title': 'A Blog Post',
             'route': '/a_source_file.html',
             'url': 'http://www.example.com/a_source_file.html',
+            'posts': {},
         }
         parameters.update(kwargs)
         return BlogPost(**parameters)

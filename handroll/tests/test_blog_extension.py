@@ -212,7 +212,7 @@ class TestBlogExtension(TestCase):
         current.source_file = 'current.md'
         older = self.factory.make_blog_post()
         older.source_file = 'older.md'
-        older.date = older.date - datetime.timedelta(days=-1)
+        older.date = older.date - datetime.timedelta(days=1)
         director = self.factory.make_director()
         extension = self._make_preprocessed_one(director=director)
         extension.posts['current.md'] = current
@@ -220,8 +220,8 @@ class TestBlogExtension(TestCase):
         os.mkdir(director.outdir)
         extension.on_post_composition(director)
         posts = builder_add.call_args[0][0]
-        self.assertEqual(older, posts[0])
-        self.assertEqual(current, posts[1])
+        self.assertEqual(current, posts[0])
+        self.assertEqual(older, posts[1])
 
     def test_list_template_not_required(self):
         director = self.factory.make_director()
@@ -433,3 +433,42 @@ class TestListPageBuilder(TestCase):
         builder._generate_output()
         context = mock_template.render.call_args[0][0]
         self.assertEqual(['fake post'], context['posts'])
+
+
+class TestBlogPost(TestCase):
+
+    def test_repr(self):
+        post = self.factory.make_blog_post()
+        self.assertIn(post.source_file, repr(post))
+
+    def test_previous(self):
+        posts = {}
+        post = self.factory.make_blog_post(posts=posts)
+        older_date = post.date - datetime.timedelta(days=1)
+        older_post = self.factory.make_blog_post(
+            date=older_date, source_file='another.md', posts=posts)
+        posts[post.source_file] = post
+        posts[older_post.source_file] = older_post
+        self.assertEqual(older_post, post.previous)
+
+    def test_no_previous(self):
+        posts = {}
+        post = self.factory.make_blog_post(posts=posts)
+        posts[post.source_file] = post
+        self.assertIsNone(post.previous)
+
+    def test_next(self):
+        posts = {}
+        post = self.factory.make_blog_post(posts=posts)
+        older_date = post.date - datetime.timedelta(days=1)
+        older_post = self.factory.make_blog_post(
+            date=older_date, source_file='another.md', posts=posts)
+        posts[post.source_file] = post
+        posts[older_post.source_file] = older_post
+        self.assertEqual(post, older_post.next)
+
+    def test_no_next(self):
+        posts = {}
+        post = self.factory.make_blog_post(posts=posts)
+        posts[post.source_file] = post
+        self.assertIsNone(post.next)

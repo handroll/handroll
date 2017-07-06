@@ -1,5 +1,6 @@
 # Copyright (c) 2017, Matt Layman
 
+import bisect
 import configparser
 import os
 
@@ -21,14 +22,44 @@ class BlogPost(object):
         self.title = smartypants.smartypants(kwargs['title'])
         self.route = kwargs['route']
         self.url = kwargs['url']
+        # Having the posts enables a blog post to find its relationships.
+        self._posts = kwargs['posts']
 
     def __eq__(self, other):
         if other is None:
             return False
         return self.__dict__ == other.__dict__
 
+    def __lt__(self, other):
+        return self.date < other.date
+
     def __ne__(self, other):
         return not self.__eq__(other)
+
+    def __repr__(self):
+        return 'BlogPost({}, {})'.format(self.source_file, self.date)
+
+    @property
+    def next(self):
+        """Get the next chronological blog post."""
+        posts_by_date = self.posts_by_date
+        index = bisect.bisect_left(posts_by_date, self)
+        if index + 1 == len(posts_by_date):
+            return None
+        return posts_by_date[index + 1]
+
+    @property
+    def previous(self):
+        """Get the previous chronological blog post."""
+        posts_by_date = self.posts_by_date
+        index = bisect.bisect_left(posts_by_date, self)
+        if index == 0:
+            return None
+        return posts_by_date[index - 1]
+
+    @property
+    def posts_by_date(self):
+        return sorted(self._posts.values(), key=lambda p: p.date)
 
 
 class BlogExtension(Extension):
@@ -86,6 +117,7 @@ class BlogExtension(Extension):
             title=frontmatter['title'],
             route=self._resolver.as_route(source_file),
             url=self._resolver.as_url(source_file),
+            posts=self.posts,
         )
         if post != self.posts.get(source_file):
             self.posts[source_file] = post
