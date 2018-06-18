@@ -18,7 +18,7 @@ class BlogPost(object):
     def __init__(self, **kwargs):
         self.date = kwargs['date']
         self.source_file = kwargs['source_file']
-        self.summary = kwargs['summary']
+        self.summary = smartypants.smartypants(kwargs['summary'])
         self.title = smartypants.smartypants(kwargs['title'])
         self.route = kwargs['route']
         self.url = kwargs['url']
@@ -113,7 +113,7 @@ class BlogExtension(Extension):
         post = BlogPost(
             date=frontmatter['date'],
             source_file=source_file,
-            summary=frontmatter.get('summary'),
+            summary=frontmatter.get('summary', ''),
             title=frontmatter['title'],
             route=self._resolver.as_route(source_file),
             url=self._resolver.as_url(source_file),
