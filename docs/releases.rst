@@ -13,6 +13,7 @@ Version 4.0, In Development
   which includes ``post.previous`` and ``post.next`` posts
   to link between pages.
 * Remove support for Python 2.7.
+* Drop support for Python 3.3 (EOL).
 
 Version 3.1, Released December 26, 2016
 ---------------------------------------

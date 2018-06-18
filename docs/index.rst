@@ -17,7 +17,6 @@ handroll is currently supported on Python
 3.6,
 3.5,
 3.4,
-3.3,
 and PyPy.
 
 .. code-block:: console
